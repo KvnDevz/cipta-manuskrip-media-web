@@ -1,20 +1,41 @@
 import { ArrowLeft, ArrowUpRight, FileUp, Landmark, Network, Orbit } from "lucide-react";
 import Link from "next/link";
-import { KATEGORI_JURNAL } from "@/content/site";
+import { KATEGORI_JURNAL, MEDIA } from "@/content/site";
+import { LogoIndeks, type JenisIndeks } from "@/components/IndexLogos";
 import { buildJournalSubmitUrl } from "@/lib/whatsapp";
 
 const IKON_KATEGORI = [Landmark, Orbit, Network] as const;
 
-/** Naskah dikirim langsung melalui WhatsApp; tidak diunggah ke server. */
+/**
+ * Penanda indeksasi per kategori. Satu kategori bisa punya lebih dari satu
+ * tanda (Scopus dan SJR adalah satu ekosistem yang sama).
+ */
+const INDEKS_KATEGORI: ReadonlyArray<ReadonlyArray<JenisIndeks>> = [
+  ["sinta"],
+  ["copernicus"],
+  ["scopus", "sjr"],
+];
+
+/**
+ * Naskah dikirim langsung melalui WhatsApp; tidak diunggah ke server.
+ *
+ * Revisi klien 1 November 2026 (NOTE UTAMA butir 14, 15): hero diberi foto
+ * orang di sisi kanan, dan setiap kartu kategori menampilkan logo indeksasi
+ * yang relevan.
+ */
 export default function Page() {
   return (
     <div className="journal-page journal-flow-page">
-      <section className="journal-flow-hero">
-        <Link className="journal-back-link" href="/publish-jurnal"><ArrowLeft size={15} /> Kembali ke Publish Jurnal</Link>
-        <p className="journal-kicker"><span className="journal-kicker-line" /> KIRIM ARTIKEL</p>
-        <h1>Kirim Artikel Jurnal Anda.</h1>
-        <p className="journal-hero-description">Pilih kategori jurnal tujuan, lalu kirimkan naskah Anda langsung ke admin lewat WhatsApp.</p>
-        <div className="journal-flow-meta"><span><FileUp size={16} /> Naskah dikirim lewat WhatsApp</span><span className="meta-divider" /><span>3 kategori jurnal</span></div>
+      <section className="journal-flow-hero journal-flow-hero-foto">
+        <div className="journal-flow-hero-copy">
+          <Link className="journal-back-link" href="/publish-jurnal"><ArrowLeft size={15} /> Kembali ke Publish Jurnal</Link>
+          <p className="journal-kicker"><span className="journal-kicker-line" /> KIRIM ARTIKEL</p>
+          <h1>Kirim Artikel Jurnal Anda.</h1>
+          <p className="journal-hero-description">Pilih kategori jurnal tujuan, lalu kirimkan naskah Anda langsung ke admin lewat WhatsApp.</p>
+          <div className="journal-flow-meta"><span><FileUp size={16} /> Naskah dikirim lewat WhatsApp</span><span className="meta-divider" /><span>3 kategori jurnal</span></div>
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element -- foto lokal di public/media */}
+        <img className="journal-flow-hero-foto-gambar" src={MEDIA.kirimArtikel} alt="Penulis memeriksa naskah artikelnya di ponsel sebelum dikirim ke admin jurnal" />
       </section>
 
       <section className="journal-category-section">
@@ -38,6 +59,9 @@ export default function Page() {
                 </div>
                 <div className="category-card-top"><span>0{i + 1} <i>/ 03</i></span><span className="category-card-icon"><IkonKategori size={18} strokeWidth={1.7} /></span></div>
                 <h2>{kategori}</h2>
+                <div className="category-indeks">
+                  {INDEKS_KATEGORI[i].map((jenis) => <LogoIndeks key={jenis} jenis={jenis} />)}
+                </div>
                 <div className="category-card-bottom"><span>PILIHAN KATEGORI</span><span className="category-arrow">↗</span></div>
                 <a href={buildJournalSubmitUrl()} target="_blank" rel="noopener noreferrer" className="journal-category-cta">
                   Kirim naskah via WhatsApp <ArrowUpRight size={16} />

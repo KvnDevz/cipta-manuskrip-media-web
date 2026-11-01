@@ -227,6 +227,39 @@ export function FormBuku({
           : "Rupiah tanpa koma; titik ribuan boleh. Kosongkan bila belum ditetapkan — katalog akan menampilkan “-”."}
       </p>
 
+      {/*
+        Detail fisik buku (revisi klien butir 20). Keempatnya opsional untuk
+        kedua status — buku yang belum terbit pun sudah bisa punya ukuran
+        dan bahasa rencana terbitnya, dan halaman detail hanya menampilkan
+        baris yang terisi.
+      */}
+      <fieldset className="flex flex-col gap-3 rounded border border-garis p-3">
+        <legend className="px-1 text-sm font-medium">Detail buku</legend>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="formatBuku">Format buku</label>
+            <input id="formatBuku" name="formatBuku" placeholder="Cetak" defaultValue={nilai.formatBuku} aria-invalid={errors.formatBuku !== undefined} className={KELAS_INPUT} />
+            <PesanGalat pesan={errors.formatBuku} />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="jenisBuku">Jenis buku</label>
+            <input id="jenisBuku" name="jenisBuku" placeholder="Nonfiksi" defaultValue={nilai.jenisBuku} aria-invalid={errors.jenisBuku !== undefined} className={KELAS_INPUT} />
+            <PesanGalat pesan={errors.jenisBuku} />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="bahasa">Bahasa</label>
+            <input id="bahasa" name="bahasa" placeholder="Indonesia" defaultValue={nilai.bahasa} aria-invalid={errors.bahasa !== undefined} className={KELAS_INPUT} />
+            <PesanGalat pesan={errors.bahasa} />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="ukuranBuku">Ukuran buku</label>
+            <input id="ukuranBuku" name="ukuranBuku" placeholder="14 x 21 cm" defaultValue={nilai.ukuranBuku} aria-invalid={errors.ukuranBuku !== undefined} className={KELAS_INPUT} />
+            <PesanGalat pesan={errors.ukuranBuku} />
+          </div>
+        </div>
+        <p className="text-xs text-zinc-600">Boleh dikosongkan. Baris yang kosong tidak ditampilkan di halaman buku.</p>
+      </fieldset>
+
       <div className="flex flex-col gap-1">
         <label htmlFor="bookInfo">Informasi buku</label>
         <textarea id="bookInfo" name="bookInfo" rows={3} defaultValue={nilai.bookInfo} className={KELAS_INPUT} />

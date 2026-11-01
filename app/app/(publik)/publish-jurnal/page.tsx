@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, BadgeCheck, Eye, FileText, Fingerprint, GraduationCap, Languages, Layers3, LayoutTemplate, Link2, MessageSquareText, MessagesSquare, PanelsTopLeft, PenLine, ScanSearch, ShieldCheck, Timer } from "lucide-react";
-import { FASILITAS_JURNAL } from "@/content/site";
+import { ArrowDown, ArrowUpRight, BadgeCheck, Eye, Fingerprint, GraduationCap, Languages, Layers3, LayoutTemplate, Link2, Mail, MessageSquareText, MessagesSquare, PanelsTopLeft, Paperclip, PenLine, ScanSearch, ShieldCheck, Timer } from "lucide-react";
+import { ALASAN_JURNAL, FASILITAS_JURNAL, MEDIA } from "@/content/site";
+import { VideoBukti } from "@/components/VideoBukti";
 
 const IKON_FASILITAS = [
   Timer,
@@ -18,17 +19,29 @@ const IKON_FASILITAS = [
   BadgeCheck,
 ] as const;
 
-const AREA_ASET = [
-  { id: "bukti", judul: "Bukti Submission", penanda: "01", ikon: FileText },
-  { id: "korespondensi", judul: "Dokumentasi Korespondensi", penanda: "02", ikon: MessageSquareText },
-  { id: "indeksasi", judul: "Logo Indeksasi", penanda: "03", ikon: ScanSearch },
+const TAHAP_KORESPONDENSI: ReadonlyArray<{ tahap: string; tanggal: string; status: "selesai" | "jalan" }> = [
+  { tahap: "Pengiriman artikel", tanggal: "12 Mei 2026", status: "selesai" },
+  { tahap: "Reviewer 1 — komentar", tanggal: "8 September 2026", status: "selesai" },
+  { tahap: "Revisi penulis", tanggal: "25 September 2026", status: "selesai" },
+  { tahap: "Keputusan editor", tanggal: "30 September 2026", status: "jalan" },
 ];
 
-/** UI editorial jurnal; seluruh konten layanan tetap mengikuti brief. */
+/**
+ * Halaman layanan jurnal.
+ *
+ * Revisi klien 1 November 2026 (NOTE UTAMA butir 10–13):
+ * - hero memakai foto orang asli di sisi kanan dengan kartu bukti
+ *   korespondensi (email + panel OJS) melayang di atas latar gelap;
+ * - bagian "Ruang untuk bukti publikasi" diganti "Mengapa Memilih
+ *   Publikasi Jurnal di Kami?" berisi tiga alasan dari klien;
+ * - di bawahnya video proses publikasi yang diputar otomatis.
+ *
+ * Fasilitas tetap 13 butir dari brief dan tidak ditambah.
+ */
 export default function Page() {
   return (
     <div className="journal-page journal-overview">
-      <section className="journal-hero">
+      <section className="journal-hero journal-hero-foto">
         <div className="journal-hero-copy">
           <p className="journal-kicker"><span className="journal-kicker-line" /> LAYANAN PUBLIKASI JURNAL</p>
           <h1>Publikasi Artikel Ilmiah Sekali Klik.</h1>
@@ -39,34 +52,59 @@ export default function Page() {
           </div>
           <a className="journal-scroll" href="#fasilitas">Lihat fasilitas <ArrowDown size={14} /></a>
         </div>
-        <div className="journal-hero-visual" aria-hidden="true">
-          <div className="journal-visual-ring journal-ring-one" />
-          <div className="journal-visual-ring journal-ring-two" />
-          <div className="journal-paper-back"><i /><i /><i /><i /></div>
-          <div className="journal-paper-front">
-            <span className="paper-index">JOURNAL / ARTICLE</span>
-            <span className="paper-glyph">J.</span>
-            <span className="paper-rule" /><span className="paper-rule short" />
-            <span className="paper-stamp"><Layers3 size={17} /></span>
-          </div>
-          <span className="journal-visual-caption">NASKAH · DOKUMENTASI · PUBLIKASI</span>
+
+        <div className="journal-hero-visual">
+          {/* eslint-disable-next-line @next/next/no-img-element -- foto lokal di public/media */}
+          <img className="journal-hero-foto-gambar" src={MEDIA.jurnalHero} alt="Konsultan publikasi ilmiah menjelaskan proses pengiriman artikel" />
+
+          <article className="bukti-kartu bukti-kartu-email" aria-label="Contoh bukti korespondensi email">
+            <header>
+              <span className="bukti-ikon"><Mail size={14} /></span>
+              <span><strong>Revision request</strong><small>editor@journal</small></span>
+              <span className="bukti-waktu">10 Apr</span>
+            </header>
+            <p>Your submission has been reviewed and we encourage you to submit revisions.</p>
+            <div className="bukti-lampiran"><Paperclip size={12} /> Komentar reviewer</div>
+          </article>
+
+          <article className="bukti-kartu bukti-kartu-ojs" aria-label="Contoh panel status di sistem jurnal">
+            <header>
+              <span className="bukti-ikon bukti-ikon-gelap"><Layers3 size={14} /></span>
+              <span><strong>Submission</strong><small>OJS · Journal of Sciences</small></span>
+            </header>
+            <ul>
+              {TAHAP_KORESPONDENSI.map((baris) => (
+                <li key={baris.tahap}>
+                  <span className={`bukti-titik${baris.status === "jalan" ? " is-jalan" : ""}`} aria-hidden="true" />
+                  <span className="bukti-tahap">{baris.tahap}</span>
+                  <span className="bukti-tanggal">{baris.tanggal}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <span className="journal-hero-cap"><MessageSquareText size={13} /> BUKTI KORESPONDENSI DISERAHKAN KE PENULIS</span>
         </div>
       </section>
 
-      <section className="journal-assets-section" aria-labelledby="journal-assets-title">
-        <div className="journal-section-heading">
-          <div><p className="journal-section-kicker">DOKUMENTASI</p><h2 id="journal-assets-title">Ruang untuk bukti publikasi.</h2></div>
-          <p>Aset akan ditampilkan setelah materi dari klien tersedia.</p>
+      <section className="alasan-jurnal" aria-labelledby="alasan-jurnal-judul">
+        <div className="alasan-jurnal-copy">
+          <p className="journal-section-kicker">MENGAPA MEMILIH KAMI</p>
+          <h2 id="alasan-jurnal-judul">Mengapa Memilih Publikasi Jurnal di Kami?</h2>
+          <ol className="alasan-jurnal-daftar">
+            {ALASAN_JURNAL.map((alasan) => (
+              <li key={alasan.urutan}>
+                <span className="alasan-jurnal-urutan">{alasan.urutan}</span>
+                <div>
+                  <h3>{alasan.judul}</h3>
+                  <p>{alasan.isi}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p className="alasan-jurnal-pesan"><strong>Pesan, bayar, dan terbit.</strong></p>
         </div>
-        <div className="journal-assets-grid">
-          {AREA_ASET.map(({ id, judul, penanda, ikon: Icon }) => (
-            <section id={id} key={id} className="journal-asset-card">
-              <div className="journal-asset-top"><span className="journal-asset-number">{penanda} / 03</span><Icon size={19} strokeWidth={1.6} /></div>
-              <h3>{judul}</h3>
-              <div className="journal-asset-placeholder"><span className="asset-placeholder-icon"><Icon size={21} /></span><span>[Aset dari klien]</span><i /></div>
-            </section>
-          ))}
-        </div>
+        <VideoBukti />
       </section>
 
       <section id="fasilitas" className="journal-facilities-section">

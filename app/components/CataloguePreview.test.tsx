@@ -23,6 +23,10 @@ function buku(judul: string, slug: string): Book {
     isbn: "978-602-1234-56-7",
     pricePrint: 85000,
     priceEbook: 45000,
+    formatBuku: "Cetak",
+    jenisBuku: "Nonfiksi",
+    bahasa: "Indonesia",
+    ukuranBuku: "14 x 21 cm",
     createdAt: new Date("2026-01-01T00:00:00Z"),
     updatedAt: new Date("2026-01-01T00:00:00Z"),
   };

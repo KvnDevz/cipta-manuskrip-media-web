@@ -202,8 +202,8 @@ export async function createBook(input: unknown): Promise<WriteResult> {
 
   try {
     const hasil = await execute(
-      `INSERT INTO books (title, slug, author, synopsis, publisher_info, book_info, cover_path, status, estimated_release, isbn, price_print, price_ebook)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO books (title, slug, author, synopsis, publisher_info, book_info, cover_path, status, estimated_release, isbn, price_print, price_ebook, format_buku, jenis_buku, bahasa, ukuran_buku)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         value.title,
         slug,
@@ -217,6 +217,10 @@ export async function createBook(input: unknown): Promise<WriteResult> {
         value.isbn,
         value.pricePrint,
         value.priceEbook,
+        value.formatBuku,
+        value.jenisBuku,
+        value.bahasa,
+        value.ukuranBuku,
       ]
     );
 
@@ -267,7 +271,8 @@ export async function updateBook(id: string, input: unknown): Promise<WriteResul
       `UPDATE books
           SET title = ?, slug = ?, author = ?, synopsis = ?, publisher_info = ?, book_info = ?,
               cover_path = ?, status = ?, estimated_release = ?, isbn = ?,
-              price_print = ?, price_ebook = ?
+              price_print = ?, price_ebook = ?,
+              format_buku = ?, jenis_buku = ?, bahasa = ?, ukuran_buku = ?
         WHERE id = ?`,
       [
         value.title,
@@ -282,6 +287,10 @@ export async function updateBook(id: string, input: unknown): Promise<WriteResul
         value.isbn,
         value.pricePrint,
         value.priceEbook,
+        value.formatBuku,
+        value.jenisBuku,
+        value.bahasa,
+        value.ukuranBuku,
         id,
       ]
     );

@@ -1,9 +1,10 @@
+import { BadgeCheck, BookMarked, CalendarClock, Clock3, Languages, Ruler, Tag } from "lucide-react";
 import { buildBookOrderUrl } from "@/lib/whatsapp";
 import { resolveCoverUrl } from "@/lib/storage/path";
 import { formatRupiah } from "@/lib/books/price";
 import type { Book } from "@/lib/books/types";
 
-const KELAS_TOMBOL = "rounded border px-4 py-2 hover:bg-zinc-50";
+const KELAS_TOMBOL = "buku-detail-tombol";
 
 /**
  * Halaman detail buku — komponen presentasi murni.
@@ -15,43 +16,69 @@ const KELAS_TOMBOL = "rounded border px-4 py-2 hover:bg-zinc-50";
  * ISBN dan harga tampil untuk buku yang sudah terbit, dengan `-` bila admin
  * belum menetapkannya. Buku yang segera terbit menampilkan status "Segera
  * terbit" pada baris ISBN dan **tidak** menawarkan harga maupun pesanan.
+ *
+ * Revisi klien 1 November 2026 (NOTE UTAMA butir 20): ditambah baris format,
+ * jenis, bahasa, dan ukuran buku (kolom migration 003), dan kolom kanan buku
+ * yang belum terbit diisi cap "SEGERA TERBIT" berukuran besar — sebelumnya
+ * ruang itu kosong.
  */
 export function BookDetail({ book }: { book: Book }) {
   const sampul = resolveCoverUrl(book.coverPath);
   const sudahTerbit = book.status === "published";
 
+  /**
+   * Hanya detail yang benar-benar terisi. Baris kosong tidak dirender sama
+   * sekali: daftar berisi "-" berulang membuat halaman terbaca seperti data
+   * yang rusak, bukan seperti data yang belum diisi.
+   */
+  const detail = [
+    { label: "Format buku", nilai: book.formatBuku, ikon: BookMarked },
+    { label: "Jenis buku", nilai: book.jenisBuku, ikon: Tag },
+    { label: "Bahasa", nilai: book.bahasa, ikon: Languages },
+    { label: "Ukuran buku", nilai: book.ukuranBuku, ikon: Ruler },
+  ].filter((baris) => baris.nilai !== null && baris.nilai.trim() !== "");
+
   return (
-    <div className="mx-auto max-w-3xl p-6">
-      <article className="flex flex-col gap-6 sm:flex-row">
-        {/* eslint-disable-next-line @next/next/no-img-element -- sampul sudah
-            diperkecil dan dikompres sharp saat diunggah; next/image belum
-            dikonfigurasi. */}
-        <img
-          src={sampul}
-          alt={`Sampul buku ${book.title}`}
-          className="aspect-[2/3] w-full max-w-[200px] rounded border object-cover"
-        />
+    <div className="buku-detail">
+      <article className="buku-detail-grid">
+        <figure className="buku-detail-sampul">
+          {/* eslint-disable-next-line @next/next/no-img-element -- sampul sudah diperkecil dan dikompres sharp saat diunggah; next/image belum dikonfigurasi. */}
+          <img src={sampul} alt={`Sampul buku ${book.title}`} />
+          <figcaption>{book.publisherInfo}</figcaption>
+        </figure>
 
-        <div className="flex-1">
-          <h1 className="text-2xl font-semibold">{book.title}</h1>
-          <p className="mt-1 text-zinc-600">{book.author}</p>
+        <div className="buku-detail-info">
+          <p className="buku-detail-kicker">
+            <span className={`buku-detail-lencana${sudahTerbit ? "" : " is-segera"}`}>
+              {sudahTerbit ? "TELAH TERBIT" : "DALAM PENERBITAN"}
+            </span>
+            KATALOG BUKU
+          </p>
+          <h1>{book.title}</h1>
+          <p className="buku-detail-penulis">{book.author}</p>
 
-          <dl className="mt-4 flex flex-col gap-1 border-y border-garis py-3">
-            <div className="flex items-baseline justify-between gap-2">
-              <dt className="text-sm text-zinc-600">ISBN</dt>
-              <dd className="text-sm font-medium">
-                {sudahTerbit ? (book.isbn ?? "-") : "Segera terbit"}
-              </dd>
+          <dl className="buku-detail-meta">
+            <div>
+              <dt>ISBN</dt>
+              <dd>{sudahTerbit ? (book.isbn ?? "-") : "Segera terbit"}</dd>
             </div>
+
+            {detail.map(({ label, nilai, ikon: Ikon }) => (
+              <div key={label}>
+                <dt><Ikon size={13} strokeWidth={1.8} /> {label}</dt>
+                <dd>{nilai}</dd>
+              </div>
+            ))}
+
             {sudahTerbit ? (
               <>
-                <div className="flex items-baseline justify-between gap-2">
-                  <dt className="text-sm text-zinc-600">Harga buku cetak</dt>
-                  <dd className="text-sm font-medium">{formatRupiah(book.pricePrint)}</dd>
+                <div>
+                  <dt>Harga buku cetak</dt>
+                  <dd>{formatRupiah(book.pricePrint)}</dd>
                 </div>
-                <div className="flex items-baseline justify-between gap-2">
-                  <dt className="text-sm text-zinc-600">Sewa ebook</dt>
-                  <dd className="text-sm font-medium">{formatRupiah(book.priceEbook)}</dd>
+                <div>
+                  <dt>Sewa ebook</dt>
+                  <dd>{formatRupiah(book.priceEbook)}</dd>
                 </div>
               </>
             ) : null}
@@ -59,42 +86,45 @@ export function BookDetail({ book }: { book: Book }) {
 
           {sudahTerbit ? (
             <>
-              <h2 className="mt-6 text-lg font-medium">Sinopsis</h2>
-              <p className="mt-2 whitespace-pre-line">{book.synopsis}</p>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href={buildBookOrderUrl(book.title, "cetak")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={KELAS_TOMBOL}
-                >
-                  Beli Buku Cetak
-                </a>
-                <a
-                  href={buildBookOrderUrl(book.title, "ebook")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={KELAS_TOMBOL}
-                >
-                  Sewa Ebook
-                </a>
-              </div>
+              <h2>Sinopsis</h2>
+              <p className="buku-detail-isi">{book.synopsis}</p>
             </>
           ) : (
             <>
-              <h2 className="mt-6 text-lg font-medium">Informasi Buku</h2>
-              <p className="mt-2 whitespace-pre-line">{book.bookInfo}</p>
-              <p className="mt-4">
-                <span className="font-medium">Estimasi terbit:</span>{" "}
-                {book.estimatedRelease}
+              <h2>Informasi Buku</h2>
+              <p className="buku-detail-isi">{book.bookInfo}</p>
+              <p className="buku-detail-estimasi">
+                <CalendarClock size={15} /> <span><b>Estimasi terbit:</b> {book.estimatedRelease}</span>
               </p>
             </>
           )}
-
-          <p className="mt-8 text-sm text-zinc-600">{book.publisherInfo}</p>
         </div>
+
+        <aside className="buku-detail-sisi">
+          {sudahTerbit ? (
+            <div className="buku-detail-pesan">
+              <p className="buku-detail-sisi-kicker"><BadgeCheck size={14} /> TERSEDIA SEKARANG</p>
+              <h2>Dapatkan buku ini</h2>
+              <p>Pesan langsung ke admin penerbitan lewat WhatsApp. Kami bantu sampai buku sampai ke tangan Anda.</p>
+              <a href={buildBookOrderUrl(book.title, "cetak")} target="_blank" rel="noopener noreferrer" className={KELAS_TOMBOL}>
+                Beli Buku Cetak
+              </a>
+              <a href={buildBookOrderUrl(book.title, "ebook")} target="_blank" rel="noopener noreferrer" className={KELAS_TOMBOL}>
+                Sewa Ebook
+              </a>
+            </div>
+          ) : (
+            <div className="cap-segera">
+              <span className="cap-segera-pita">SEGERA TERBIT</span>
+              <span className="cap-segera-jam"><Clock3 size={54} strokeWidth={1.1} /></span>
+              <p>Buku ini akan segera hadir. Pantau terus untuk mendapatkan akses saat sudah diterbitkan.</p>
+              <small>{book.estimatedRelease ? `Estimasi ${book.estimatedRelease}` : book.publisherInfo}</small>
+            </div>
+          )}
+        </aside>
       </article>
+
+      <p className="buku-detail-penerbit">{book.publisherInfo}</p>
     </div>
   );
 }
