@@ -26,11 +26,6 @@ export type BookInput = {
   isbn: string | null;
   pricePrint: number | null;
   priceEbook: number | null;
-  /** Detail fisik buku — opsional untuk kedua status (migration 003). */
-  formatBuku: string | null;
-  jenisBuku: string | null;
-  bahasa: string | null;
-  ukuranBuku: string | null;
 };
 
 /** Input buku tanpa `coverPath`: yang bisa dinilai sebelum berkas diunggah. */
@@ -115,19 +110,6 @@ export function validateBookText(raw: unknown): TextValidationResult {
   const bookInfo = teksAtauNull(raw.bookInfo);
   const estimatedRelease = teksAtauNull(raw.estimatedRelease);
   const isbn = teksAtauNull(raw.isbn);
-  const formatBuku = teksAtauNull(raw.formatBuku);
-  const jenisBuku = teksAtauNull(raw.jenisBuku);
-  const bahasa = teksAtauNull(raw.bahasa);
-  const ukuranBuku = teksAtauNull(raw.ukuranBuku);
-
-  // Detail fisik hanya label pendek ("Cetak", "Nonfiksi", "Indonesia",
-  // "14 x 21 cm"). Batas 60 karakter sama dengan lebar kolomnya, jadi
-  // kesalahan ini muncul sebagai pesan yang bisa dibaca, bukan galat
-  // database "data too long".
-  if (formatBuku !== null && formatBuku.length > 60) errors.formatBuku = "Format buku maksimal 60 karakter.";
-  if (jenisBuku !== null && jenisBuku.length > 60) errors.jenisBuku = "Jenis buku maksimal 60 karakter.";
-  if (bahasa !== null && bahasa.length > 60) errors.bahasa = "Bahasa maksimal 60 karakter.";
-  if (ukuranBuku !== null && ukuranBuku.length > 60) errors.ukuranBuku = "Ukuran buku maksimal 60 karakter.";
 
   if (title === "") errors.title = "Judul wajib diisi.";
   if (author === "") errors.author = "Penulis wajib diisi.";
@@ -191,10 +173,6 @@ export function validateBookText(raw: unknown): TextValidationResult {
       isbn,
       pricePrint: hargaCetak.ok ? hargaCetak.value : null,
       priceEbook: hargaEbook.ok ? hargaEbook.value : null,
-      formatBuku,
-      jenisBuku,
-      bahasa,
-      ukuranBuku,
     },
   };
 }

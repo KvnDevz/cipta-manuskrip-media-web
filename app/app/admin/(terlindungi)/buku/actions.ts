@@ -27,10 +27,6 @@ function bacaNilai(data: FormData): NilaiFormBuku {
     isbn: bacaTeks(data, "isbn"),
     pricePrint: bacaTeks(data, "pricePrint"),
     priceEbook: bacaTeks(data, "priceEbook"),
-    formatBuku: bacaTeks(data, "formatBuku"),
-    jenisBuku: bacaTeks(data, "jenisBuku"),
-    bahasa: bacaTeks(data, "bahasa"),
-    ukuranBuku: bacaTeks(data, "ukuranBuku"),
   };
 }
 

@@ -19,15 +19,6 @@ export type Book = {
   /** Harga cetak dan sewa ebook dalam rupiah; NULL = belum ditetapkan. */
   pricePrint: number | null;
   priceEbook: number | null;
-  /**
-   * Detail fisik buku (migration 003, revisi klien butir 20). Semuanya
-   * nullable: buku lama belum punya data ini, dan baris yang kosong tidak
-   * dirender di halaman detail alih-alih tampil sebagai "-".
-   */
-  formatBuku: string | null;
-  jenisBuku: string | null;
-  bahasa: string | null;
-  ukuranBuku: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -58,10 +49,6 @@ export const KOLOM_BUKU = [
   "isbn",
   "price_print",
   "price_ebook",
-  "format_buku",
-  "jenis_buku",
-  "bahasa",
-  "ukuran_buku",
   "created_at",
   "updated_at",
 ].join(", ");
@@ -108,10 +95,6 @@ export function mapRow(row: Record<string, unknown>): Book {
     isbn: teksAtauNull(row.isbn),
     pricePrint: angkaAtauNull(row.price_print),
     priceEbook: angkaAtauNull(row.price_ebook),
-    formatBuku: teksAtauNull(row.format_buku),
-    jenisBuku: teksAtauNull(row.jenis_buku),
-    bahasa: teksAtauNull(row.bahasa),
-    ukuranBuku: teksAtauNull(row.ukuran_buku),
     createdAt: waktu(row.created_at),
     updatedAt: waktu(row.updated_at),
   };

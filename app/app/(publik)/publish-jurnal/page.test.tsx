@@ -18,36 +18,20 @@ describe("publish-jurnal", () => {
     expect(html).toContain("Publikasi Artikel Ilmiah Sekali Klik.");
   });
 
-  /**
-   * Revisi klien 1 November 2026 (NOTE UTAMA butir 11): blok placeholder
-   * "Ruang untuk bukti publikasi" diganti bagian "Mengapa Memilih Publikasi
-   * Jurnal di Kami?" dengan tiga alasan dari klien, dan bukti korespondensi
-   * kini ditampilkan sebagai contoh kartu (email + panel OJS) — karena itu
-   * kata "OJS" justru diharapkan muncul, bukan dilarang.
-   */
-  it("memuat tiga alasan memilih jurnal dan bukti korespondensi", () => {
-    for (const teks of [
-      "Mengapa Memilih Publikasi Jurnal di Kami?",
-      "Bukti korespondensi lengkap",
-      "Belum ada artikel tidak ada masalah",
-      "semudah beli kopi",
-      "Pesan, bayar, dan terbit.",
-    ]) {
-      expect(html).toContain(teks);
+  it("memuat keempat area dengan tepat satu placeholder aset per area", () => {
+    for (const area of ["Bukti Submission", "Dokumentasi Korespondensi", "Logo Indeksasi", "Fasilitas"]) {
+      expect(html).toContain(area);
     }
-    expect(html).toContain("Bukti Submission".length > 0 ? "korespondensi" : "");
-    expect(html).not.toContain("[Aset dari klien]");
+    // Satu slot per tiga area aset: hitungannya mengunci bahwa editan
+    // berikutnya tidak membiarkan satu area tampil tanpa slotnya.
+    expect((html.match(/\[Aset dari klien\]/g) ?? []).length).toBe(3);
   });
 
-  it("menampilkan video proses publikasi di bawahnya", () => {
-    expect(html).toContain("video-bukti");
-    expect(html).toContain("Video proses publikasi");
-  });
-
-  it("tidak mengarang klaim keanggotaan atau tautan luar di luar brief", () => {
-    // Penjaga data-jujur yang masih berlaku: tidak ada klaim keanggotaan,
-    // tautan repositori, atau alamat surel karangan.
-    expect(html).not.toMatch(/github|keanggotaan|@gmail/i);
+  it("tidak mengarang klaim vendor atau indeksasi di luar brief", () => {
+    // Penjaga data-jujur: OJS, github, dan keanggotaan tidak ada di
+    // brief/plan/spec — regex ini memasangkannya bila ada yang menambahkan
+    // klaim platform atau indeksasi karangan.
+    expect(html).not.toMatch(/OJS|github|keanggotaan/i);
   });
 
   it("memuat seluruh 13 fasilitas tanpa menambah janji", () => {

@@ -1,35 +1,36 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, BadgeCheck, BookOpen, Coffee, Feather, FileText, Sparkles, Stamp } from "lucide-react";
-import { LangkahBanding } from "@/components/LangkahBanding";
-import { MEDIA } from "@/content/site";
+import { ArrowDown, ArrowUpRight, BookOpen, Feather, FileText, Sparkles } from "lucide-react";
 
-/**
- * Beranda.
- *
- * Revisi klien 1 November 2026 (NOTE UTAMA butir 1–7):
- * - headline menjadi "Publikasi Karya Semudah Beli Kopi" tanpa titik;
- * - deskripsi memakai kalimat baru ("Layanan jasa penerbitan buku dan
- *   publikasi artikel jurnal");
- * - ukuran display diperbesar mengikuti referensi bukuloka;
- * - ilustrasi buku CSS diganti foto orang sungguhan di kedai kopi, ditambah
- *   papan analogi tiga langkah "beli kopi vs publikasi di CMM".
- *
- * Tombol hero tetap menuju dua halaman layanan (dikunci tes).
- */
+const orbitNotes = [
+  { icon: BookOpen, label: "Penerbitan buku", className: "orbit-note orbit-note-book" },
+  { icon: Feather, label: "Karya & gagasan", className: "orbit-note orbit-note-feather" },
+  { icon: FileText, label: "Publikasi artikel", className: "orbit-note orbit-note-paper" },
+];
+
 export default function Home() {
   return (
-    <div className="kopi-beranda">
-      <section className="kopi-hero">
-        <div aria-hidden="true" className="kopi-hero-grid" />
-        <div className="kopi-hero-copy">
+    <div>
+      <section className="home-hero relative isolate overflow-hidden">
+        <div aria-hidden="true" className="hero-grid" />
+        <div aria-hidden="true" className="orbit orbit-outer" />
+        <div aria-hidden="true" className="orbit orbit-middle" />
+        <div aria-hidden="true" className="orbit orbit-inner" />
+
+        {orbitNotes.map(({ icon: Icon, label, className }) => (
+          <div key={label} aria-hidden="true" className={className}>
+            <Icon size={19} strokeWidth={1.7} />
+          </div>
+        ))}
+
+        <div className="hero-copy relative z-10 mx-auto flex max-w-4xl flex-col items-center px-5 text-center">
           <div className="eyebrow-pill"><Sparkles size={13} /> Ruang untuk karya yang berarti</div>
-          <h1 className="kopi-judul">
-            Publikasi Karya <span className="kopi-judul-aksen">Semudah Beli Kopi</span>
+          <h1 className="hero-title mt-7 text-teks">
+            Publikasi Semudah <span className="headline-accent">Beli Kopi.</span>
           </h1>
-          <p className="kopi-lede">
-            Layanan jasa penerbitan buku dan publikasi artikel jurnal.
+          <p className="hero-description mt-5 max-w-xl text-teks-sec">
+            Layanan penerbitan buku dan publikasi artikel ilmiah.
           </p>
-          <div className="kopi-aksi">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/publish-buku" className="button-primary">
               Publish Buku <ArrowUpRight size={17} />
             </Link>
@@ -37,34 +38,26 @@ export default function Home() {
               Publish Jurnal <ArrowUpRight size={17} />
             </Link>
           </div>
-          <ul className="kopi-poin">
-            <li><BadgeCheck size={15} /> ISBN resmi Perpusnas</li>
-            <li><Stamp size={15} /> CV berbadan hukum</li>
-            <li><Feather size={15} /> Pendampingan penulisan</li>
-          </ul>
-        </div>
 
-        <div className="kopi-hero-foto">
-          {/* eslint-disable-next-line @next/next/no-img-element -- foto lokal di public/media, sudah dikompres */}
-          <img src={MEDIA.heroKopi} alt="Seorang penulis menerima secangkir kopi di kedai kopi, analogi proses penerbitan yang sederhana" className="kopi-foto" />
-          <div className="kopi-foto-kartu kopi-foto-kartu-atas">
-            <span className="kopi-foto-ikon"><Coffee size={17} strokeWidth={1.8} /></span>
-            <span><strong>Pilih kopi</strong><small>Pilih layanan</small></span>
-            <ArrowDown size={15} className="kopi-foto-panah" />
+          <div className="book-scene" aria-label="Ilustrasi buku dan naskah">
+            <div className="scene-glow" />
+            <div className="orbit-dot orbit-dot-a" />
+            <div className="orbit-dot orbit-dot-b" />
+            <div className="orbit-dot orbit-dot-c" />
+            <div className="scene-caption scene-caption-left"><span className="caption-rule" /> NASKAH</div>
+            <div className="scene-caption scene-caption-right">GAGASAN <span className="caption-rule" /></div>
+            <div className="book book-back"><div className="book-spine" /><div className="book-cover-lines" /></div>
+            <div className="book book-front">
+              <div className="cover-mark">CMM</div>
+              <div className="cover-lines" aria-hidden="true"><span /><span /><span /><i /></div>
+              <div className="cover-ornament" />
+              <div className="book-page-edge" />
+            </div>
+            <div className="floating-note"><span className="note-icon"><Feather size={15} /></span><span><strong>Dari ide menjadi karya</strong><small>Mulai perjalanan publikasi</small></span></div>
           </div>
-          <div className="kopi-foto-kartu kopi-foto-kartu-bawah">
-            <span className="kopi-foto-ikon kopi-foto-ikon-gold"><BookOpen size={17} strokeWidth={1.8} /></span>
-            <span><strong>Kopi siap</strong><small>Karya terbit</small></span>
-            <ArrowUpRight size={15} className="kopi-foto-panah" />
-          </div>
+          <Link href="#pilih-layanan" className="scroll-cue"><span>Jelajahi layanan</span><ArrowDown size={15} /></Link>
         </div>
-
-        <a href="#pilih-layanan" className="kopi-scroll"><span>Jelajahi layanan</span><ArrowDown size={15} /></a>
       </section>
-
-      <div className="kopi-bandung">
-        <LangkahBanding />
-      </div>
 
       <section id="pilih-layanan" className="services-section mx-auto max-w-6xl px-5 py-24 sm:px-8">
         <div className="section-heading">

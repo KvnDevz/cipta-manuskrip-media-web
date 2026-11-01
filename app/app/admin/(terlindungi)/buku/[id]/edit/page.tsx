@@ -31,8 +31,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       bookInfo: buku.bookInfo ?? "", status: buku.status,
       estimatedRelease: buku.estimatedRelease ?? "", isbn: buku.isbn ?? "",
       pricePrint: nilaiFormHarga(buku.pricePrint), priceEbook: nilaiFormHarga(buku.priceEbook),
-      formatBuku: buku.formatBuku ?? "", jenisBuku: buku.jenisBuku ?? "",
-      bahasa: buku.bahasa ?? "", ukuranBuku: buku.ukuranBuku ?? "",
     },
     percobaan: 0,
     ulangiSampul: false,

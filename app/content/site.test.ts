@@ -1,42 +1,16 @@
 // app/content/site.test.ts
 import { describe, it, expect } from "vitest";
 import {
-  NAV_UTAMA, LAYANAN_NAV, TAUTAN_LAYANAN, KONTAK, PAKET_BUKU,
+  NAV_UTAMA, TAUTAN_LAYANAN, KONTAK, PAKET_BUKU,
   FASILITAS_JURNAL, KATEGORI_JURNAL, PREVIEW_LIMIT,
-  ALASAN_PENERBIT, ALASAN_JURNAL,
 } from "./site";
 
 describe("content/site", () => {
-  /**
-   * Revisi klien 1 November 2026 (NOTE UTAMA butir 2): "Tentang Kami"
-   * pindah dari menu tengah ke tombol kanan, jadi menu tengah hanya berisi
-   * Beranda. Menu layanan ada di daftar terpisah supaya tes ini tetap bisa
-   * membuktikan tidak ada tautan layanan yang menyelinap ke menu utama.
-   */
-  it("menu utama hanya memuat Beranda", () => {
-    expect(NAV_UTAMA).toEqual([{ label: "Beranda", href: "/" }]);
-  });
-
-  it("menu layanan memuat dua layanan dan dua jalur asistensi", () => {
-    expect(LAYANAN_NAV).toEqual([
-      { label: "Publish Buku", href: "/publish-buku" },
-      { label: "Publish Jurnal", href: "/publish-jurnal" },
-      { label: "Asistensi Penulisan Buku", href: "/publish-buku#asistensi" },
-      { label: "Asistensi Penulisan Artikel Jurnal", href: "/publish-jurnal/asistensi" },
+  it("header hanya memuat Beranda dan Tentang Kami", () => {
+    expect(NAV_UTAMA).toEqual([
+      { label: "Beranda", href: "/" },
+      { label: "Tentang Kami", href: "/tentang-kami" },
     ]);
-  });
-
-  it("empat alasan memilih penerbit persis dari catatan klien", () => {
-    expect(ALASAN_PENERBIT.map((a) => a.judul)).toEqual([
-      "Legalitas Resmi",
-      "ISBN Resmi",
-      "Tidak Harus Ada Naskah di Awal",
-      "Distribusi Beragam",
-    ]);
-  });
-
-  it("tiga alasan memilih jurnal berurutan Pertama–Ketiga", () => {
-    expect(ALASAN_JURNAL.map((a) => a.urutan)).toEqual(["Pertama", "Kedua", "Ketiga"]);
   });
 
   it("footer mengulang tautan dua layanan", () => {

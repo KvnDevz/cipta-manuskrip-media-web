@@ -28,18 +28,6 @@ import type { Book } from "@/lib/books/types";
 const KELAS_TOMBOL =
   "block rounded border px-3 py-1.5 text-center text-sm hover:bg-zinc-50";
 
-/**
- * Detail fisik yang terisi saja, siap digabung dengan pemisah.
- *
- * Mengosongkan daftar ketika semuanya kosong penting: kartu buku lama tidak
- * boleh menampilkan baris kosong atau tanda hubung yang tidak menjelaskan
- * apa pun.
- */
-function detailRingkas(book: Book): string[] {
-  return [book.formatBuku, book.jenisBuku, book.bahasa, book.ukuranBuku]
-    .filter((nilai): nilai is string => nilai !== null && nilai.trim() !== "");
-}
-
 function BarisHarga({ label, nilai }: { label: string; nilai: number | null }) {
   return (
     <div className="flex items-baseline justify-between gap-2">
@@ -66,15 +54,6 @@ export function BookCard({ book }: { book: Book }) {
         <p className="font-medium leading-snug">{book.title}</p>
         <p className="mt-1 text-sm text-zinc-600">{book.author}</p>
       </Link>
-
-      {/*
-        Detail fisik ringkas (revisi klien butir 20) — hanya yang terisi,
-        dipisah titik tengah supaya tiga sampai empat label pendek tetap
-        terbaca dalam satu baris kartu.
-      */}
-      {detailRingkas(book).length > 0 ? (
-        <p className="mt-2 text-xs text-zinc-600">{detailRingkas(book).join(" · ")}</p>
-      ) : null}
 
       <dl className="mt-2 flex flex-col gap-1 border-t border-garis pt-2">
         <div className="flex items-baseline justify-between gap-2">
