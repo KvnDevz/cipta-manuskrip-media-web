@@ -23,4 +23,17 @@ describe("asistensi", () => {
     expect(html).toContain("Topik Asistensi Penulisan Artikel Jurnal Ilmiah");
     expect(html).toMatch(/<label[^>]*for="topik-jurnal"/);
   });
+
+  it("§5.1 memakai headline & subheadline baru persis", () => {
+    expect(html).toContain("Publikasi Jurnal Ilmiah, Hanya Perlu Mention Topik");
+    expect(html).toContain("Tuliskan topik penelitian, kami bantu asistensi sampai jadi artikel ilmiah berkualitas");
+  });
+
+  it("§5.1 memuat banner dua peneliti dan ketiga logo resmi", () => {
+    expect(html).toContain("/aset/asistensi-jurnal.jpg");
+    for (const src of ["/logo-resmi/sinta.png", "/logo-resmi/ici.png", "/logo-resmi/scopus.png", "/logo-resmi/sjr.png"]) {
+      expect(html).toContain(src);
+    }
+    expect((html.match(/data-warna=/g) ?? [])).toHaveLength(4);
+  });
 });

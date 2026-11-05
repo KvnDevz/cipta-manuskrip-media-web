@@ -63,3 +63,6 @@ skills-lock.json
 # Status kerja skill desain Impeccable: sama seperti di atas, isinya state
 # lokal mesin ini (susunan berkas yang sedang disunting), bukan bagian kode.
 .impeccable/
+
+# Scratch agen AI di Arena (screenshot & skrip verifikasi lokal), bukan bagian kode.
+.arena/

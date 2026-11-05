@@ -1,7 +1,15 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { NAV_UTAMA } from "@/content/site";
+import { NAV_KANAN, NAV_UTAMA } from "@/content/site";
 
+/**
+ * Header publik.
+ *
+ * Slot kanan bukan lagi tombol CTA "Mulai berkarya", melainkan tautan menu
+ * biasa "Tentang Kami" — tanpa pill, tanpa ikon panah, tanpa `nav-cta`.
+ * Arahan terbaru klien: navbar hanya dua menu, `Beranda` di tengah dan
+ * `Tentang Kami` di kanan, keduanya berukuran huruf besar demi keterbacaan
+ * audiens dosen senior. Arah ke layanan/katalog ada di footer dan kartu hero.
+ */
 export function SiteHeader() {
   return (
     <header className="site-header">
@@ -18,8 +26,8 @@ export function SiteHeader() {
             <Link key={tautan.href} href={tautan.href} className="nav-link">{tautan.label}</Link>
           ))}
         </div>
-        <Link href="/publish-buku" className="nav-cta">
-          Mulai berkarya <ArrowUpRight aria-hidden="true" size={15} />
+        <Link href={NAV_KANAN.href} className="nav-link nav-link-kanan">
+          {NAV_KANAN.label}
         </Link>
       </nav>
     </header>

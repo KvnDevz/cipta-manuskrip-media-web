@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-img-element -- banner foto lokal statis di public/aset/, src langsung dipakai agar mudah ditimpa klien. */
 import { ArrowLeft, ArrowUpRight, FileUp, Landmark, Network, Orbit } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { KATEGORI_JURNAL } from "@/content/site";
 import { buildJournalSubmitUrl } from "@/lib/whatsapp";
+import { LogoKategoriJurnal } from "@/components/LogoKategoriJurnal";
 
 /** Judul tab halaman pengiriman naskah jurnal. */
 export const metadata: Metadata = {
@@ -17,7 +19,15 @@ const IKON_KATEGORI = [Landmark, Orbit, Network] as const;
 export default function Page() {
   return (
     <div className="journal-page journal-flow-page">
-      <section className="journal-flow-hero">
+      <section className="journal-flow-hero journal-flow-hero--banner">
+        <div className="journal-flow-banner">
+          <img
+            src="/aset/kirim-artikel.jpg"
+            width={1200}
+            height={800}
+            alt="Akademik Indonesia tersenyum percaya diri memegang berkas naskah di meja kayu dengan laptop dan ponsel, cahaya siang hangat."
+          />
+        </div>
         <Link className="journal-back-link" href="/publish-jurnal"><ArrowLeft size={15} /> Kembali ke Publish Jurnal</Link>
         <p className="journal-kicker"><span className="journal-kicker-line" /> KIRIM ARTIKEL</p>
         <h1>Kirim Artikel Jurnal Anda.</h1>
@@ -35,17 +45,9 @@ export default function Page() {
             const IkonKategori = IKON_KATEGORI[i];
             return (
               <li key={kategori} className={`journal-category-card journal-category-${i + 1}`}>
-                <div className="category-art" aria-hidden="true">
-                  {i === 0 ? (
-                    <svg viewBox="0 0 120 96" className="category-art-svg"><path d="M24 20h53l17 14v48H24z" /><path d="M77 20v15h17M35 48h47M35 59h47M35 70h29" /><path d="M18 27v54h72" /></svg>
-                  ) : i === 1 ? (
-                    <svg viewBox="0 0 120 96" className="category-art-svg"><ellipse cx="60" cy="48" rx="45" ry="18" /><ellipse cx="60" cy="48" rx="45" ry="18" transform="rotate(58 60 48)" /><ellipse cx="60" cy="48" rx="45" ry="18" transform="rotate(-58 60 48)" /><circle cx="60" cy="48" r="5" className="art-core" /><circle cx="98" cy="48" r="3" className="art-node" /></svg>
-                  ) : (
-                    <svg viewBox="0 0 120 96" className="category-art-svg"><path d="m26 25 31 23 34-20M26 25l8 47 23-24 26 34 8-54M34 72l49 10" /><circle cx="26" cy="25" r="5" className="art-node" /><circle cx="57" cy="48" r="5" className="art-core" /><circle cx="91" cy="28" r="5" className="art-node" /><circle cx="34" cy="72" r="5" className="art-node" /><circle cx="83" cy="82" r="5" className="art-node" /></svg>
-                  )}
-                </div>
                 <div className="category-card-top"><span>0{i + 1} <i>/ 03</i></span><span className="category-card-icon"><IkonKategori size={18} strokeWidth={1.7} /></span></div>
                 <h2>{kategori}</h2>
+                <LogoKategoriJurnal indeks={i} />
                 <div className="category-card-bottom"><span>PILIHAN KATEGORI</span><span className="category-arrow">↗</span></div>
                 <a href={buildJournalSubmitUrl(kategori)} target="_blank" rel="noopener noreferrer" className="journal-category-cta">
                   Kirim naskah via WhatsApp <ArrowUpRight size={16} />
