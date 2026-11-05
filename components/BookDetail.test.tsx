@@ -123,3 +123,41 @@ describe("BookDetail — judul dengan karakter khusus", () => {
     }
   });
 });
+
+describe("BookDetail — §6 spesifikasi & badge", () => {
+  const LABEL = ["Format Buku", "Jenis Buku", "Bahasa", "Ukuran Buku"];
+
+  it("§6.1 empat spesifikasi tampil pada buku terbit", () => {
+    const html = renderToStaticMarkup(<BookDetail book={buku()} />);
+    for (const l of LABEL) expect(html).toContain(l);
+    expect(html).toContain("Buku Cetak &amp; E-Book");
+    expect(html).toContain("Bahasa Indonesia");
+    expect(html).not.toContain("detail-coming-badge");
+  });
+
+  it("§6.1 empat spesifikasi juga tampil pada buku segera terbit", () => {
+    const html = renderToStaticMarkup(<BookDetail book={buku({ status: "upcoming" })} />);
+    for (const l of LABEL) expect(html).toContain(l);
+    expect(html).toContain("UNESCO 15.5 x 23 cm");
+  });
+
+  it("§6.1 field per buku mengalahkan nilai standar bila tersedia", () => {
+    const html = renderToStaticMarkup(
+      <BookDetail book={buku({ formatBuku: "E-Book", jenisBuku: "Monograf", bahasa: "Bahasa Jawa", ukuranBuku: "A5 14.8 x 21 cm" })} />
+    );
+    expect(html).toContain("E-Book");
+    expect(html).toContain("Monograf");
+    expect(html).toContain("Bahasa Jawa");
+    expect(html).toContain("A5 14.8 x 21 cm");
+  });
+
+  it("§6.2 badge SEGERA TERBIT hanya untuk status upcoming", () => {
+    const upcoming = renderToStaticMarkup(<BookDetail book={buku({ status: "upcoming" })} />);
+    expect(upcoming).toContain("detail-coming-badge");
+    expect(upcoming).toContain("SEGERA TERBIT");
+    expect(upcoming).toContain("Buku ini akan segera hadir. Pantau terus untuk mendapatkan akses saat sudah diterbitkan.");
+    expect(upcoming).toContain("detail-coming-badge__jam");
+    const published = renderToStaticMarkup(<BookDetail book={buku()} />);
+    expect(published).not.toContain("detail-coming-badge");
+  });
+});

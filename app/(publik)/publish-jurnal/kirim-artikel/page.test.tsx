@@ -56,4 +56,13 @@ describe("kirim-artikel", () => {
     expect(html.match(/target="_blank"/g) ?? []).toHaveLength(3);
     expect(html.match(/rel="noopener noreferrer"/g) ?? []).toHaveLength(3);
   });
+
+  it("§5.2 memuat banner kirim artikel dan logo resmi di tiga kartu", () => {
+    expect(html).toContain("Kirim Artikel Jurnal Anda.");
+    expect(html).toContain("/aset/kirim-artikel.jpg");
+    for (const src of ["/logo-resmi/sinta.png", "/logo-resmi/ici.png", "/logo-resmi/scopus.png", "/logo-resmi/sjr.png"]) {
+      expect(html).toContain(src);
+    }
+    expect(html).not.toContain("category-art-svg");
+  });
 });

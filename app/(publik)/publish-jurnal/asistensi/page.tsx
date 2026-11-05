@@ -1,25 +1,35 @@
+/* eslint-disable @next/next/no-img-element -- banner foto lokal statis di public/aset/, src langsung dipakai agar mudah ditimpa klien. */
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, FileText, MessageCircle, PenLine } from "lucide-react";
 import { KATEGORI_JURNAL } from "@/content/site";
 import type { Metadata } from "next";
 import { FormAsistensi } from "@/components/FormAsistensi";
+import { LogoKategoriJurnal } from "@/components/LogoKategoriJurnal";
 
 /** Judul tab halaman asistensi. */
 export const metadata: Metadata = {
-  title: "Asistensi Penulisan",
+  title: "Asistensi Penulisan Artikel Jurnal",
   description:
-    "Tuliskan topik yang sedang Anda kerjakan, lalu lanjutkan ke admin lewat WhatsApp. Topik tidak disimpan di situs ini.",
+    "Tuliskan topik penelitian, kami bantu asistensi sampai jadi artikel ilmiah berkualitas.",
 };
 
 /** Topik hanya pernah masuk ke teks WhatsApp; tidak disimpan ke database. */
 export default function Page() {
   return (
     <div className="journal-page journal-flow-page journal-assist-page">
-      <section className="journal-flow-hero journal-assist-hero">
+      <section className="journal-flow-hero journal-assist-hero journal-flow-hero--banner">
+        <div className="journal-flow-banner">
+          <img
+            src="/aset/asistensi-jurnal.jpg"
+            width={1200}
+            height={800}
+            alt="Dua peneliti perempuan Indonesia berdiskusi di depan laptop sambil menganalisis grafik dan lembar data akademik."
+          />
+        </div>
         <Link className="journal-back-link" href="/publish-jurnal"><ArrowLeft size={15} /> Kembali ke Publish Jurnal</Link>
         <p className="journal-kicker"><span className="journal-kicker-line" /> ASISTENSI PENULISAN</p>
-        <h1>Asistensi Penulisan Artikel.</h1>
-        <p className="journal-hero-description">Tuliskan topik yang sedang Anda kerjakan, lalu lanjutkan ke admin lewat WhatsApp.</p>
+        <h1>Publikasi Jurnal Ilmiah, Hanya Perlu Mention Topik</h1>
+        <p className="journal-hero-description">Tuliskan topik penelitian, kami bantu asistensi sampai jadi artikel ilmiah berkualitas</p>
         <div className="journal-flow-meta"><span><PenLine size={16} /> Masukkan topik penelitian</span><span className="meta-divider" /><span><MessageCircle size={16} /> Lanjut lewat WhatsApp</span></div>
       </section>
 
@@ -30,7 +40,10 @@ export default function Page() {
           <p>Tiga kategori jurnal yang tersedia pada layanan ini.</p>
           <ol className="journal-assist-categories">
             {KATEGORI_JURNAL.map((kategori, i) => (
-              <li key={kategori}><span>{String(i + 1).padStart(2, "0")}</span><strong>{kategori}</strong></li>
+              <li key={kategori} className="journal-assist-category">
+                <span>{String(i + 1).padStart(2, "0")}</span>
+                <div><strong>{kategori}</strong><LogoKategoriJurnal indeks={i} ringkas /></div>
+              </li>
             ))}
           </ol>
         </div>

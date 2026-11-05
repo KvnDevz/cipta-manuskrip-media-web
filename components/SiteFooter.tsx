@@ -15,14 +15,15 @@ const HALAMAN = [
 /**
  * Footer situs publik — komponen presentasi murni, sinkron.
  *
+ * Kontrak desain Tahap 1 §1.2: menu LAYANAN memuat empat tautan eksplisit
+ * dari `TAUTAN_LAYANAN` (dua layanan + dua asistensi yang dipecah), jadi
+ * tidak ada lagi tautan umum "Asistensi penulisan" yang disalin di sini.
+ * §1.3: banner "Katalog buku menjadi rujukan data terbit…" dihapus total,
+ * termasuk baris catatan di kaki footer.
+ *
  * Nama perusahaan dan tautan layanan bersumber dari brief §10; tanpa NIB,
  * NPWP, alamat, surel, atau tautan sosial apa pun karena semuanya
  * menunggu materi klien (brief §3).
- *
- * Katalog ikut ditautkan di sini. Sebelumnya kedua halaman katalog hanya
- * bisa dicapai lewat tombol "Lihat Semua" di halaman penerbitan buku,
- * sehingga pengunjung yang membuka Beranda tidak punya jalan menuju
- * katalog sama sekali.
  */
 export function SiteFooter() {
   const tahun = new Date().getFullYear();
@@ -60,9 +61,6 @@ export function SiteFooter() {
                 <ArrowUpRight aria-hidden="true" size={13} />
               </Link>
             ))}
-            <Link href="/publish-jurnal/asistensi" className="footer-link">
-              Asistensi penulisan
-            </Link>
           </nav>
         </div>
 
@@ -111,10 +109,6 @@ export function SiteFooter() {
             </Link>
           ))}
         </nav>
-        <p className="site-footer-note">
-          Katalog buku menjadi rujukan data terbit. Setiap tindak lanjut berlangsung lewat
-          percakapan WhatsApp dengan admin.
-        </p>
       </div>
     </footer>
   );
