@@ -8,7 +8,6 @@ import {
   BookOpen,
   Check,
   ChevronDown,
-  Clock3,
   Feather,
   FileText,
   MessageCircle,
@@ -16,6 +15,11 @@ import {
   Sparkles,
 } from "lucide-react";
 import { KONTAK } from "@/content/site";
+import { HeroPhotoCard } from "@/components/HeroPhotoCard";
+import { HeroOrbit } from "@/components/HeroOrbit";
+import { LogoMarquee } from "@/components/LogoMarquee";
+import { BukuTigaD } from "@/components/BukuTigaD";
+import { TrustPillars } from "@/components/TrustPillars";
 
 /**
  * Judul dan deskripsi beranda ditulis sendiri supaya hasil pencarian
@@ -31,12 +35,6 @@ export const metadata: Metadata = {
   description:
     "CV Cipta Manuskrip Media menerbitkan buku ber-ISBN dan mendampingi publikasi artikel ilmiah. Katalog, paket penerbitan, dan asistensi penulisan.",
 };
-
-const orbitNotes = [
-  { icon: BookOpen, label: "Penerbitan buku", className: "orbit-note orbit-note-book" },
-  { icon: Feather, label: "Karya & gagasan", className: "orbit-note orbit-note-feather" },
-  { icon: FileText, label: "Publikasi artikel", className: "orbit-note orbit-note-paper" },
-];
 
 /**
  * Empat langkah ini merangkum alur yang sudah tertulis di halaman Tentang
@@ -127,51 +125,41 @@ const TANYA_JAWAB = [
 export default function Home() {
   return (
     <div>
-      <section className="home-hero relative isolate overflow-hidden">
-        <div aria-hidden="true" className="hero-grid" />
-        <div aria-hidden="true" className="orbit orbit-outer" />
-        <div aria-hidden="true" className="orbit orbit-middle" />
-        <div aria-hidden="true" className="orbit orbit-inner" />
+      <section className="home-hero home-hero--foto relative isolate overflow-hidden">
+        <HeroOrbit />
+        <div className="hero-photo-layout">
+          <HeroPhotoCard varian="kopi" />
 
-        {orbitNotes.map(({ icon: Icon, label, className }) => (
-          <div key={label} aria-hidden="true" className={className}>
-            <Icon size={19} strokeWidth={1.7} />
-          </div>
-        ))}
-
-        <div className="hero-copy relative z-10 mx-auto flex max-w-4xl flex-col items-center px-5 text-center">
-          <div className="eyebrow-pill"><Sparkles size={13} /> Ruang untuk karya yang berarti</div>
-          <h1 className="hero-title mt-7 text-teks">
-            Publikasi Semudah <span className="headline-accent">Beli Kopi.</span>
-          </h1>
-          <p className="hero-description mt-5 max-w-xl text-teks-sec">
-            Layanan penerbitan buku dan publikasi artikel ilmiah.
-          </p>
-          <div className="hero-actions mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/publish-buku" className="button-primary">
-              Publish Buku <ArrowUpRight size={17} />
-            </Link>
-            <Link href="/publish-jurnal" className="button-secondary">
-              Publish Jurnal <ArrowUpRight size={17} />
-            </Link>
-          </div>
-
-          <div className="book-scene" aria-label="Ilustrasi buku dan naskah">
-            <div className="scene-glow" />
-            <div className="scene-caption scene-caption-left"><span className="caption-rule" /> NASKAH</div>
-            <div className="scene-caption scene-caption-right">GAGASAN <span className="caption-rule" /></div>
-            <div className="book book-back"><div className="book-spine" /><div className="book-cover-lines" /></div>
-            <div className="book book-front">
-              <div className="cover-mark">CMM</div>
-              <div className="cover-lines" aria-hidden="true"><span /><span /><span /><i /></div>
-              <div className="cover-ornament" />
-              <div className="book-page-edge" />
+          <div className="hero-copy relative z-10 flex flex-col items-center px-5 text-center">
+            <div className="eyebrow-pill"><Sparkles size={13} /> Ruang untuk karya yang berarti</div>
+            <h1 className="hero-title mt-7 text-teks">
+              Publikasi{" "}<br />
+              <span className="hero-title-line">Semudah <span className="headline-accent">Beli Kopi.</span></span>
+            </h1>
+            <p className="hero-description mt-5 max-w-xl text-teks-sec">
+              Layanan penerbitan buku dan publikasi artikel ilmiah.
+            </p>
+            <div className="hero-actions mt-8 flex flex-wrap justify-center gap-3">
+              <Link href="/publish-buku" className="button-primary">
+                Publish Buku <ArrowUpRight size={17} />
+              </Link>
+              <Link href="/publish-jurnal" className="button-secondary">
+                Publish Jurnal <ArrowUpRight size={17} />
+              </Link>
             </div>
-            <div className="floating-note"><span className="note-icon"><Feather size={15} /></span><span><strong>Dari ide menjadi karya</strong><small>Mulai perjalanan publikasi</small></span></div>
+            <div className="hero-buku">
+              {/* Dua lapis buku 3D dari repo lama + 2 slot logo resmi. */}
+              <BukuTigaD />
+            </div>
+            <Link href="#pilih-layanan" className="scroll-cue"><span>Jelajahi layanan</span><ArrowDown size={15} /></Link>
           </div>
-          <Link href="#pilih-layanan" className="scroll-cue"><span>Jelajahi layanan</span><ArrowDown size={15} /></Link>
+
+          <HeroPhotoCard varian="cmm" />
         </div>
       </section>
+
+      {/* Strip marquee indeks: placeholder sampai logo resmi SINTA dikirim. */}
+      <LogoMarquee />
 
       <section id="pilih-layanan" className="services-section mx-auto max-w-6xl px-5 py-24 sm:px-8">
         <div className="section-heading">
@@ -245,36 +233,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pintasan katalog: tanpa membaca database, jadi beranda tetap ringan. */}
-      <section className="home-catalog mx-auto max-w-6xl px-5 pb-24 sm:px-8" aria-labelledby="katalog-title">
-        <div className="home-catalog-panel">
-          <div className="home-catalog-copy">
-            <p className="section-kicker">Katalog penerbitan</p>
-            <h2 id="katalog-title" className="section-title">Lihat naskah yang <em>sudah dan akan terbit.</em></h2>
-            <p className="home-section-lede">
-              Katalog disusun menurut abjad judul. Buku yang telah terbit mencantumkan ISBN dan harga.
-            </p>
-          </div>
-          <div className="home-catalog-links">
-            <Link href="/katalog/telah-terbit" className="home-catalog-card">
-              <span className="home-catalog-icon" aria-hidden="true"><BookOpen size={19} strokeWidth={1.7} /></span>
-              <span>
-                <strong>Buku telah terbit</strong>
-                <small>ISBN, harga cetak, dan sewa ebook.</small>
-              </span>
-              <ArrowUpRight size={16} className="home-catalog-arrow" />
-            </Link>
-            <Link href="/katalog/segera-terbit" className="home-catalog-card">
-              <span className="home-catalog-icon home-catalog-icon-lime" aria-hidden="true"><Clock3 size={19} strokeWidth={1.7} /></span>
-              <span>
-                <strong>Buku segera terbit</strong>
-                <small>Naskah yang sedang disiapkan, tanpa harga.</small>
-              </span>
-              <ArrowUpRight size={16} className="home-catalog-arrow" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Section 2.2 — empat pilar kepercayaan, menggantikan pintasan katalog. */}
+      <TrustPillars />
 
       {/* Tanya jawab memakai <details> bawaan browser: bisa dibuka tanpa JavaScript. */}
       <section className="home-faq mx-auto max-w-6xl px-5 pb-24 sm:px-8" aria-labelledby="faq-title">

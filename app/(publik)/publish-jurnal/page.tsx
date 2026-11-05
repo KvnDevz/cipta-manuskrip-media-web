@@ -1,7 +1,11 @@
+/* eslint-disable @next/next/no-img-element -- foto lokal statis di public/aset/,
+   sudah dioptimasi ke JPEG q82; src langsung dipakai agar preview & tes visual
+   tidak bergantung pada image optimizer Next (pola sama dengan HeroPhotoCard). */
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, BadgeCheck, Eye, FileText, Fingerprint, GraduationCap, Languages, Layers3, LayoutTemplate, Link2, MessageSquareText, MessagesSquare, PanelsTopLeft, PenLine, ScanSearch, ShieldCheck, Timer } from "lucide-react";
+import { ArrowDown, ArrowUpRight, BadgeCheck, Eye, FileText, Fingerprint, GraduationCap, Languages, LayoutTemplate, Link2, MessageSquareText, MessagesSquare, PanelsTopLeft, PenLine, ScanSearch, ShieldCheck, Timer } from "lucide-react";
 import type { Metadata } from "next";
 import { FASILITAS_JURNAL } from "@/content/site";
+import { MockupGmail, MockupTimelineSinta, MockupOjs } from "@/components/BuktiOtentik";
 
 /** Judul tab halaman layanan jurnal. */
 export const metadata: Metadata = {
@@ -47,17 +51,20 @@ export default function Page() {
           </div>
           <a className="journal-scroll" href="#fasilitas">Lihat fasilitas <ArrowDown size={14} /></a>
         </div>
-        <div className="journal-hero-visual" aria-hidden="true">
-          <div className="journal-visual-ring journal-ring-one" />
-          <div className="journal-visual-ring journal-ring-two" />
-          <div className="journal-paper-back"><i /><i /><i /><i /></div>
-          <div className="journal-paper-front">
-            <span className="paper-index">JOURNAL / ARTICLE</span>
-            <span className="paper-glyph">J.</span>
-            <span className="paper-rule" /><span className="paper-rule short" />
-            <span className="paper-stamp"><Layers3 size={17} /></span>
-          </div>
-          <span className="journal-visual-caption">NASKAH · DOKUMENTASI · PUBLIKASI</span>
+        <div className="journal-hero-visual journal-hero-visual--foto">
+          <img
+            className="journal-hero-foto"
+            src="/aset/jurnal-dosen.jpg"
+            width={900}
+            height={600}
+            alt="Dosen Indonesia berjas biru dongker berdiri dengan tangan bersedekap di ruang kerja akademik."
+          />
+          <div className="bukti-float bukti-float--email"><MockupGmail /></div>
+          <div className="bukti-float bukti-float--timeline"><MockupTimelineSinta /></div>
+          <div className="bukti-float bukti-float--ojs"><MockupOjs /></div>
+          <p className="journal-visual-caption journal-visual-caption--foto">
+            NASKAH · DOKUMENTASI · PUBLIKASI — mockup ilustrasi, bukti asli menyusul
+          </p>
         </div>
       </section>
 

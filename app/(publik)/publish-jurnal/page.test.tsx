@@ -28,10 +28,24 @@ describe("publish-jurnal", () => {
   });
 
   it("tidak mengarang klaim vendor atau indeksasi di luar brief", () => {
-    // Penjaga data-jujur: OJS, github, dan keanggotaan tidak ada di
-    // brief/plan/spec — regex ini memasangkannya bila ada yang menambahkan
-    // klaim platform atau indeksasi karangan.
-    expect(html).not.toMatch(/OJS|github|keanggotaan/i);
+    // Penjaga data-jujur: github dan keanggotaan tetap tidak ada di brief.
+    // OJS kini DIMINTA eksplisit oleh brief §3.2 sebagai mockup antarmuka,
+    // jadi dikeluarkan dari larangan secara sempit (bukan membuka klaim baru).
+    expect(html).not.toMatch(/github|keanggotaan/i);
+  });
+
+  it("§3.2 memuat foto dosen dan ketiga mockup bukti otentik", () => {
+    expect(html).toContain("/aset/jurnal-dosen.jpg");
+    expect(html).toContain("Your submission has been reviewed and we encourage you to submit revisions...");
+    expect(html).toContain("Timeline Publikasi SINTA 2");
+    expect(html).toContain("Accepted &amp; copyediting");
+    expect(html).toContain("Your submission has been sent for another round of review");
+    expect(html).toContain("Submission accepted");
+    expect(html).toContain("Workflow / Round 1");
+    expect(html).toContain("mockup ilustrasi");
+    // Visual CSS abstrak sudah diganti foto.
+    expect(html).not.toContain("journal-paper-front");
+    expect(html).not.toContain("journal-ring-one");
   });
 
   it("memuat seluruh 13 fasilitas tanpa menambah janji", () => {

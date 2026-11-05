@@ -21,6 +21,15 @@ export type Book = {
   priceEbook: number | null;
   createdAt: Date;
   updatedAt: Date;
+  /**
+   * Section 6.1 — spesifikasi tampilan. OPSIONAL dan sengaja TIDAK masuk
+   * `KOLOM_BUKU`: skema database belum memilikinya. Saat kolomnya tersedia,
+   * cukup tambahkan ke `KOLOM_BUKU` dan `mapRow` di bawah sudah membacanya.
+   */
+  formatBuku?: string | null;
+  jenisBuku?: string | null;
+  bahasa?: string | null;
+  ukuranBuku?: string | null;
 };
 
 export type Page<T> = {
@@ -97,5 +106,10 @@ export function mapRow(row: Record<string, unknown>): Book {
     priceEbook: angkaAtauNull(row.price_ebook),
     createdAt: waktu(row.created_at),
     updatedAt: waktu(row.updated_at),
+    // Kolom spesifikasi bersifat opsional; undefined -> default di BookDetail.
+    formatBuku: teksAtauNull(row.format_buku),
+    jenisBuku: teksAtauNull(row.jenis_buku),
+    bahasa: teksAtauNull(row.bahasa),
+    ukuranBuku: teksAtauNull(row.ukuran_buku),
   };
 }

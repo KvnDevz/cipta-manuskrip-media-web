@@ -1,5 +1,8 @@
+/* eslint-disable @next/next/no-img-element -- foto lokal statis di public/aset/,
+   sudah dioptimasi ke JPEG q82; src langsung dipakai agar preview & tes visual
+   tidak bergantung pada image optimizer Next (pola sama dengan HeroPhotoCard). */
 import type { Metadata } from "next";
-import { ArrowDown, ArrowUpRight, BookOpen, Feather, PenLine, ServerCrash } from "lucide-react";
+import { ArrowDown, ArrowUpRight, BookOpen, PenLine, ServerCrash } from "lucide-react";
 import { listBooks } from "@/lib/books/repository";
 import { catalogueKind } from "@/lib/books/status";
 import { CataloguePreview } from "@/components/CataloguePreview";
@@ -51,23 +54,38 @@ export default async function Page() {
           </div>
           <a href="#paket" className="publish-scroll"><span>Lihat pilihan paket</span><ArrowDown size={14} /></a>
         </div>
-        <div className="publish-hero-art" aria-hidden="true">
-          <div className="publish-art-glow" />
-          <div className="publish-sheet sheet-back"><i /><i /><i /></div>
-          <div className="publish-sheet sheet-front"><span className="sheet-emblem"><Feather size={22} /></span><i /><i /><i /><small>CIPTA MANUSKRIP MEDIA</small></div>
-          <span className="art-spark art-spark-one">✳</span><span className="art-spark art-spark-two">✳</span>
-          <span className="art-label">DARI NASKAH MENJADI BUKU</span>
+        <div className="publish-hero-art publish-hero-art--foto">
+          <img
+            className="publish-hero-foto"
+            src="/aset/buku-hero.jpg"
+            width={1200}
+            height={800}
+            alt="Penulis muda Indonesia tersenyum menunjukkan ponsel bertanda PUBLISHED, disertai ilustrasi lambang Perpustakaan Nasional dan barcode ISBN."
+          />
+          <p className="publish-hero-foto-catatan">
+            Ilustrasi AI · logo &amp; ISBN resmi menyusul dari klien
+          </p>
         </div>
       </section>
 
       <PackagePicker tiers={PAKET_BUKU} />
 
-      <section id="asistensi" className="assist-section scroll-mt-24">
+      <section id="asistensi" className="assist-section assist-section--foto scroll-mt-24">
         <div className="assist-copy">
           <p className="publish-section-kicker">PENDAMPINGAN NASKAH</p>
           <h2>Setiap ide layak mendapat ruang untuk tumbuh.</h2>
           <p>Pendampingan penulisan untuk artikel dan naskah buku. Hubungi admin untuk menanyakan ruang lingkup dan jadwalnya.</p>
           <div className="assist-note"><PenLine size={17} /><span>Mulai dengan menceritakan topik atau gagasan buku Anda.</span></div>
+        </div>
+        <div className="assist-media">
+          <img
+            className="assist-foto"
+            src="/aset/asistensi-buku.jpg"
+            width={900}
+            height={600}
+            alt="Dua mahasiswi Indonesia berdiskusi di meja belajar; satu mencatat ide buku di buku catatan, satu lagi menunjuk layar laptop."
+          />
+          <span className="assist-foto-label">Ide Buku: Topik Utama, Detail Bab, Target Pembaca</span>
         </div>
         <div className="assist-form-card"><PackageSelectionStatus /><FormAsistensi jenis="buku" /></div>
       </section>
