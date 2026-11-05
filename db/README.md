@@ -4,8 +4,9 @@ Folder ini memuat seluruh perubahan skema database, dalam file `.sql` bernomor.
 
 ## Menjalankan
 
+Jalankan dari **akar repo** (tempat `package.json` berada):
+
 ```bash
-cd app
 npm run db:migrate
 ```
 
@@ -65,4 +66,4 @@ npm run db:migrate
 npm run db:admin             # membuat akun admin pertama
 ```
 
-Rinciannya ada di `docs/SETUP.md` pada akar repo.
+Rincian variabel koneksi ada di `.env.example` dan bagian **Deploy** di `README.md`.
