@@ -13,6 +13,7 @@ import { HeroPhotoCard } from "@/components/HeroPhotoCard";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { BukuTigaD } from "@/components/BukuTigaD";
 import { PrinsipPublikasi } from "@/components/PrinsipPublikasi";
+import { OrbitSatellites } from "@/components/OrbitSatellites";
 
 /**
  * Judul dan deskripsi beranda ditulis sendiri supaya hasil pencarian
@@ -70,6 +71,8 @@ export default function Home() {
         <div aria-hidden="true" className="orbit orbit-outer" />
         <div aria-hidden="true" className="orbit orbit-middle" />
         <div aria-hidden="true" className="orbit orbit-inner" />
+        {/* Bulatan ikon (orang, buku, esensial penerbitan) menempel mengelilingi cincin orbit */}
+        <OrbitSatellites />
 
         <div className="hero-copy relative z-10 flex flex-col items-center px-5 text-center">
           <div className="eyebrow-pill"><Sparkles size={13} /> Ruang untuk karya yang berarti</div>

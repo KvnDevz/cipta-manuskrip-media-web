@@ -951,6 +951,14 @@
 .detail-coming-badge__jam { flex: 0 0 auto; color: #d8a637; }
 .detail-coming-badge__body p { margin: 0; color: #5d5541; font-size: 13px; font-weight: 550; line-height: 1.7; }
 
+/* — Cap besar "SEGERA TERBIT" di sudut kanan bawah halaman detail —
+   hanya untuk buku berstatus upcoming, supaya sudut itu tidak kosong.
+   Gaya cap tinta: border ganda emas, agak diputar, dan mix-blend multiply
+   supaya teks apa pun di bawahnya tetap terbaca. */
+.detail-stamp { position: absolute; right: 30px; bottom: 24px; z-index: 3; display: grid; width: 122px; height: 122px; place-items: center; align-content: center; gap: 5px; border: 3px double #c39a3f; border-radius: 50%; background: rgba(255, 244, 214, .55); color: #b18a39; box-shadow: 0 10px 26px rgba(172, 128, 34, .16); transform: rotate(-10deg); text-align: center; pointer-events: none; mix-blend-mode: multiply; }
+.detail-stamp__ikon { color: #c39a3f; }
+.detail-stamp__teks { font-size: 15px; font-weight: 800; letter-spacing: .12em; line-height: 1.25; }
+
 /* — §7.1 Hero Tentang Kami — teks tengah, lede lebih besar, tanpa pill — */
 .about-hero--baru { grid-template-columns: 1fr; min-height: 0; gap: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; }
 .about-hero--baru .about-hero-copy { max-width: 960px; margin-inline: auto; padding: 0 7% 32px; text-align: center; }

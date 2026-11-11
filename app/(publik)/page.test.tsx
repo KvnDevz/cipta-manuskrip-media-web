@@ -72,6 +72,56 @@ describe("beranda", () => {
     expect(css).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
   });
 
+  it("ikon satelit: berputar DI GARIS orbit dengan arah & titik awal berbeda per cincin", () => {
+    expect((html.match(/class="orbit-sat /g) ?? [])).toHaveLength(4);
+    for (const rotor of ["luar", "tengah", "inner"]) {
+      expect(html).toContain(`orbit-sat-rotor--${rotor}`);
+    }
+    // Cincin luar memakai DUA foto orang asli berdiskusi buku (satu arah putar),
+    // cincin tengah & dalam masing-masing satu ikon.
+    expect((html.match(/orbit-sat__gambar/g) ?? []).length).toBe(2);
+    expect(html).toContain('src="/aset/orbit-diskusi-buku.png"');
+    expect(html).toContain('src="/aset/orbit-diskusi-buku-2.png"');
+    expect(html.indexOf("orbit-outer")).toBeLessThan(html.indexOf("orbit-sat"));
+    expect(html.indexOf("orbit-sat")).toBeLessThan(html.indexOf("hero-copy"));
+
+    const css = readFileSync(join(process.cwd(), "app/globals.css"), "utf8");
+    // Tiga rotor = tiga ukuran cincin; arah bergantian antar cincin
+    // (shorthand animation penuh supaya reverse tidak kalah specificity).
+    expect((css.match(/\.home-hero \.orbit-sat-rotor--[a-z-]+ \{/g) ?? []).length).toBe(3);
+    expect(css).toMatch(/\.home-hero \.orbit-sat-rotor--luar \{[^}]*width:\s*min\(88vw, 860px\)[^}]*animation:\s*cmm-orbit-spin 90s linear infinite;/);
+    expect(css).toMatch(/\.home-hero \.orbit-sat-rotor--tengah \{[^}]*width:\s*min\(70vw, 670px\)[^}]*cmm-orbit-spin 70s linear infinite reverse/);
+    expect(css).toMatch(/\.home-hero \.orbit-sat-rotor--inner \{[^}]*width:\s*min\(52vw, 490px\)[^}]*cmm-orbit-spin 60s linear infinite -40s;/);
+    // Titik awal putaran tiap cincin berbeda (delay negatif per rotor) dan
+    // ikon counter-rotate ikut delay yang sama supaya tetap tegak.
+    expect(css).toMatch(/\.home-hero \.orbit-sat-rotor--tengah \{[^}]*reverse -25s/);
+    expect(css).toMatch(/rotor--tengah \.orbit-sat__ikon \{ animation: cmm-sat-tegak 70s linear infinite -25s/);
+    expect(css).toMatch(/rotor--inner \.orbit-sat__ikon \{ animation: cmm-sat-tegak 60s linear infinite reverse -40s/);
+    // Ikon di-counter-rotate supaya tetap tegak saat mengorbit.
+    expect(css).toContain("cmm-sat-tegak");
+    // Semua posisi TEPAT di garis cincin (radius 50% kotak rotor): tidak ada
+    // radius khusus yang membuat ikon keluar dari orbit.
+    expect(css).not.toContain("--sat-r");
+    expect(css).toMatch(/\.orbit-sat--1 \{ left: 3\.02%; top: 32\.9%/);
+    expect(css).toMatch(/\.orbit-sat--3 \{ left: 0%; top: 50%/);
+    // Satelit murni hiasan: non-aktif secara pointer dan tersembunyi di layar kecil.
+    expect(css).toMatch(/\.home-hero \.orbit-sat-rotor \{[^}]*pointer-events:\s*none/);
+    expect(css).toMatch(/@media \(max-width: 899px\) \{\s*\.home-hero \.orbit-sat-rotor \{\s*display:\s*none/);
+    // Foto bulatan mengisi penuh lingkaran badge (pembungkus ikon 100% supaya tidak
+    // kolaps saat rotor berputar; gambar di-crop penuh ke lingkaran).
+    expect(css).toMatch(/\.home-hero \.orbit-sat__ikon \{[^}]*width:\s*100%[^}]*height:\s*100%/);
+    expect(css).toMatch(/\.home-hero \.orbit-sat__gambar \{[^}]*border-radius:\s*50%[^}]*object-fit:\s*cover/);
+    expect(css).toMatch(/\.orbit-sat--foto \{[^}]*width:\s*54px/);
+  });
+
+  it("tidak ada lagi bintang sparkle pada aksen kata Media di headline", () => {
+    const css = readFileSync(join(process.cwd(), "app/hero-headline.css"), "utf8");
+    expect(css).not.toContain("headline-accent::before");
+    expect(css).not.toMatch(/hero-sparkle/);
+    // Underline aksen tetap ada.
+    expect(css).toContain("headline-accent::after");
+  });
+
   it("marquee logo placeholder hadir setelah hero, sebelum section prinsip", () => {
     expect(html).toContain("logo-marquee-viewport");
     expect(html.indexOf("logo-marquee-viewport")).toBeLessThan(
