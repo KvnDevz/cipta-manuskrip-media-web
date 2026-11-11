@@ -175,6 +175,15 @@ export function BookDetail({ book }: { book: Book }) {
             </>
           )}
         </div>
+
+        {/* Cap besar "SEGERA TERBIT" di sudut kanan bawah shell — hanya untuk
+            buku yang akan terbit, supaya sudut itu tidak tampak kosong. */}
+        {!sudahTerbit ? (
+          <div className="detail-stamp" aria-hidden="true">
+            <AlarmClock className="detail-stamp__ikon" size={30} strokeWidth={1.5} />
+            <strong className="detail-stamp__teks">SEGERA<br />TERBIT</strong>
+          </div>
+        ) : null}
       </article>
 
       <div className="detail-back">

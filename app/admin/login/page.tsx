@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, BookOpen, LockKeyhole, Sparkles } from "lucide-react";
+import { ArrowLeft, BookOpen, LockKeyhole, Sparkles } from "lucide-react";
 import { loginAction } from "../actions";
 import { LOGIN_AWAL } from "../login-state";
 import { FormLogin } from "./FormLogin";
@@ -47,7 +47,6 @@ export default function Page() {
           <h2 id="admin-login-title">Masuk ke panel admin</h2>
           <p className="admin-login-subtitle">Gunakan akun admin untuk melanjutkan ke ruang kerja.</p>
           <FormLogin action={loginAction} awal={LOGIN_AWAL} />
-          <div className="admin-login-demo-note"><span>Butuh melihat tampilannya?</span><Link href="/admin/preview">Buka pratinjau demo <ArrowUpRight size={14} /></Link></div>
           <Link href="/" className="admin-login-back"><ArrowLeft size={14} /> Kembali ke situs utama</Link>
         </div>
         <p className="admin-login-footnote">Akses admin terbatas untuk pengelola situs.</p>

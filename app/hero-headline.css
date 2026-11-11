@@ -1,7 +1,7 @@
 /* ==========================================================================
    HEADLINE BERANDA — font asli dipertahankan.
    File ini hanya menambah efek “heboh” pada aksen yang sudah ada:
-   pop masuk, underline gradient, glow lembut, dan sparkle dekoratif.
+   pop masuk, underline gradient, dan glow lembut.
    Tidak mengubah font-family, font-size, font-weight, letter-spacing,
    text-transform, maupun struktur teks headline.
    ========================================================================== */
@@ -33,24 +33,6 @@
     hero-underline-flow 5s linear 1.2s infinite;
 }
 
-.home-hero--foto .hero-title .headline-accent::before {
-  content: "";
-  position: absolute;
-  top: -0.22em;
-  right: -0.18em;
-  width: 0.3em;
-  height: 0.3em;
-  background: var(--color-lime);
-  clip-path: polygon(
-    50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
-    50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
-  );
-  pointer-events: none;
-  animation:
-    hero-sparkle-pop 0.5s ease-out 0.8s both,
-    hero-sparkle-twinkle 2.6s ease-in-out 1.4s infinite;
-}
-
 @keyframes hero-accent-pop {
   0% { opacity: 0; transform: translateY(8px) scale(0.96); }
   65% { opacity: 1; transform: translateY(-2px) scale(1.03); }
@@ -72,19 +54,8 @@
   to { background-position: 220% 50%; }
 }
 
-@keyframes hero-sparkle-pop {
-  from { opacity: 0; scale: 0.3; }
-  to { opacity: 1; scale: 1; }
-}
-
-@keyframes hero-sparkle-twinkle {
-  0%, 100% { opacity: 1; scale: 1; }
-  50% { opacity: 0.55; scale: 0.82; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .home-hero--foto .hero-title .headline-accent,
-  .home-hero--foto .hero-title .headline-accent::before,
   .home-hero--foto .hero-title .headline-accent::after {
     animation: none;
     transition: none;
@@ -93,12 +64,7 @@
 
 @media print {
   .home-hero--foto .hero-title .headline-accent,
-  .home-hero--foto .hero-title .headline-accent::before,
   .home-hero--foto .hero-title .headline-accent::after {
     animation: none;
-  }
-
-  .home-hero--foto .hero-title .headline-accent::before {
-    display: none;
   }
 }

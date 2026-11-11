@@ -160,4 +160,15 @@ describe("BookDetail — §6 spesifikasi & badge", () => {
     const published = renderToStaticMarkup(<BookDetail book={buku()} />);
     expect(published).not.toContain("detail-coming-badge");
   });
+
+  it("cap besar SEGERA TERBIT di shell detail hanya untuk buku upcoming", () => {
+    const upcoming = renderToStaticMarkup(<BookDetail book={buku({ status: "upcoming" })} />);
+    expect(upcoming).toContain('class="detail-stamp"');
+    expect(upcoming).toContain("detail-stamp__ikon");
+    expect(upcoming).toContain("detail-stamp__teks");
+    // Cap ada di dalam shell (sudut kanan bawah), setelah kolom konten.
+    expect(upcoming.indexOf("detail-content")).toBeLessThan(upcoming.indexOf("detail-stamp"));
+    const published = renderToStaticMarkup(<BookDetail book={buku()} />);
+    expect(published).not.toContain("detail-stamp");
+  });
 });
