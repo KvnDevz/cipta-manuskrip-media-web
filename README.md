@@ -13,12 +13,14 @@ dikelola sendiri, diakses tanpa ORM.
 | Node.js | ≥ 20.9 | Dikembangkan dan diuji di Node v24.22.0 |
 | MySQL | 8.4 | Diuji pada MySQL 8.4.3 |
 
-MariaDB 11.8 didukung (diuji sebagai target hosting). Untuk menaikkan situs ke server, lihat `docs/DEPLOY.md` dan `docs/UPLOAD-DATABASE.md`.
+MariaDB 11.8 didukung (diuji sebagai target hosting). Untuk menaikkan situs ke server, lihat bagian **Deploy** di bawah.
 
 ## Menyiapkan proyek
 
+Semua perintah dijalankan dari **akar repo** — folder yang berisi
+`package.json` — bukan dari dalam folder `app`:
+
 ```bash
-cd app
 npm install
 ```
 
@@ -49,7 +51,7 @@ itu yang dianjurkan di hosting: sampul tidak ikut terhapus saat aplikasi
 di-deploy ulang. Folder mana pun yang dipakai, sampul **tidak** disajikan
 sebagai berkas statis — isinya dibaca oleh route `/covers/[berkas]` per
 permintaan. Sampul disimpan di luar folder aplikasi di hosting supaya selamat
-saat deploy ulang — lihat `docs/DEPLOY.md`.
+saat deploy ulang — lihat bagian **Deploy**.
 
 ## Menyiapkan database
 
@@ -89,7 +91,48 @@ mendukung SWC native:
 npm run build:turbopack
 ```
 
-Rinciannya di `docs/DEPLOY.md`.
+## Deploy
+
+> **Penyebab paling umum build gagal:** `package.json` ada di **akar repo**.
+> Sejak commit `ed475c7` seluruh proyek dipindah dari subfolder `app/` ke akar;
+> `app/` sekarang hanya folder route Next.js (berisi `layout.tsx`,
+> `(publik)/`, `admin/`, dan sebagainya) tanpa `package.json`. Karena itu
+> **Root Directory / Base Directory / Build Context di panel hosting wajib
+> dikosongkan atau diisi `/`** (akar repo). Kalau masih diisi `app`, build
+> berhenti dengan `ERROR: package.json file not found` dalam hitungan detik.
+
+| Pengaturan | Nilai |
+| --- | --- |
+| Root Directory / Build Context | akar repo — **kosong / `/`**, jangan `app` |
+| Node.js | ≥ 20.9 (disarankan 22, lihat `.nvmrc`) |
+| Install | `npm ci` |
+| Build | `npm run build` (webpack) |
+| Start | `npm run start` |
+
+Pastikan **branch** yang ditarik berisi commit terbaru; bila perubahan masih
+berada di branch kerja dan belum di-merge, `master` berisi versi yang lebih
+lama.
+
+`next start` memakai port 3000 sebagai bawaan. Bila platform menyuntik
+variabel `PORT`, jalankan `npm run start -- -p "$PORT"` — perintah itu sudah
+disiapkan di `nixpacks.toml` untuk platform berbasis Nixpacks (Railway,
+Coolify, Dokploy, dan sejenisnya).
+
+Isi variabel environment lewat panel mengikuti `.env.example`: `DB_HOST`,
+`DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `SITE_URL`, `COVER_DIR`,
+`BOOKS_PER_PAGE`, `COVER_MAX_BYTES`. Catatan penting:
+
+- `DB_USER=root` **ditolak di produksi** (`lib/env.ts`); nilai itu hanya contoh
+  dari `.env.example`. Pakai user database dari panel hosting.
+- `SITE_URL` wajib diganti dari `http://localhost:3000` ke domain asli.
+- `COVER_DIR` sebaiknya menunjuk ke folder di luar aplikasi agar sampul tidak
+  hilang saat deploy ulang.
+- Jalankan `npm run db:migrate` sebelum start pertama, lalu buat akun admin
+  dengan `npm run db:create-admin` (atau `npm run db:admin-sql` bila hosting
+  tanpa Terminal).
+
+Seluruh halaman yang membaca database sudah `force-dynamic`, jadi build tidak
+membutuhkan koneksi MySQL; MySQL baru wajib hidup saat server berjalan.
 
 ## Memakai panel admin
 
@@ -215,10 +258,14 @@ bukan lewat tes. Setiap halaman admin baru harus masuk ke dalam group itu.
 
 | Berkas | Isi |
 |---|---|
-| `docs/IMPORT-PHPMYADMIN.md` | Import skema lewat phpMyAdmin bila hosting tanpa Terminal |
-| `docs/UPLOAD-DATABASE.md` | Membuat database di panel hosting, mengisi env, migrasi, akun admin |
-| `docs/DEPLOY.md` | Menaikkan situs ke hosting, environment produksi, daftar periksa |
-| `PROJECT-BACKEND-FIRST.md` | Brief awal dari klien |
+| `PRODUCT.md` | Brief produk dan batasan hosting |
+| `.env.example` | Daftar variabel environment produksi |
+| `db/README.md` | Migrasi skema database |
+| `public/logo/README.md`, `public/logo-resmi/README.md` | Sumber aset logo |
+
+Dokumen `docs/` dan `PROJECT-BACKEND-FIRST.md` dari struktur lama sudah
+dihapus saat proyek dipindah ke akar repo; petunjuk deploy kini ada di bagian
+**Deploy** di atas.
 
 Perjanjian kerja sama yang ditandatangani **tidak** ada di repo ini: dokumen
 itu memuat nama asli, tanda tangan, dan nilai perjanjian, sehingga disimpan

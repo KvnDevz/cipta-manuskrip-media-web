@@ -26,6 +26,10 @@ export type NilaiFormBuku = {
   isbn: string;
   pricePrint: string;
   priceEbook: string;
+  formatBuku: string;
+  jenisBuku: string;
+  bahasa: string;
+  ukuranBuku: string;
 };
 
 export const NILAI_BUKU_KOSONG: NilaiFormBuku = {
@@ -40,6 +44,10 @@ export const NILAI_BUKU_KOSONG: NilaiFormBuku = {
   isbn: "",
   pricePrint: "",
   priceEbook: "",
+  formatBuku: "",
+  jenisBuku: "",
+  bahasa: "",
+  ukuranBuku: "",
 };
 
 export type StateFormBuku = {

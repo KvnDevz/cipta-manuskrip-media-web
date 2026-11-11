@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, CalendarClock, ChevronRight, Hash, ShieldCheck } from "lucide-react";
+import { AlarmClock, ArrowLeft, ArrowUpRight, BookOpen, CalendarClock, ChevronRight, Hash, Languages, LibraryBig, Ruler, ShieldCheck } from "lucide-react";
 import { buildBookOrderUrl } from "@/lib/whatsapp";
 import { resolveCoverUrl } from "@/lib/storage/path";
 import { formatRupiah } from "@/lib/books/price";
+import { SPESIFIKASI_BUKU } from "@/content/site";
 import { BookCover } from "./BookCover";
 import type { Book } from "@/lib/books/types";
 
@@ -20,6 +21,17 @@ import type { Book } from "@/lib/books/types";
 export function BookDetail({ book }: { book: Book }) {
   const sudahTerbit = book.status === "published";
   const katalogHref = sudahTerbit ? "/katalog/telah-terbit" : "/katalog/segera-terbit";
+
+  /** §6.1 — empat spesifikasi, sama untuk buku terbit maupun segera terbit. */
+  const spesifikasi = [
+    { label: "Format Buku", nilai: book.formatBuku || SPESIFIKASI_BUKU.format, Ikon: BookOpen },
+    { label: "Jenis Buku", nilai: book.jenisBuku || SPESIFIKASI_BUKU.jenis, Ikon: LibraryBig },
+    { label: "Bahasa", nilai: book.bahasa || SPESIFIKASI_BUKU.bahasa, Ikon: Languages },
+    { label: "Ukuran Buku", nilai: book.ukuranBuku || SPESIFIKASI_BUKU.ukuran, Ikon: Ruler },
+  ];
+  const hasCustomSpecs = Boolean(
+    book.formatBuku || book.jenisBuku || book.bahasa || book.ukuranBuku
+  );
 
   return (
     <div className="detail-page">
@@ -86,6 +98,20 @@ export function BookDetail({ book }: { book: Book }) {
             )}
           </dl>
 
+          <dl className="detail-specs" aria-label="Spesifikasi buku">
+            {spesifikasi.map(({ label, nilai, Ikon }) => (
+              <div className="detail-fact" key={label}>
+                <dt><Ikon aria-hidden="true" size={14} /> {label}</dt>
+                <dd>{nilai}</dd>
+              </div>
+            ))}
+          </dl>
+          {!hasCustomSpecs ? (
+            <p className="detail-specs-note">
+              Spesifikasi standar penerbitan.
+            </p>
+          ) : null}
+
           {sudahTerbit ? (
             <>
               <section className="detail-section">
@@ -135,6 +161,17 @@ export function BookDetail({ book }: { book: Book }) {
                 <CalendarClock aria-hidden="true" size={16} />
                 Buku ini sedang disiapkan dan belum dapat dipesan.
               </p>
+
+              <section className="detail-coming-badge" aria-labelledby="detail-coming-title">
+                <div className="detail-coming-badge__header">
+                  <span className="detail-coming-badge__dot" aria-hidden="true" />
+                  <h2 id="detail-coming-title">SEGERA TERBIT</h2>
+                </div>
+                <div className="detail-coming-badge__body">
+                  <AlarmClock className="detail-coming-badge__jam" size={68} strokeWidth={1.2} aria-hidden="true" />
+                  <p>Buku ini akan segera hadir. Pantau terus untuk mendapatkan akses saat sudah diterbitkan.</p>
+                </div>
+              </section>
             </>
           )}
         </div>

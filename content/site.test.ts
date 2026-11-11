@@ -1,23 +1,65 @@
 // app/content/site.test.ts
 import { describe, it, expect } from "vitest";
 import {
-  NAV_UTAMA, TAUTAN_LAYANAN, KONTAK, PAKET_BUKU,
-  FASILITAS_JURNAL, KATEGORI_JURNAL, PREVIEW_LIMIT,
+  NAV_UTAMA, NAV_KANAN, TAUTAN_LAYANAN, KONTAK, PAKET_BUKU,
+  FASILITAS_JURNAL, KATEGORI_JURNAL, PREVIEW_LIMIT, MARQUEE_SINTA,
+  PILAR_KEPERCAYAAN,
 } from "./site";
 
 describe("content/site", () => {
-  it("header hanya memuat Beranda dan Tentang Kami", () => {
-    expect(NAV_UTAMA).toEqual([
-      { label: "Beranda", href: "/" },
-      { label: "Tentang Kami", href: "/tentang-kami" },
+  it("navbar hanya dua menu: Beranda di tengah, Tentang Kami di kanan", () => {
+    expect(NAV_UTAMA).toEqual([{ label: "Beranda", href: "/" }]);
+    expect([...NAV_UTAMA.map((t) => t.label), NAV_KANAN.label]).toEqual([
+      "Beranda",
+      "Tentang Kami",
     ]);
   });
 
-  it("footer mengulang tautan dua layanan", () => {
+  it("slot kanan header adalah tautan biasa Tentang Kami, bukan CTA", () => {
+    expect(NAV_KANAN).toEqual({ label: "Tentang Kami", href: "/tentang-kami" });
+    expect(NAV_UTAMA.some((t) => t.href === NAV_KANAN.href)).toBe(false);
+  });
+
+  it("menu footer memuat empat tautan layanan eksplisit", () => {
     expect(TAUTAN_LAYANAN.map((t) => t.href)).toEqual([
       "/publish-buku",
       "/publish-jurnal",
+      "/publish-buku#asistensi",
+      "/publish-jurnal/asistensi",
     ]);
+    expect(TAUTAN_LAYANAN.map((t) => t.label)).toEqual([
+      "Publish Buku",
+      "Publish Jurnal",
+      "Asistensi penulisan buku",
+      "Asistensi penulisan artikel jurnal",
+    ]);
+    // Tidak boleh ada lagi tautan umum yang menyatukan dua asistensi.
+    expect(TAUTAN_LAYANAN.some((t) => t.label === "Asistensi penulisan")).toBe(false);
+  });
+
+  it("marquee SINTA berisi daftar indeks dan pengakuan", () => {
+    expect(MARQUEE_SINTA.slice(0, 6).map((s) => s.label)).toEqual([
+      "SINTA 1", "SINTA 2", "SINTA 3", "SINTA 4", "Scimago", "Scopus",
+    ]);
+    expect(new Set(MARQUEE_SINTA.map((s) => s.id)).size).toBe(MARQUEE_SINTA.length);
+  });
+
+  it("empat pilar kepercayaan Section 2.2 memakai teks persis brief", () => {
+    expect(PILAR_KEPERCAYAAN.map((p) => p.judul)).toEqual([
+      "Legalitas Resmi",
+      "ISBN Resmi",
+      "Tidak Harus Ada Naskah di Awal",
+      "Distribusi Beragam",
+    ]);
+    expect(PILAR_KEPERCAYAAN.map((p) => p.jenisVisual)).toEqual([
+      "legalitas", "isbn", "naskah", "distribusi",
+    ]);
+    expect(PILAR_KEPERCAYAAN[0].deskripsi).toBe(
+      "CV Cipta Manuskrip Media telah resmi berbadan hukum dengan kegiatan usaha penerbitan buku dan jurnal ilmiah.",
+    );
+    expect(PILAR_KEPERCAYAAN[3].deskripsi).toBe(
+      "Buku kamu tak hanya dijual secara cetak, tapi bisa disewa secara online juga.",
+    );
   });
 
   it("nomor kontak memakai format tampil yang ditetapkan brief", () => {
@@ -59,8 +101,8 @@ describe("content/site", () => {
 
   it("tepat tiga kategori jurnal dengan en dash pada SINTA", () => {
     expect(KATEGORI_JURNAL).toEqual([
-      "Jurnal Nasional Terakreditasi SINTA 1–4",
-      "Jurnal Internasional Index Copernicus",
+      "Jurnal Nasional Terakreditasi SINTA 1–4 dan GARUDA",
+      "Jurnal Internasional Index Copernicus & CrossRef",
       "Jurnal Internasional Scopus dan SCImago",
     ]);
   });

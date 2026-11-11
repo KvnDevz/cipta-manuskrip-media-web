@@ -89,6 +89,10 @@ export async function simpanBukuBaru(data: FormData): Promise<HasilSimpan> {
     isbn: bacaTeks(data, "isbn"),
     pricePrint: bacaTeks(data, "pricePrint"),
     priceEbook: bacaTeks(data, "priceEbook"),
+    formatBuku: bacaTeks(data, "formatBuku"),
+    jenisBuku: bacaTeks(data, "jenisBuku"),
+    bahasa: bacaTeks(data, "bahasa"),
+    ukuranBuku: bacaTeks(data, "ukuranBuku"),
   });
 
   if (!teks.ok) return { ok: false, errors: teks.errors };
@@ -156,6 +160,10 @@ export async function perbaruiBuku(id: string, data: FormData): Promise<HasilUba
     isbn: bacaTeks(data, "isbn"),
     pricePrint: bacaTeks(data, "pricePrint"),
     priceEbook: bacaTeks(data, "priceEbook"),
+    formatBuku: bacaTeks(data, "formatBuku"),
+    jenisBuku: bacaTeks(data, "jenisBuku"),
+    bahasa: bacaTeks(data, "bahasa"),
+    ukuranBuku: bacaTeks(data, "ukuranBuku"),
   });
 
   if (!teks.ok) return { ok: false, errors: teks.errors };

@@ -26,6 +26,10 @@ export type BookInput = {
   isbn: string | null;
   pricePrint: number | null;
   priceEbook: number | null;
+  formatBuku: string | null;
+  jenisBuku: string | null;
+  bahasa: string | null;
+  ukuranBuku: string | null;
 };
 
 /** Input buku tanpa `coverPath`: yang bisa dinilai sebelum berkas diunggah. */
@@ -110,9 +114,26 @@ export function validateBookText(raw: unknown): TextValidationResult {
   const bookInfo = teksAtauNull(raw.bookInfo);
   const estimatedRelease = teksAtauNull(raw.estimatedRelease);
   const isbn = teksAtauNull(raw.isbn);
+  const formatBuku = teksAtauNull(raw.formatBuku);
+  const jenisBuku = teksAtauNull(raw.jenisBuku);
+  const bahasa = teksAtauNull(raw.bahasa);
+  const ukuranBuku = teksAtauNull(raw.ukuranBuku);
 
   if (title === "") errors.title = "Judul wajib diisi.";
   if (author === "") errors.author = "Penulis wajib diisi.";
+
+  if (formatBuku !== null && formatBuku.length > 100) {
+    errors.formatBuku = "Format buku maksimal 100 karakter.";
+  }
+  if (jenisBuku !== null && jenisBuku.length > 100) {
+    errors.jenisBuku = "Jenis buku maksimal 100 karakter.";
+  }
+  if (bahasa !== null && bahasa.length > 100) {
+    errors.bahasa = "Bahasa maksimal 100 karakter.";
+  }
+  if (ukuranBuku !== null && ukuranBuku.length > 100) {
+    errors.ukuranBuku = "Ukuran buku maksimal 100 karakter.";
+  }
 
   const galatIsbn = galatIsbnDari(isbn);
   if (galatIsbn !== null) errors.isbn = galatIsbn;
@@ -173,6 +194,10 @@ export function validateBookText(raw: unknown): TextValidationResult {
       isbn,
       pricePrint: hargaCetak.ok ? hargaCetak.value : null,
       priceEbook: hargaEbook.ok ? hargaEbook.value : null,
+      formatBuku,
+      jenisBuku,
+      bahasa,
+      ukuranBuku,
     },
   };
 }

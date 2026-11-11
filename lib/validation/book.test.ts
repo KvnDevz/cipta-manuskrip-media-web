@@ -215,3 +215,57 @@ describe("validateBookInput — ISBN dan harga", () => {
     expect(hasil.ok).toBe(true);
   });
 });
+
+describe("validateBookInput — spesifikasi buku", () => {
+  it("menerima spesifikasi buku yang lengkap", () => {
+    const hasil = validateBookInput({
+      ...valid,
+      formatBuku: "Buku Cetak & E-Book",
+      jenisBuku: "Nonfiksi",
+      bahasa: "Bahasa Indonesia",
+      ukuranBuku: "UNESCO 15.5 x 23 cm",
+    });
+    expect(hasil.ok).toBe(true);
+    if (hasil.ok) {
+      expect(hasil.value.formatBuku).toBe("Buku Cetak & E-Book");
+      expect(hasil.value.jenisBuku).toBe("Nonfiksi");
+      expect(hasil.value.bahasa).toBe("Bahasa Indonesia");
+      expect(hasil.value.ukuranBuku).toBe("UNESCO 15.5 x 23 cm");
+    }
+  });
+
+  it("mengubah spesifikasi string kosong menjadi null", () => {
+    const hasil = validateBookInput({
+      ...valid,
+      formatBuku: "   ",
+      jenisBuku: "",
+      bahasa: "",
+      ukuranBuku: "   ",
+    });
+    expect(hasil.ok).toBe(true);
+    if (hasil.ok) {
+      expect(hasil.value.formatBuku).toBeNull();
+      expect(hasil.value.jenisBuku).toBeNull();
+      expect(hasil.value.bahasa).toBeNull();
+      expect(hasil.value.ukuranBuku).toBeNull();
+    }
+  });
+
+  it("menolak nilai spesifikasi yang melebihi 100 karakter", () => {
+    const teksPanjang = "a".repeat(101);
+    const hasil = validateBookInput({
+      ...valid,
+      formatBuku: teksPanjang,
+      jenisBuku: teksPanjang,
+      bahasa: teksPanjang,
+      ukuranBuku: teksPanjang,
+    });
+    expect(hasil.ok).toBe(false);
+    if (!hasil.ok) {
+      expect(hasil.errors.formatBuku).toBeDefined();
+      expect(hasil.errors.jenisBuku).toBeDefined();
+      expect(hasil.errors.bahasa).toBeDefined();
+      expect(hasil.errors.ukuranBuku).toBeDefined();
+    }
+  });
+});

@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { AlertCircle, BookOpen, CalendarClock, ImagePlus, Info, Save, Tag } from "lucide-react";
+import { AlertCircle, BookOpen, CalendarClock, ImagePlus, Info, Save, SlidersHorizontal, Tag } from "lucide-react";
 import { PILIHAN_STATUS } from "./form-state";
 import type { AksiFormBuku, StateFormBuku } from "./form-state";
 
@@ -303,6 +303,78 @@ export function FormBuku({
             ? "Buku yang segera terbit tidak dijual, jadi tidak punya harga."
             : "Rupiah tanpa koma; titik ribuan boleh. Kosongkan bila belum ditetapkan — katalog menampilkan “-”."}
         </Petunjuk>
+      </section>
+
+      <section className="admin-form-section">
+        <header className="admin-form-section-head">
+          <span className="admin-form-section-icon" aria-hidden="true">
+            <SlidersHorizontal size={16} />
+          </span>
+          <div>
+            <h3>Spesifikasi buku</h3>
+            <p>Format, jenis, bahasa, dan ukuran buku untuk kartu detail di halaman publik.</p>
+          </div>
+        </header>
+
+        <div className="admin-field-grid">
+          <div className="admin-field">
+            <label htmlFor="formatBuku">Format buku</label>
+            <input
+              id="formatBuku"
+              name="formatBuku"
+              defaultValue={nilai.formatBuku}
+              aria-invalid={errors.formatBuku !== undefined}
+              placeholder="Contoh: Buku Cetak & E-Book"
+              className={kelasKontrol(errors.formatBuku !== undefined)}
+            />
+            <PesanGalat pesan={errors.formatBuku} />
+            <Petunjuk>Dikosongkan berarti “Buku Cetak & E-Book”.</Petunjuk>
+          </div>
+
+          <div className="admin-field">
+            <label htmlFor="jenisBuku">Jenis buku</label>
+            <input
+              id="jenisBuku"
+              name="jenisBuku"
+              defaultValue={nilai.jenisBuku}
+              aria-invalid={errors.jenisBuku !== undefined}
+              placeholder="Contoh: Nonfiksi"
+              className={kelasKontrol(errors.jenisBuku !== undefined)}
+            />
+            <PesanGalat pesan={errors.jenisBuku} />
+            <Petunjuk>Dikosongkan berarti “Nonfiksi”.</Petunjuk>
+          </div>
+        </div>
+
+        <div className="admin-field-grid">
+          <div className="admin-field">
+            <label htmlFor="bahasa">Bahasa</label>
+            <input
+              id="bahasa"
+              name="bahasa"
+              defaultValue={nilai.bahasa}
+              aria-invalid={errors.bahasa !== undefined}
+              placeholder="Contoh: Bahasa Indonesia"
+              className={kelasKontrol(errors.bahasa !== undefined)}
+            />
+            <PesanGalat pesan={errors.bahasa} />
+            <Petunjuk>Dikosongkan berarti “Bahasa Indonesia”.</Petunjuk>
+          </div>
+
+          <div className="admin-field">
+            <label htmlFor="ukuranBuku">Ukuran buku</label>
+            <input
+              id="ukuranBuku"
+              name="ukuranBuku"
+              defaultValue={nilai.ukuranBuku}
+              aria-invalid={errors.ukuranBuku !== undefined}
+              placeholder="Contoh: UNESCO 15.5 x 23 cm"
+              className={kelasKontrol(errors.ukuranBuku !== undefined)}
+            />
+            <PesanGalat pesan={errors.ukuranBuku} />
+            <Petunjuk>Dikosongkan berarti “UNESCO 15.5 x 23 cm”.</Petunjuk>
+          </div>
+        </div>
       </section>
 
       <section className="admin-form-section">

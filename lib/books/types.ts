@@ -21,6 +21,11 @@ export type Book = {
   priceEbook: number | null;
   createdAt: Date;
   updatedAt: Date;
+  /** Spesifikasi teknis buku (opsional / nullable di database). */
+  formatBuku?: string | null;
+  jenisBuku?: string | null;
+  bahasa?: string | null;
+  ukuranBuku?: string | null;
 };
 
 export type Page<T> = {
@@ -49,6 +54,10 @@ export const KOLOM_BUKU = [
   "isbn",
   "price_print",
   "price_ebook",
+  "format_buku",
+  "jenis_buku",
+  "bahasa",
+  "ukuran_buku",
   "created_at",
   "updated_at",
 ].join(", ");
@@ -97,5 +106,10 @@ export function mapRow(row: Record<string, unknown>): Book {
     priceEbook: angkaAtauNull(row.price_ebook),
     createdAt: waktu(row.created_at),
     updatedAt: waktu(row.updated_at),
+    // Kolom spesifikasi bersifat opsional; undefined -> default di BookDetail.
+    formatBuku: teksAtauNull(row.format_buku),
+    jenisBuku: teksAtauNull(row.jenis_buku),
+    bahasa: teksAtauNull(row.bahasa),
+    ukuranBuku: teksAtauNull(row.ukuran_buku),
   };
 }

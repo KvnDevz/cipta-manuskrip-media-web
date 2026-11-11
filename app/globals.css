@@ -484,8 +484,10 @@ body {
 .kat-card-media {
   position: relative;
   display: block;
-  height: 258px;
-  padding: 18px 18px 0;
+  aspect-ratio: 2 / 3;
+  height: auto;
+  /* Ruang atas ekstra menjaga badge status tidak menutupi sampul. */
+  padding: 42px 18px 18px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 60% 10%, rgba(255, 255, 255, 0.9), transparent 60%),
@@ -497,13 +499,14 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center;
   filter: drop-shadow(0 12px 20px rgba(16, 42, 49, 0.16));
   transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.25, 1);
 }
 
 .kat-card:hover .kat-card-cover {
-  transform: translateY(-3px) scale(1.012);
+  /* Tanpa scale: tepi sampul tetap utuh, tidak terpotong overflow media. */
+  transform: translateY(-2px);
 }
 
 .kat-card-badge {
@@ -1021,6 +1024,13 @@ body {
 
 .katalog-skeleton-crumbs {
   gap: 10px;
+}
+
+.katalog-skeleton-card .skeleton-cover {
+  width: calc(100% - 36px);
+  height: auto;
+  aspect-ratio: 2 / 3;
+  margin: 42px 18px 18px;
 }
 
 .katalog-skeleton-card .kat-card-body {
@@ -1857,13 +1867,6 @@ body {
   color: #ffffff;
 }
 
-.site-footer-note {
-  flex: 1 1 340px;
-  max-width: 52ch;
-  color: #7e968f;
-  text-align: right;
-}
-
 /* --- Halaman 404 --------------------------------------------------------- */
 
 .notfound {
@@ -2130,10 +2133,6 @@ body {
     padding: 16px 24px 24px;
   }
 
-  .site-footer-note {
-    text-align: left;
-  }
-
   .katalog-help {
     flex-direction: column;
     align-items: flex-start;
@@ -2195,8 +2194,9 @@ body {
   }
 
   .kat-card-media {
-    height: 196px;
-    padding: 12px 12px 0;
+    aspect-ratio: 2 / 3;
+    height: auto;
+    padding: 38px 12px 12px;
   }
 
   .kat-card-body {
@@ -2356,11 +2356,6 @@ body {
     padding: 15px 20px 24px;
   }
 
-  .site-footer-note {
-    flex: 0 0 auto;
-    text-align: left;
-  }
-
   .preview-head {
     align-items: flex-start;
     flex-direction: column;
@@ -2379,7 +2374,8 @@ body {
   }
 
   .kat-card-media {
-    height: 250px;
+    aspect-ratio: 2 / 3;
+    height: auto;
   }
 }
 
@@ -2524,11 +2520,12 @@ body {
 
 /* --- Penyesuaian hasil tinjau visual ------------------------------------ */
 
-/* Ponsel kecil: satu kolom dengan sampul yang tidak memenuhi layar. */
+/* Ponsel kecil: satu kolom, sampul potret tetap utuh. */
 @media (max-width: 420px) {
   .kat-card-media {
-    height: 232px;
-    padding: 14px 14px 0;
+    aspect-ratio: 2 / 3;
+    height: auto;
+    padding: 38px 14px 14px;
   }
 
   .kat-card {
@@ -4266,11 +4263,11 @@ html {
     .package-card,
     .package-heading,
     .journal-facility,
-    .journal-asset-card,
+    .journal-advantage-card,
+    .journal-video,
     .journal-next-step,
     .journal-category-card,
-    .about-value-card,
-    .about-steps li,
+    .about-team-role,
     .about-pending-card,
     .kat-card {
       animation: cmm-view-reveal linear both;
@@ -4323,11 +4320,11 @@ html {
   .package-card,
   .package-heading,
   .journal-facility,
-  .journal-asset-card,
+  .journal-advantage-card,
+  .journal-video,
   .journal-next-step,
   .journal-category-card,
-  .about-value-card,
-  .about-steps li,
+  .about-team-role,
   .about-pending-card,
   .kat-card,
   .motion-pending {
@@ -5232,5 +5229,639 @@ html {
 
   .katalog-stat-count strong {
     font-size: 38px;
+  }
+}
+
+/* ==========================================================================
+   TAHAP 1 — KONTRAK DESAIN: header, footer, dan hero berfoto
+   --------------------------------------------------------------------------
+   Aturan di blok ini sengaja ditaruh paling akhir: berkas ini punya
+   beberapa lapisan penimpaan historis, jadi yang menang harus yang terbaru.
+   ========================================================================== */
+
+/* --- §1.1 Slot kanan header: tautan biasa, bukan tombol CTA -------------- */
+
+.nav-link-kanan {
+  grid-area: cta;
+  justify-self: end;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    gap: clamp(12px, 2.4vw, 24px);
+  }
+}
+
+/* Empat tautan di tengah tidak muat dalam satu baris ponsel: baris kedua
+   navbar bisa digeser mendatar, tanpa menyembunyikan salah satu menu. */
+@media (max-width: 700px) {
+  .nav-links {
+    width: 100%;
+    height: auto;
+    min-height: 36px;
+    justify-content: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links .nav-link {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .nav-links .nav-link::after {
+    bottom: 1px;
+    height: 1.5px;
+  }
+
+  .nav-link-kanan {
+    min-height: 38px;
+    padding: 0 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+  .nav-links .nav-link {
+    padding: 0 9px;
+    font-size: 9.5px;
+  }
+
+  .nav-link-kanan {
+    padding: 0 5px;
+    font-size: 9.5px;
+  }
+}
+
+/* --- Hero berfoto: tiga kolom, kartu kiri/kanan + teks tengah ------------ */
+
+.home-hero--foto {
+  min-height: 0;
+  padding: 20px;
+  border: 1px solid rgba(16, 42, 49, 0.06);
+  border-radius: 26px;
+  background:
+    radial-gradient(ellipse at 50% -12%, rgba(194, 204, 8, 0.1), transparent 46%),
+    radial-gradient(ellipse at 6% 100%, rgba(212, 163, 70, 0.11), transparent 48%),
+    radial-gradient(ellipse at 94% 100%, rgba(9, 103, 125, 0.11), transparent 48%),
+    #fbfcfb;
+  box-shadow:
+    0 18px 54px rgba(16, 42, 49, 0.035),
+    inset 0 1px rgba(255, 255, 255, 0.9);
+}
+
+.hero-photo-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.85fr) minmax(0, 1fr);
+  grid-template-areas: "kiri tengah kanan";
+  align-items: stretch;
+  gap: 16px;
+  min-height: 420px;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.hero-photo-card--kopi {
+  grid-area: kiri;
+}
+
+.home-hero--foto .hero-copy {
+  grid-area: tengah;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  justify-content: center;
+  padding: 28px 12px 20px;
+}
+
+.hero-photo-card--cmm {
+  grid-area: kanan;
+}
+
+.home-hero--foto .hero-title {
+  font-size: clamp(30px, 3.45vw, 49px);
+  font-weight: 750;
+  line-height: 1.05;
+  letter-spacing: -0.06em;
+}
+
+/* Baris kedua dirapatkan supaya "Semudah Beli Kopi." tidak pecah di desktop,
+   meniru susunan dua baris pada acuan desain. */
+.home-hero--foto .hero-title-line {
+  white-space: nowrap;
+}
+
+.home-hero--foto .hero-description {
+  font-size: clamp(13px, 1.25vw, 16px);
+}
+
+.home-hero--foto .hero-actions {
+  gap: 10px;
+}
+
+.home-hero--foto .button-primary,
+.home-hero--foto .button-secondary {
+  min-height: 46px;
+  padding: 0 17px;
+  font-size: 12px;
+}
+
+.home-hero--foto .scroll-cue {
+  margin-top: 26px;
+}
+
+/* --- Kartu foto --------------------------------------------------------- */
+
+.hero-photo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 18px 16px 16px;
+  border: 1px solid rgba(16, 42, 49, 0.08);
+  border-radius: 18px;
+  isolation: isolate;
+}
+
+.hero-photo-card--kopi {
+  background: linear-gradient(160deg, rgba(255, 252, 244, 0.96), rgba(249, 244, 231, 0.92));
+}
+
+.hero-photo-card--cmm {
+  background: linear-gradient(160deg, rgba(244, 251, 249, 0.96), rgba(232, 244, 242, 0.92));
+}
+
+/* Foto besar samar di belakang kartu, bukan vektor abstrak. */
+.hero-photo-card-latar {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.12;
+  filter: saturate(0.7);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 92%);
+}
+
+.hero-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hero-card-kicker {
+  margin: 0;
+  color: #8a7a4d;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 0.17em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.hero-photo-card--cmm .hero-card-kicker {
+  color: #3d7a83;
+}
+
+.hero-card-title {
+  margin: 7px 0 0;
+  color: #173b3d;
+  font-size: 23px;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+}
+
+.hero-card-badge {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  place-items: center;
+  border: 1px solid rgba(16, 42, 49, 0.1);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  color: #a8843c;
+}
+
+.hero-photo-card--cmm .hero-card-badge {
+  color: #09677d;
+}
+
+.hero-step-list {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  margin: 22px 0 0;
+  padding: 0 0 0 30px;
+  list-style: none;
+}
+
+.hero-step-list::before {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 10px;
+  width: 1px;
+  background: rgba(180, 145, 70, 0.35);
+  content: "";
+}
+
+.hero-photo-card--cmm .hero-step-list::before {
+  background: rgba(9, 103, 125, 0.28);
+}
+
+.hero-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-step-no {
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  display: grid;
+  width: 21px;
+  height: 21px;
+  transform: translateY(-50%);
+  place-items: center;
+  border-radius: 50%;
+  background: #d4a346;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 750;
+  box-shadow: 0 0 0 4px rgba(212, 163, 70, 0.13);
+}
+
+.hero-photo-card--cmm .hero-step-no {
+  background: #09677d;
+  box-shadow: 0 0 0 4px rgba(9, 103, 125, 0.13);
+}
+
+.hero-step-foto {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #fff;
+  border-radius: 9px;
+  background: #e9eee9;
+  box-shadow: 0 5px 14px rgba(16, 42, 49, 0.16);
+  object-fit: cover;
+}
+
+.hero-step-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.hero-step-copy strong {
+  color: #1d3d3f;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.hero-step-copy span {
+  color: #6c7b76;
+  font-size: 9.5px;
+  line-height: 1.45;
+}
+
+.hero-card-bukti {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(9, 103, 125, 0.13);
+}
+
+.hero-bukti-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 7px;
+  border: 1px solid rgba(9, 103, 125, 0.14);
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #3f6c71;
+  font-size: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hero-bukti-chip img {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+}
+
+/* --- Kerangka muat beranda mengikuti layout baru ------------------------ */
+
+.home-hero-skeleton .hero-photo-layout {
+  width: 100%;
+}
+
+.home-hero-skeleton .home-skeleton-center {
+  grid-area: tengah;
+  margin: 0;
+  padding: 20px 0;
+}
+
+.home-skeleton-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.home-skeleton-card--kiri {
+  grid-area: kiri;
+}
+
+.home-skeleton-card--kanan {
+  grid-area: kanan;
+}
+
+.home-skeleton-steps {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.home-skeleton-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Responsif ---------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .hero-photo-layout {
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "tengah tengah"
+      "kiri kanan";
+    gap: 12px;
+  }
+
+  .home-hero--foto .hero-copy {
+    padding: 20px 8px 8px;
+  }
+
+  .home-hero--foto .hero-title {
+    font-size: clamp(38px, 6.4vw, 58px);
+  }
+
+  .home-hero--foto .hero-title-line {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-hero--foto {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .hero-photo-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "tengah"
+      "kiri"
+      "kanan";
+  }
+
+  .home-hero--foto .hero-copy {
+    padding: 18px 4px 10px;
+  }
+
+  .home-hero--foto .hero-title {
+    font-size: clamp(32px, 9.4vw, 46px);
+  }
+
+  .home-hero--foto .hero-title br {
+    display: none;
+  }
+
+  .home-hero--foto .scroll-cue {
+    margin-top: 18px;
+  }
+
+  .hero-photo-card {
+    padding: 14px 13px;
+  }
+
+  .hero-card-title {
+    font-size: 20px;
+  }
+
+  .hero-step-list {
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .hero-step {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .hero-step-foto {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero--foto .eyebrow-pill,
+  .home-hero--foto .hero-title,
+  .home-hero--foto .hero-title .headline-accent::after,
+  .home-hero--foto .hero-description,
+  .home-hero--foto .button-primary,
+  .home-hero--foto .button-secondary,
+  .home-hero--foto .scroll-cue svg {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   LANJUTAN TAHAP 1 — navbar 2 menu, tipografi senior
+   --------------------------------------------------------------------------
+   Arahan klien: navbar cukup Beranda + Tentang Kami; tulisan dibesarkan
+   untuk audiens dosen senior. Dekorasi orbit latar sudah dihapus agar hero
+   lebih bersih, sementara kartu foto dan buku tetap dipertahankan.
+   ========================================================================== */
+
+.home-hero--foto .hero-photo-layout {
+  z-index: 1;
+}
+
+/* --- Keterbacaan lanjutan untuk audiens dosen senior -------------------- */
+
+/* Subheadline: permintaan eksplisit klien, dinaikkan lagi + kontras lebih. */
+.home-hero--foto .hero-description {
+  max-width: 32ch;
+  color: #2f474c;
+  font-size: clamp(20px, 2.15vw, 28px);
+  font-weight: 550;
+  line-height: 1.42;
+  letter-spacing: -0.012em;
+}
+
+.home-hero--foto .eyebrow-pill {
+  padding: 10px 17px;
+  font-size: 14px;
+}
+
+.home-hero--foto .button-primary,
+.home-hero--foto .button-secondary {
+  min-height: 54px;
+  padding: 0 22px;
+  font-size: 15px;
+}
+
+.home-hero--foto .scroll-cue {
+  font-size: 13px;
+}
+
+.nav-link {
+  font-size: 15.5px;
+}
+
+.nav-link-kanan {
+  font-size: 15.5px;
+  font-weight: 650;
+}
+
+.hero-photo-card {
+  padding: 22px 20px 20px;
+}
+
+.hero-card-kicker {
+  font-size: 10.5px;
+  color: #8a6d2c;
+}
+
+.hero-card-title {
+  font-size: 28px;
+}
+
+.hero-card-badge {
+  width: 38px;
+  height: 38px;
+  flex-basis: 38px;
+}
+
+.hero-step {
+  grid-template-columns: 64px minmax(0, 1fr);
+}
+
+.hero-step-foto {
+  width: 64px;
+  height: 64px;
+}
+
+.hero-step-list::before {
+  left: 12px;
+}
+
+.hero-step-no {
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+
+.hero-step-copy strong {
+  font-size: 15px;
+}
+
+.hero-step-copy span {
+  font-size: 12.5px;
+  color: #4c605d;
+}
+
+.hero-bukti-chip {
+  padding: 7px 10px;
+  font-size: 11px;
+}
+
+/* --- Responsif & aksesibilitas gerak ------------------------------------ */
+
+@media (max-width: 700px) {
+  .nav-links {
+    justify-content: center;
+    gap: 0;
+    overflow: visible;
+  }
+
+  .nav-links .nav-link {
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .nav-link-kanan {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-photo-card {
+    padding: 17px 15px;
+  }
+
+  .hero-card-title {
+    font-size: 24px;
+  }
+
+  .hero-step {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+
+  .hero-step-foto {
+    width: 56px;
+    height: 56px;
+  }
+
+  .hero-step-copy strong {
+    font-size: 14px;
+  }
+
+  .hero-step-copy span {
+    font-size: 12px;
+  }
+
+  .home-hero--foto .hero-description {
+    max-width: 30ch;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 390px) {
+  .nav-links .nav-link,
+  .nav-link-kanan {
+    font-size: 12px;
+  }
+
+  .home-hero--foto .hero-description {
+    font-size: 19px;
   }
 }

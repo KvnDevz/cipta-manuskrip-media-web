@@ -65,4 +65,36 @@ describe("mapRow", () => {
     expect(buku.synopsis).toBeNull();
     expect(buku.bookInfo).toBeNull();
   });
+
+  it("memetakan kolom spesifikasi buku format_buku, jenis_buku, bahasa, dan ukuran_buku", () => {
+    const baris = {
+      ...barisMysql(),
+      format_buku: "E-Book",
+      jenis_buku: "Monograf",
+      bahasa: "Bahasa Indonesia",
+      ukuran_buku: "A5 14.8 x 21 cm",
+    };
+    const buku = mapRow(baris);
+
+    expect(buku.formatBuku).toBe("E-Book");
+    expect(buku.jenisBuku).toBe("Monograf");
+    expect(buku.bahasa).toBe("Bahasa Indonesia");
+    expect(buku.ukuranBuku).toBe("A5 14.8 x 21 cm");
+  });
+
+  it("mengembalikan null untuk spesifikasi buku yang belum diisi", () => {
+    const baris = {
+      ...barisMysql(),
+      format_buku: null,
+      jenis_buku: null,
+      bahasa: null,
+      ukuran_buku: null,
+    };
+    const buku = mapRow(baris);
+
+    expect(buku.formatBuku).toBeNull();
+    expect(buku.jenisBuku).toBeNull();
+    expect(buku.bahasa).toBeNull();
+    expect(buku.ukuranBuku).toBeNull();
+  });
 });

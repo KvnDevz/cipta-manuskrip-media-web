@@ -83,7 +83,14 @@ const nextConfig = {
    * peringatan "Blocked cross-origin request" dan hot reload tidak jalan.
    * Tidak berpengaruh pada build produksi.
    */
-  allowedDevOrigins: ["127.0.0.1", "localhost", "*.e2b.app"],
+  // Pola `**` juga disertakan: sebagian proxy pratinjau meneruskan Origin
+  // induk (iframe) untuk koneksi HMR, bukan host pratinjau itu sendiri.
+  // Semua entri ini hanya berlaku di mode dev.
+  allowedDevOrigins: [
+    "127.0.0.1", "localhost",
+    "*.e2b.app", "**.e2b.app",
+    "arena.ai", "*.arena.ai", "**.arena.ai",
+  ],
 
   experimental: {
     serverActions: {
@@ -108,7 +115,7 @@ const nextConfig = {
    * hash isi, jadi tetap aman di-cache selamanya.
    */
   async headers() {
-    return [
+    const aturan = [
       {
         source: "/:path((?!_next/static|_next/image|covers).*)",
         headers: [
@@ -124,6 +131,32 @@ const nextConfig = {
         ],
       },
     ];
+
+    /**
+     * KHUSUS MODE DEV — perbaikan CSS yang "tidak ke-load" di pratinjau.
+     *
+     * Turbopack memberi nama chunk CSS yang STABIL
+     * (`app_globals_css_<hash>.css`) dan hash itu tidak berubah saat isi
+     * `globals.css` disunting. Peramban maupun proxy pratinjau Arena bisa
+     * menyimpan salinan lama di URL yang sama, sehingga aturan baru (marquee,
+     * orbit, dll.) tidak pernah tampil meski server sudah menyajikan CSS
+     * terbaru. Paksa aset CSS dev untuk selalu diambil ulang.
+     *
+     * Tidak berlaku di produksi: di sana nama berkas CSS sudah ber-hash isi
+     * dan justru harus di-cache agresif.
+     */
+    if (process.env.NODE_ENV !== "production") {
+      aturan.unshift({
+        source: "/_next/static/chunks/:file",
+        headers: [
+          { key: "Cache-Control", value: "no-store, max-age=0" },
+          { key: "CDN-Cache-Control", value: "no-store" },
+          { key: "Surrogate-Control", value: "no-store" },
+        ],
+      });
+    }
+
+    return aturan;
   },
 
   turbopack: {
