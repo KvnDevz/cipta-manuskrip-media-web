@@ -31,7 +31,6 @@ const MOTION_TARGETS = [
   ".about-team",
   ".about-team-role",
   ".about-contact",
-  ".about-pending-card",
   ".about-medsos",
   ".home-prinsip .prinsip-head",
   ".prinsip-card",
