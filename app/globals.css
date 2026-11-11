@@ -6029,3 +6029,142 @@ html {
     font-size: 19px;
   }
 }
+
+/* ==========================================================================
+   POLES KHUSUS MOBILE (<=700px)
+   --------------------------------------------------------------------------
+   Header sticky dua baris, teks kecil, dan target sentuh di bawah 44px
+   membuat halaman terasa "rusak" di layar HP: sulit disentuh, dan input
+   berfont <16px memicu auto-zoom iOS saat disentuh sehingga halaman
+   melompat. Semua perbaikan di blok ini HANYA aktif di layar kecil —
+   tampilan desktop tidak berubah.
+   ========================================================================== */
+@media (max-width: 700px) {
+  /* Anchor (legalitas/tim/medsos/dll) tidak tertutup header sticky. */
+  html {
+    scroll-padding-top: 116px;
+  }
+
+  /* --- Target sentuh minimal 44px --------------------------------------- */
+  .site-nav {
+    grid-template-rows: 48px 44px;
+    min-height: 100px;
+  }
+
+  .brand-lockup,
+  .nav-link,
+  .nav-links .nav-link,
+  .closing-note > a,
+  .site-footer-bottom-nav a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .closing-note > a {
+    width: 44px;
+    height: 44px;
+  }
+
+  .footer-link,
+  .footer-contact-copy a,
+  .katalog-crumbs a,
+  .detail-crumbs a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .footer-nav,
+  .footer-contact {
+    gap: 4px;
+  }
+
+  .katalog-tab {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .publish-scroll,
+  .journal-scroll,
+  .journal-back-link a,
+  .journal-text-link,
+  .journal-return-link a,
+  .admin-back-link,
+  .admin-view-site,
+  .admin-inline-link,
+  .admin-table-action,
+  .detail-error-link,
+  .detail-error-retry,
+  .admin-login-back,
+  .journal-back-link,
+  .katalog-error-retry {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .admin-password-toggle {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .admin-pagination a {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* --- Keterbacaan teks kecil di layar HP -------------------------------- */
+  .brand-name small {
+    font-size: 7px;
+  }
+
+  .footer-title {
+    font-size: 11px;
+  }
+
+  .footer-contact-copy small {
+    font-size: 10.5px;
+  }
+
+  .about-kicker,
+  .journal-section-kicker,
+  .journal-assist-label,
+  .journal-form-heading p,
+  .admin-eyebrow,
+  .katalog-kicker {
+    font-size: 10px;
+  }
+}
+
+/* Input berfont <16px memicu auto-zoom iOS saat fokus — pakai 16px di layar
+   kecil supaya halaman tidak melompat saat mengisi formulir. */
+@media (max-width: 700px) {
+  input,
+  textarea,
+  select,
+  .admin-control,
+  .assist-topic-input,
+  .admin-login-input-wrap input {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .footer-contact a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 700px) {
+  /* Sidebar admin (nav horizontal) tidak boleh melebihi lebar layar saat
+     item navnya panjang — tanpa ini halaman admin overflow ~12px di 320px. */
+  .admin-sidebar {
+    min-width: 0;
+  }
+}

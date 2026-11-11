@@ -133,6 +133,7 @@ export const PAKET_BUKU: ReadonlyArray<{
       "Restrukturisasi bab dan judul",
       "Penyuntingan naskah",
       "Layout isi buku",
+      "Desain cover buku",
       "Pengurusan ISBN",
       "Royalti penulis 30%",
     ],
