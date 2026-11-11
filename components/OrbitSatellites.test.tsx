@@ -16,7 +16,7 @@ describe("OrbitSatellites", () => {
 
   it("cincin luar memakai dua foto diskusi buku, sisanya ikon buku & naskah", () => {
     expect(html).toContain('src="/aset/orbit-diskusi-buku.png"');
-    expect(html).toContain('src="/aset/orbit-diskusi-buku-2.png"');
+    expect(html).toContain('src="/aset/orbit-diskusi-buku-2.jpg"');
     expect((html.match(/orbit-sat__gambar/g) ?? [])).toHaveLength(2);
     expect((html.match(/orbit-sat--foto/g) ?? [])).toHaveLength(2);
     expect(html).toContain("lucide-book-open");

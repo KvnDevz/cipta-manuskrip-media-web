@@ -81,7 +81,7 @@ describe("beranda", () => {
     // cincin tengah & dalam masing-masing satu ikon.
     expect((html.match(/orbit-sat__gambar/g) ?? []).length).toBe(2);
     expect(html).toContain('src="/aset/orbit-diskusi-buku.png"');
-    expect(html).toContain('src="/aset/orbit-diskusi-buku-2.png"');
+    expect(html).toContain('src="/aset/orbit-diskusi-buku-2.jpg"');
     expect(html.indexOf("orbit-outer")).toBeLessThan(html.indexOf("orbit-sat"));
     expect(html.indexOf("orbit-sat")).toBeLessThan(html.indexOf("hero-copy"));
 
@@ -107,11 +107,14 @@ describe("beranda", () => {
     // Satelit murni hiasan: non-aktif secara pointer dan tersembunyi di layar kecil.
     expect(css).toMatch(/\.home-hero \.orbit-sat-rotor \{[^}]*pointer-events:\s*none/);
     expect(css).toMatch(/@media \(max-width: 899px\) \{\s*\.home-hero \.orbit-sat-rotor \{\s*display:\s*none/);
-    // Foto bulatan mengisi penuh lingkaran badge (pembungkus ikon 100% supaya tidak
-    // kolaps saat rotor berputar; gambar di-crop penuh ke lingkaran).
+    // Foto bulatan mengisi penuh lingkaran badge: gambar di-absolute-kan ke badge
+    // (inset:0 + 100%) supaya tidak bisa kolaps/oval saat rotor berputar, dan
+    // badge foto 54px menang specificity dari `.home-hero .orbit-sat` 46px.
     expect(css).toMatch(/\.home-hero \.orbit-sat__ikon \{[^}]*width:\s*100%[^}]*height:\s*100%/);
-    expect(css).toMatch(/\.home-hero \.orbit-sat__gambar \{[^}]*border-radius:\s*50%[^}]*object-fit:\s*cover/);
-    expect(css).toMatch(/\.orbit-sat--foto \{[^}]*width:\s*54px/);
+    expect(css).toMatch(/\.home-hero \.orbit-sat__gambar \{[^}]*position:\s*absolute[^}]*inset:\s*0[^}]*width:\s*100%[^}]*height:\s*100%[^}]*border-radius:\s*50%[^}]*object-fit:\s*cover/);
+    expect(css).toMatch(/\.home-hero \.orbit-sat--foto \{[^}]*width:\s*54px[^}]*height:\s*54px/);
+    // Crop foto kedua (portrait) diarahkan ke wajah + buku terbuka.
+    expect(css).toMatch(/\.home-hero \.orbit-sat--4 \.orbit-sat__gambar \{[^}]*object-position:\s*50% 35%/);
   });
 
   it("tidak ada lagi bintang sparkle pada aksen kata Media di headline", () => {

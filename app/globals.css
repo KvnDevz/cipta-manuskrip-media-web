@@ -4552,9 +4552,9 @@ html {
 /* ==========================================================================
    SATELIT IKON DI GARIS ORBIT HERO (SATU PER CINCIN, BERPUTAR)
    --------------------------------------------------------------------------
-   TIGA bulatan ikon kecil — satu untuk SETIAP garis cincin orbit: orang/
-   penulis di cincin luar, buku di cincin tengah, naskah di cincin dalam.
-   Ketiganya menempel TEPAT di garis cincin dan berputar mengitari pusat hero
+   Bulatan kecil menempel di garis cincin orbit: DUA foto orang asli di
+   cincin luar, ikon buku di cincin tengah, ikon naskah di cincin dalam.
+   Bulatan menempel TEPAT di garis cincin dan berputar mengitari pusat hero
    dengan arah bergantian antar cincin (luar maju, tengah mundur, dalam
    maju), jadi tidak semuanya bergerak ke arah yang sama.
 
@@ -4640,16 +4640,22 @@ html {
   height: 20px;
 }
 
-/* Bulatan foto (orang berdiskusi buku): gambar mengisi penuh lingkaran badge
-   (sedikit lebih besar dari bulatan ikon supaya foto terbaca), di-crop ke
-   buku terbuka + tangan. Ikut dibungkus .orbit-sat__ikon sehingga tetap tegak
-   saat rotor berputar. */
-.orbit-sat--foto {
+/* Bulatan foto (orang berdiskusi buku): sedikit lebih besar dari bulatan ikon
+   supaya foto terbaca. Selector WAJIB pakai prefix .home-hero supaya menang
+   melawan `.home-hero .orbit-sat` (specificity 0,2,0) — tanpa prefix, aturan
+   54px kalah dan badge foto jatuh kembali ke 46px. */
+.home-hero .orbit-sat--foto {
   width: 54px;
   height: 54px;
 }
 
+/* Foto mengisi PENUH lingkaran badge: diposisikan absolute dengan inset:0
+   sehingga selalu mengacu ke kotak badge/bungkus ikon (keduanya berukuran
+   penuh) — gambar tidak bisa kolaps atau jadi oval lagi saat rotor berputar.
+   Ikut dibungkus .orbit-sat__ikon sehingga tetap tegak saat mengorbit. */
 .home-hero .orbit-sat__gambar {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -4658,22 +4664,27 @@ html {
   object-position: 50% 58%;
 }
 
+/* Foto kedua (portrait): crop diarahkan ke wajah + buku terbuka + tangan. */
+.home-hero .orbit-sat--4 .orbit-sat__gambar {
+  object-position: 50% 35%;
+}
+
 /* Ukuran bulatan sedikit mengecil ke cincin dalam supaya terasa kedalaman. */
-.orbit-sat--2 { width: 42px; height: 42px; }
-.orbit-sat--2 svg { width: 18px; height: 18px; }
-.orbit-sat--3 { width: 38px; height: 38px; }
-.orbit-sat--3 svg { width: 16px; height: 16px; }
+.home-hero .orbit-sat--2 { width: 42px; height: 42px; }
+.home-hero .orbit-sat--2 svg { width: 18px; height: 18px; }
+.home-hero .orbit-sat--3 { width: 38px; height: 38px; }
+.home-hero .orbit-sat--3 svg { width: 16px; height: 16px; }
 
 /* --- Posisi awal TEPAT di garis cincin -------------------------------------
    left/top = 50% + 50%·cos/sin(sudut) sebagai persentase kotak rotor
    (radius selalu 50% = garis cincin, tidak ada yang keluar dari orbit).
    Sudut diukur dari sumbu-x positif, y turun ke bawah. */
-.orbit-sat--1 { left: 3.02%; top: 32.9%; color: #276d67; }
-.orbit-sat--2 { left: 78.68%; top: 9.04%; color: #a98235; }
-.orbit-sat--3 { left: 0%; top: 50%; color: #7c8a0a; }
+.home-hero .orbit-sat--1 { left: 3.02%; top: 32.9%; color: #276d67; }
+.home-hero .orbit-sat--2 { left: 78.68%; top: 9.04%; color: #a98235; }
+.home-hero .orbit-sat--3 { left: 0%; top: 50%; color: #7c8a0a; }
 /* Foto kedua di cincin luar: sudut 20° — berjarak 180° dari foto pertama (200°),
    tetap di garis cincin luar dan satu arah putar (rotor--luar yang sama). */
-.orbit-sat--4 { left: 96.98%; top: 67.1%; }
+.home-hero .orbit-sat--4 { left: 96.98%; top: 67.1%; }
 
 /* Di layar menengah/kecil, ikon orbit akan bertabrakan dengan judul hero;
    karena murni hiasan (aria-hidden), cukup disembunyikan. */

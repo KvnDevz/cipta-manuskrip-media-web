@@ -22,7 +22,7 @@ import { BookOpen, Feather, type LucideIcon } from "lucide-react";
  * dan menempatkan rotor di bawah `hero-copy`, jadi tidak mengganggu pembaca
  * layar, klik, maupun keterbacaan judul.
  */
-type Satelit = { className: string; Ikon?: LucideIcon; gambar?: string; posisiGambar?: string };
+type Satelit = { className: string; Ikon?: LucideIcon; gambar?: string };
 
 const KELOMPOK_ROTOR: { rotor: string; satelit: Satelit[] }[] = [
   {
@@ -31,7 +31,7 @@ const KELOMPOK_ROTOR: { rotor: string; satelit: Satelit[] }[] = [
     rotor: "orbit-sat-rotor--luar",
     satelit: [
       { className: "orbit-sat--1 orbit-sat--foto", gambar: "/aset/orbit-diskusi-buku.png" },
-      { className: "orbit-sat--4 orbit-sat--foto", gambar: "/aset/orbit-diskusi-buku-2.png", posisiGambar: "50% 42%" },
+      { className: "orbit-sat--4 orbit-sat--foto", gambar: "/aset/orbit-diskusi-buku-2.jpg" },
     ],
   },
   {
@@ -51,17 +51,12 @@ export function OrbitSatellites() {
     <>
       {KELOMPOK_ROTOR.map(({ rotor, satelit }) => (
         <div key={rotor} aria-hidden="true" className={`orbit-sat-rotor ${rotor}`}>
-          {satelit.map(({ className, Ikon, gambar, posisiGambar }) => (
+          {satelit.map(({ className, Ikon, gambar }) => (
             <span key={className} className={`orbit-sat ${className}`}>
               <span className="orbit-sat__ikon">
                 {gambar ? (
                   // eslint-disable-next-line @next/next/no-img-element -- aset lokal dekoratif di dalam rotor aria-hidden
-                  <img
-                    src={gambar}
-                    alt=""
-                    className="orbit-sat__gambar"
-                    style={posisiGambar ? { objectPosition: posisiGambar } : undefined}
-                  />
+                  <img src={gambar} alt="" className="orbit-sat__gambar" />
                 ) : (
                   Ikon && <Ikon size={20} strokeWidth={1.8} />
                 )}
