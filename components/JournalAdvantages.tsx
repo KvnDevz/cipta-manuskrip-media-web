@@ -1,15 +1,15 @@
-/* eslint-disable @next/next/no-img-element -- poster statis lokal di public/aset/;
-   pola sama dengan foto hero jurnal agar preview tidak bergantung pada
-   image optimizer Next. */
-import { Coffee, Inbox, Lightbulb, Play } from "lucide-react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Coffee, Inbox, Lightbulb, Pause, Play } from "lucide-react";
 
 /**
  * Section “Keunggulan Kami” pada /publish-jurnal.
  *
  * Menggantikan section lama “Ruang untuk bukti publikasi”. Tata letak dan
  * isi mengikuti referensi klien: kicker + judul, tiga kartu keunggulan,
- * lalu bidang video proses publikasi dengan poster, tombol putar, dan
- * badge autoplay/muted.
+ * lalu pemutar video proses publikasi dengan autoplay saat muncul di layar,
+ * poster transisi awal, kontrol play/pause interaktif, dan badge indikator.
  */
 const KEUNGGULAN = [
   {
@@ -33,6 +33,76 @@ const KEUNGGULAN = [
 ] as const;
 
 export function JournalAdvantages() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const userPausedRef = useRef(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Pastikan muted aktif di DOM agar autoplay diizinkan peramban
+    video.muted = true;
+
+    if (!video.paused) {
+      setIsPlaying(true);
+    }
+
+    if (typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            // Autoplay saat video masuk ke layar jika pengguna belum sengaja mem-pause
+            if (video.paused && !userPausedRef.current) {
+              const playPromise = video.play();
+              if (playPromise !== undefined) {
+                playPromise
+                  .then(() => setIsPlaying(true))
+                  .catch(() => {
+                    // Browser policy mengabaikan autoplay otomatis bila belum ada interaksi
+                  });
+              }
+            }
+          } else {
+            // Pause saat video keluar dari pandangan untuk menghemat daya & memori
+            if (!video.paused) {
+              video.pause();
+              setIsPlaying(false);
+            }
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      userPausedRef.current = false;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => {});
+      }
+    } else {
+      userPausedRef.current = true;
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <section className="journal-advantages-section" aria-labelledby="journal-advantages-title">
       <div className="journal-advantages-head">
@@ -53,24 +123,55 @@ export function JournalAdvantages() {
         ))}
       </div>
 
-      <figure className="journal-video">
-        <img
-          className="journal-video-poster"
-          src="/aset/jurnal-video-poster.jpg"
-          width={1920}
-          height={1080}
-          alt="Poster video proses publikasi: meja kerja dengan buku, naskah terbuka, pena, dan secangkir kopi."
-          loading="lazy"
-          decoding="async"
-        />
-        <span className="journal-video-chip journal-video-chip--left">
+      <figure
+        className={`journal-video ${isPlaying ? "is-playing" : ""}`}
+        onClick={togglePlay}
+      >
+        <video
+          ref={videoRef}
+          className="journal-video-media journal-video-poster"
+          src="/video/video_bukti_korespondensi.mp4"
+          poster="/aset/jurnal-video-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          aria-label="Video bukti korespondensi dan proses publikasi jurnal"
+        >
+          <source src="/video/video_bukti_korespondensi.mp4" type="video/mp4" />
+          Browser Anda tidak mendukung tag video.
+        </video>
+        <span
+          className="journal-video-chip journal-video-chip--left"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Play size={11} strokeWidth={2} aria-hidden="true" /> VIDEO PROSES PUBLIKASI
         </span>
-        <span className="journal-video-chip journal-video-chip--right">AUTOPLAY · MUTED</span>
-        <button type="button" className="journal-video-play" aria-label="Putar video proses publikasi">
-          <Play size={22} strokeWidth={2} aria-hidden="true" />
+        <span
+          className="journal-video-chip journal-video-chip--right"
+          onClick={(e) => e.stopPropagation()}
+        >
+          AUTOPLAY · MUTED
+        </span>
+        <button
+          type="button"
+          className={`journal-video-play ${isPlaying ? "is-playing" : ""}`}
+          aria-label={isPlaying ? "Jeda video proses publikasi" : "Putar video proses publikasi"}
+          onClick={(e) => {
+            e.stopPropagation();
+            togglePlay();
+          }}
+        >
+          {isPlaying ? (
+            <Pause size={22} strokeWidth={2} aria-hidden="true" />
+          ) : (
+            <Play size={22} strokeWidth={2} aria-hidden="true" />
+          )}
         </button>
-        <figcaption className="sr-only">Video proses publikasi jurnal.</figcaption>
+        <figcaption className="sr-only">Video bukti korespondensi dan proses publikasi jurnal.</figcaption>
       </figure>
     </section>
   );

@@ -27,10 +27,17 @@ describe("JournalAdvantages", () => {
     expect(html).toContain("Pesan, bayar, dan terbit.");
   });
 
-  it("memuat bidang video proses publikasi dengan poster dan kontrol", () => {
+  it("memuat bidang video proses publikasi dengan elemen video asli, poster, dan kontrol", () => {
     expect(html).toContain("VIDEO PROSES PUBLIKASI");
     expect(html).toContain("AUTOPLAY · MUTED");
-    expect(html).toContain('src="/aset/jurnal-video-poster.jpg"');
+    expect(html).toContain("<video");
+    expect(html).toContain('src="/video/video_bukti_korespondensi.mp4"');
+    expect(html).toContain('poster="/aset/jurnal-video-poster.jpg"');
+    expect(html.toLowerCase()).toContain("autoplay");
+    expect(html.toLowerCase()).toContain("muted");
+    expect(html.toLowerCase()).toContain("loop");
+    expect(html.toLowerCase()).toContain("playsinline");
+    expect(html).toContain('preload="auto"');
     expect(html).toContain('aria-label="Putar video proses publikasi"');
     expect(html).toContain("journal-video-play");
   });
@@ -41,12 +48,15 @@ describe("JournalAdvantages", () => {
     expect(html).not.toContain("journal-asset-card");
   });
 
-  it("CSS menjaga tiga kolom, kartu rounded, dan poster video penuh", () => {
+  it("CSS menjaga tiga kolom, kartu rounded, poster video penuh, dan kontrol interaktif", () => {
     const css = readFileSync(join(process.cwd(), "app/home-sections.css"), "utf8");
     expect(css).toContain(".journal-advantages-grid");
     expect(css).toContain("grid-template-columns: repeat(3, minmax(0, 1fr))");
     expect(css).toContain(".journal-advantage-card");
     expect(css).toContain(".journal-video-poster");
+    expect(css).toContain(".journal-video-media");
     expect(css).toContain("object-fit: cover");
+    expect(css).toContain(".journal-video.is-playing .journal-video-play");
+    expect(css).toContain(".journal-video:hover .journal-video-play");
   });
 });

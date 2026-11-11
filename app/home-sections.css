@@ -1278,9 +1278,11 @@
   border: 1px solid #dfe8e1;
   border-radius: 16px;
   background: #eef3ee;
+  cursor: pointer;
 }
 
-.journal-video-poster {
+.journal-video-poster,
+.journal-video-media {
   display: block;
   width: 100%;
   height: 100%;
@@ -1358,12 +1360,33 @@
   color: #173a44;
   cursor: pointer;
   transform: translate(-50%, -50%);
-  transition: background 0.2s, box-shadow 0.2s;
+  transition: opacity 0.25s ease, background 0.2s, box-shadow 0.2s, transform 0.2s;
+  opacity: 1;
 }
 
 .journal-video-play svg {
-  margin-left: 3px;
   fill: currentColor;
+}
+
+.journal-video-play svg.lucide-play {
+  margin-left: 3px;
+}
+
+.journal-video-play svg.lucide-pause {
+  margin-left: 0;
+}
+
+.journal-video.is-playing .journal-video-play,
+.journal-video-play.is-playing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.journal-video:hover .journal-video-play,
+.journal-video:focus-within .journal-video-play,
+.journal-video-play:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .journal-video-play:hover {
