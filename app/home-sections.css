@@ -992,9 +992,17 @@
   .journal-flow-hero--banner .journal-hero-description,
   .journal-flow-hero--banner .journal-flow-meta { max-width: 100%; }
   .journal-flow-banner { position: relative; inset: auto; width: 100%; height: 210px; margin-top: 22px; }
+  /* Varian assist/submit memakai width 56–68% di desktop (foto mengisi sisi
+     kanan); di dalam media query aturan itu kalah specificity, jadi lebar &
+     posisi di sini di-override lagi dengan selector yang sama supaya banner
+     mobile benar-benar full-width dan subjek foto tidak terpotong. */
+  .journal-assist-hero .journal-flow-banner,
+  .journal-submit-hero .journal-flow-banner { width: 100%; }
   .journal-flow-banner img { object-position: 68% 30%;
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 14%, #000 40%);
     mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 14%, #000 40%); }
+  .journal-assist-hero .journal-flow-banner img { object-position: 58% 28%; }
+  .journal-submit-hero .journal-flow-banner img { object-position: 48% 30%; }
   .about-hero-banner { height: 230px; }
 }
 @media (max-width: 600px) {
