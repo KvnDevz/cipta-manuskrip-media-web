@@ -56,7 +56,20 @@ describe("beranda", () => {
     expect(html).not.toContain("book-scene");
     expect(html).not.toContain("floating-note");
     expect(html).not.toContain("hero-grid");
-    expect(html).not.toContain("orbit-outer");
+  });
+
+  it("orbit latar dirancang minimalis, tenang, berada di belakang hero-copy, dan mendukung reduced motion", () => {
+    expect(html).toContain('class="orbit orbit-outer"');
+    expect(html).toContain('class="orbit orbit-middle"');
+    expect(html).toContain('class="orbit orbit-inner"');
+    expect(html.indexOf("orbit-outer")).toBeLessThan(html.indexOf("hero-copy"));
+    expect(html.indexOf("orbit-middle")).toBeLessThan(html.indexOf("hero-copy"));
+    expect(html.indexOf("orbit-inner")).toBeLessThan(html.indexOf("hero-copy"));
+
+    const css = readFileSync(join(process.cwd(), "app/globals.css"), "utf8");
+    expect(css).toContain("pointer-events: none");
+    expect(css).toContain("cmm-orbit-spin");
+    expect(css).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
   });
 
   it("marquee logo placeholder hadir setelah hero, sebelum section prinsip", () => {

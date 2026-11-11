@@ -49,8 +49,8 @@ body { background: #fbfcfb; }
 .nav-cta:hover { transform: translateY(-1px); background: #09677d; }
 .home-hero { min-height: 760px; margin: 16px auto 0; max-width: 1460px; padding: 100px 20px 34px; background: radial-gradient(ellipse at 50% 60%, rgba(225,241,239,.72), transparent 38%), linear-gradient(180deg,#fff 0%,#fbfcfb 100%); border: 1px solid rgba(16,42,49,.045); border-radius: 30px; }
 .hero-grid { position:absolute; inset:0; opacity:.27; background-image: linear-gradient(rgba(16,42,49,.027) 1px,transparent 1px),linear-gradient(90deg,rgba(16,42,49,.027) 1px,transparent 1px); background-size:60px 60px; mask-image:linear-gradient(to bottom,black,transparent 88%); }
-.orbit { position:absolute; left:50%; top:405px; aspect-ratio:1; border:1px solid rgba(16,42,49,.085); border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; }
-.orbit-outer { width:min(92vw,980px); }.orbit-middle { width:min(75vw,780px); }.orbit-inner { width:min(57vw,590px); border-color:rgba(9,103,125,.15); }
+.orbit { position:absolute; left:50%; top:50%; aspect-ratio:1; border:1px solid rgba(9,103,125,.09); border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; }
+.orbit-outer { width:min(88vw,860px); }.orbit-middle { width:min(70vw,670px); border:1px dashed rgba(212,163,70,.14); }.orbit-inner { width:min(52vw,490px); border-color:rgba(9,103,125,.13); }
 .hero-copy { max-width:850px; }
 .eyebrow-pill { display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border:1px solid #e5ece9; border-radius:100px; background:#fff; color:#527069; font-size:11px; letter-spacing:.045em; box-shadow:0 4px 14px rgba(16,42,49,.04); }
 .eyebrow-pill svg { color:#b18a39; }
@@ -85,7 +85,7 @@ body { background: #fbfcfb; }
 .service-grid { display:grid; grid-template-columns:1fr 1fr; gap:17px; }.service-card { position:relative; display:flex; min-height:255px; flex-direction:column; justify-content:space-between; overflow:hidden; padding:26px 28px; border:1px solid #e4eae6; border-radius:20px; background:#fff; color:inherit; text-decoration:none; transition:transform .25s,box-shadow .25s,border-color .25s; }.service-card:hover { transform:translateY(-4px); border-color:#c7d8d1; box-shadow:0 20px 44px rgba(16,42,49,.08); }.service-card-journal { background:linear-gradient(140deg,#fff 55%,#f7f8e9); }.service-card-top { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; }.service-icon { display:grid; width:43px;height:43px;place-items:center;border:1px solid #e2eae5;border-radius:13px;background:#f7faf8;color:#326e62; }.service-card-journal .service-icon { color:#9b7a2d;background:#fffdf3; }.service-index { color:#8b9892;font-size:9px;letter-spacing:.14em; }.service-card-content { position:relative;z-index:2;max-width:370px; }.service-card-content h3 { color:#173338;font-size:23px;font-weight:600;letter-spacing:-.04em; }.service-card-content p { max-width:340px;margin-top:8px;color:#78847f;font-size:12px;line-height:1.65; }.service-link { display:inline-flex;align-items:center;gap:8px;margin-top:20px;color:#276d62;font-size:11px;font-weight:600; }.service-card-journal .service-link { color:#8c6d2a; }
 .card-decoration { position:absolute;right:22px;top:52px;width:145px;height:140px;opacity:.65;transform:rotate(-13deg); }.card-decoration-book div { position:absolute;right:10px;top:12px;width:72px;height:100px;border:1px solid #d8e3dc;border-radius:3px 8px 8px 3px;background:linear-gradient(135deg,rgba(9,103,125,.09),rgba(9,103,125,.015)); }.card-decoration-book div:nth-child(2) { right:48px;top:26px;transform:rotate(-9deg);background:linear-gradient(135deg,rgba(194,204,8,.12),rgba(194,204,8,.02)); }.card-decoration-book div:nth-child(3) { right:32px;top:18px;transform:rotate(6deg); }.card-decoration-journal div { position:absolute;right:15px;top:5px;width:82px;height:108px;border:1px solid #dfdfc7;border-radius:4px;background:rgba(255,255,255,.8);transform:rotate(8deg); }.card-decoration-journal div:nth-child(2) { right:33px;top:16px;transform:rotate(-4deg); }.card-decoration-journal div:nth-child(3) { right:52px;top:28px;transform:rotate(-15deg);background:#faf9ed; }.card-decoration-journal div:nth-child(4) { right:48px;top:50px;width:30px;height:1px;border:0;border-radius:0;background:#c6bb83;box-shadow:0 9px #d3cba8,0 18px #d3cba8;transform:rotate(-15deg); }
 .closing-note { display:flex;align-items:center;gap:16px;padding:22px 24px;border-top:1px solid #e6ebe7;border-bottom:1px solid #e6ebe7; }.closing-mark { display:grid;width:48px;height:48px;place-items:center;overflow:hidden;border-radius:14px;background:#eef3ee; }.closing-mark img { width:39px;height:39px;object-fit:contain; }.closing-note p { flex:1;color:#294246;font-size:12px;line-height:1.65; }.closing-note p span { color:#7b8982; }.closing-note > a { display:grid;width:38px;height:38px;place-items:center;border:1px solid #e1e9e4;border-radius:50%;color:#28695f;transition:background .2s; }.closing-note > a:hover { background:#eef5f1; }
-@media (max-width:700px) { .site-header { padding:10px 12px 0; }.site-nav { min-height:58px;padding:7px 9px 7px 12px;border-radius:15px;gap:8px; }.brand-lockup { min-width:auto;gap:6px; }.brand-logo { width:35px;height:35px; }.brand-name strong { font-size:11px; }.brand-name small { font-size:6px; }.nav-links { gap:12px; }.nav-link { font-size:11px; }.nav-cta { gap:5px;padding:10px 10px;font-size:10px; }.home-hero { min-height:695px;margin:10px 8px 0;padding:88px 12px 26px;border-radius:23px; }.hero-title { max-width:500px;font-size:clamp(40px,11vw,60px); }.hero-description { max-width:330px; }.orbit { top:390px; }.orbit-outer { width:115vw; }.orbit-middle { width:92vw; }.orbit-inner { width:70vw; }.orbit-note { width:39px;height:39px; }.orbit-note-book { top:230px;left:8%; }.orbit-note-feather { top:290px;right:7%; }.orbit-note-paper { top:480px;left:auto;right:5%; }.book-scene { height:230px;margin-top:32px; }.scene-caption { font-size:7px; }.scene-caption-left { left:0; }.scene-caption-right { right:0; }.floating-note { left:calc(50% + 4px);bottom:14px;min-width:190px;padding:9px 10px; }.book { transform:translateX(-42%) scale(.9) rotateY(-19deg) rotateZ(4deg); }.book-back { transform:translateX(-50%) scale(.9) rotateY(-21deg) rotateZ(-8deg); }.book-front { transform:translateX(-35%) scale(.9) rotateY(-14deg) rotateZ(4deg); }.services-section { padding-top:68px;padding-bottom:50px; }.section-heading { display:block; }.section-intro { margin-top:16px; }.service-grid { grid-template-columns:1fr;gap:12px; }.service-card { min-height:228px;padding:22px; }.card-decoration { right:8px;opacity:.45; }.closing-note { gap:12px;padding:18px 4px; } }
+@media (max-width:700px) { .site-header { padding:10px 12px 0; }.site-nav { min-height:58px;padding:7px 9px 7px 12px;border-radius:15px;gap:8px; }.brand-lockup { min-width:auto;gap:6px; }.brand-logo { width:35px;height:35px; }.brand-name strong { font-size:11px; }.brand-name small { font-size:6px; }.nav-links { gap:12px; }.nav-link { font-size:11px; }.nav-cta { gap:5px;padding:10px 10px;font-size:10px; }.home-hero { min-height:695px;margin:10px 8px 0;padding:88px 12px 26px;border-radius:23px; }.hero-title { max-width:500px;font-size:clamp(40px,11vw,60px); }.hero-description { max-width:330px; }.orbit { top:50%; }.orbit-outer { width:min(88vw,360px); }.orbit-middle { width:min(70vw,285px); }.orbit-inner { width:min(52vw,210px); }.orbit-note { width:39px;height:39px; }.orbit-note-book { top:230px;left:8%; }.orbit-note-feather { top:290px;right:7%; }.orbit-note-paper { top:480px;left:auto;right:5%; }.book-scene { height:230px;margin-top:32px; }.scene-caption { font-size:7px; }.scene-caption-left { left:0; }.scene-caption-right { right:0; }.floating-note { left:calc(50% + 4px);bottom:14px;min-width:190px;padding:9px 10px; }.book { transform:translateX(-42%) scale(.9) rotateY(-19deg) rotateZ(4deg); }.book-back { transform:translateX(-50%) scale(.9) rotateY(-21deg) rotateZ(-8deg); }.book-front { transform:translateX(-35%) scale(.9) rotateY(-14deg) rotateZ(4deg); }.services-section { padding-top:68px;padding-bottom:50px; }.section-heading { display:block; }.section-intro { margin-top:16px; }.service-grid { grid-template-columns:1fr;gap:12px; }.service-card { min-height:228px;padding:22px; }.card-decoration { right:8px;opacity:.45; }.closing-note { gap:12px;padding:18px 4px; } }
 @media (max-width:390px) { .brand-name small { letter-spacing:.12em; }.nav-links { gap:8px; }.nav-link { font-size:10px; }.nav-cta { font-size:9px; }.orbit-note-book { left:3%; }.orbit-note-feather { right:2%; } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important;transition:none!important; } }
 
@@ -4456,11 +4456,13 @@ html {
 }
 
 /* ==========================================================================
-   ORBIT HERO
+   ORBIT HERO — MINIMALIS & TENANG (SIMPLIFIED)
    --------------------------------------------------------------------------
-   Cincin konsentris di belakang judul diputar pelan. Garisnya sendiri nyaris
-   tak terlihat saat berputar (lingkaran simetris), jadi tiap cincin membawa
-   satu titik satelit sebagai penanda arah dan kecepatan.
+   Cincin konsentris di tengah hero banner diputar sangat lambat dan halus
+   (120s - 180s) dengan warna teal/gold lembut khas brand CMM (opacity 0.08 - 0.15)
+   tanpa titik satelit heboh, agar tidak membuat pengguna pusing di PC maupun mobile.
+   Pointer-events: none memastikan interaksi tombol/tautan tidak terhalang.
+   Mendukung prefers-reduced-motion untuk mematikan seluruh animasi.
    ========================================================================== */
 
 @keyframes cmm-orbit-spin {
@@ -4473,65 +4475,77 @@ html {
 }
 
 .home-hero .orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
   will-change: transform;
-  animation: cmm-orbit-spin 68s linear infinite;
+}
+
+.home-hero .orbit-outer {
+  width: min(88vw, 860px);
+  border: 1px solid rgba(9, 103, 125, 0.1);
+  animation: cmm-orbit-spin 150s linear infinite;
 }
 
 .home-hero .orbit-middle {
-  border-style: dashed;
-  border-color: rgba(16, 42, 49, 0.1);
-  animation-duration: 46s;
-  animation-direction: reverse;
+  width: min(70vw, 670px);
+  border: 1px dashed rgba(212, 163, 70, 0.14);
+  animation: cmm-orbit-spin 180s linear infinite reverse;
 }
 
 .home-hero .orbit-inner {
-  animation:
-    cmm-soft-pulse 11s ease-in-out infinite,
-    cmm-orbit-spin 32s linear infinite;
+  width: min(52vw, 490px);
+  border: 1px solid rgba(9, 103, 125, 0.13);
+  background: radial-gradient(circle, rgba(9, 103, 125, 0.035) 0%, rgba(212, 163, 70, 0.02) 60%, transparent 80%);
+  animation: cmm-orbit-spin 120s linear infinite;
 }
 
-.home-hero .orbit::before {
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  margin-left: -4px;
-  border-radius: 50%;
-  background: #c2cc08;
-  box-shadow: 0 0 0 5px rgba(194, 204, 8, 0.13);
-  content: "";
-}
-
-.home-hero .orbit::after {
-  position: absolute;
-  top: 50%;
-  right: -2.5px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(9, 103, 125, 0.42);
-  content: "";
-}
-
-.home-hero .orbit-middle::before {
-  background: #09677d;
-  box-shadow: 0 0 0 5px rgba(9, 103, 125, 0.1);
-}
-
-.home-hero .orbit-inner::before {
-  background: #b18a39;
-  box-shadow: 0 0 0 4px rgba(177, 138, 57, 0.12);
-}
-
+.home-hero .orbit::before,
+.home-hero .orbit::after,
+.home-hero .orbit-middle::before,
+.home-hero .orbit-inner::before,
 .home-hero .orbit-inner::after {
   display: none;
 }
 
+@media (max-width: 700px) {
+  .home-hero .orbit {
+    top: 50%;
+  }
+  .home-hero .orbit-outer {
+    width: min(88vw, 360px);
+  }
+  .home-hero .orbit-middle {
+    width: min(70vw, 285px);
+  }
+  .home-hero .orbit-inner {
+    width: min(52vw, 210px);
+  }
+}
+
+@media (max-width: 390px) {
+  .home-hero .orbit-outer {
+    width: 86vw;
+  }
+  .home-hero .orbit-middle {
+    width: 68vw;
+  }
+  .home-hero .orbit-inner {
+    width: 50vw;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-hero .orbit,
-  .home-hero .orbit-middle {
-    animation: none;
+  .home-hero .orbit-outer,
+  .home-hero .orbit-middle,
+  .home-hero .orbit-inner {
+    animation: none !important;
   }
 }
 
@@ -5703,11 +5717,11 @@ html {
 }
 
 /* ==========================================================================
-   LANJUTAN TAHAP 1 — navbar 2 menu, tipografi senior
+   LANJUTAN TAHAP 1 — navbar 2 menu, tipografi senior & orbit simplified
    --------------------------------------------------------------------------
    Arahan klien: navbar cukup Beranda + Tentang Kami; tulisan dibesarkan
-   untuk audiens dosen senior. Dekorasi orbit latar sudah dihapus agar hero
-   lebih bersih, sementara kartu foto dan buku tetap dipertahankan.
+   untuk audiens dosen senior. Dekorasi orbit disederhanakan agar hero
+   tetap tenang dan elegan, sementara kartu foto dan buku tetap dipertahankan.
    ========================================================================== */
 
 .home-hero--foto .hero-photo-layout {

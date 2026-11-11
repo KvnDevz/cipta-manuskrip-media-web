@@ -66,6 +66,11 @@ export default function Home() {
   return (
     <div>
       <section className="home-hero home-hero--foto relative isolate overflow-hidden">
+        {/* Orbit konsentris minimalis dan tenang di latar tengah hero banner */}
+        <div aria-hidden="true" className="orbit orbit-outer" />
+        <div aria-hidden="true" className="orbit orbit-middle" />
+        <div aria-hidden="true" className="orbit orbit-inner" />
+
         <div className="hero-copy relative z-10 flex flex-col items-center px-5 text-center">
           <div className="eyebrow-pill"><Sparkles size={13} /> Ruang untuk karya yang berarti</div>
           <h1 className="hero-title mt-7 text-teks">
