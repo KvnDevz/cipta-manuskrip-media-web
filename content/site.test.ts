@@ -67,16 +67,18 @@ describe("content/site", () => {
     expect(KONTAK.adminJurnal).toBe("0895-6292-03142");
   });
 
-  it("tiga tier contoh berurutan dari harga tertinggi ke terendah dan berbeda fasilitasnya", () => {
+  it("tiga paket penerbitan buku resmi terdaftar dengan harga dan fasilitas berbeda", () => {
     expect(PAKET_BUKU).toHaveLength(3);
     expect(PAKET_BUKU.map((paket) => paket.nama)).toEqual([
       "Paket Eksklusif",
-      "Paket Profesional",
-      "Paket Dasar",
+      "Paket Konversi Skripsi/Tesis/Disertasi Jadi Buku",
+      "Paket Esensial",
     ]);
-    const harga = PAKET_BUKU.map((paket) => Number(paket.harga.replace(/[^0-9]/g, "")));
-    expect(harga[0]).toBeGreaterThan(harga[1]);
-    expect(harga[1]).toBeGreaterThan(harga[2]);
+    expect(PAKET_BUKU.map((paket) => paket.harga)).toEqual([
+      "Rp1.500.000",
+      "Rp800.000",
+      "Rp1.000.000",
+    ]);
     expect(new Set(PAKET_BUKU.map((paket) => paket.fasilitas.join("|"))).size).toBe(3);
     expect(PAKET_BUKU.every((paket) => paket.fasilitas.length > 0)).toBe(true);
   });

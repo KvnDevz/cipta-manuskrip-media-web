@@ -83,19 +83,20 @@ describe("publish-buku", () => {
     expect(html).not.toContain("Topik Asistensi Penulisan Artikel Jurnal Ilmiah");
   });
 
-  it("mencetak tiga tier harga contoh berurutan, dengan fasilitas per-tier yang berbeda", async () => {
+  it("mencetak tiga tier paket penerbitan buku resmi, dengan harga dan fasilitas berbeda", async () => {
     const el = await Page();
     const html = renderToStaticMarkup(el);
 
     expect(html).toContain("Paket Eksklusif");
-    expect(html).toContain("Rp7.500.000");
-    expect(html).toContain("Paket Profesional");
-    expect(html).toContain("Rp4.500.000");
-    expect(html).toContain("Paket Dasar");
-    expect(html).toContain("Rp2.500.000");
-    expect(html).toContain("Penyuntingan naskah");
-    expect(html).toContain("Tata letak isi buku");
-    expect(html).toContain("bukan penawaran resmi");
+    expect(html).toContain("Rp1.500.000");
+    expect(html).toContain("Paket Konversi Skripsi/Tesis/Disertasi Jadi Buku");
+    expect(html).toContain("Rp800.000");
+    expect(html).toContain("Paket Esensial");
+    expect(html).toContain("Rp1.000.000");
+    expect(html).toContain("Asistensi penulisan naskah");
+    expect(html).toContain("Layout isi buku");
+    expect(html).toContain("Royalti penulis 30%");
+    expect(html).toContain("Paket penerbitan resmi");
 
     expect(PAKET_BUKU).toHaveLength(3);
     expect(new Set(PAKET_BUKU.map((paket) => paket.fasilitas.join("|"))).size).toBe(3);

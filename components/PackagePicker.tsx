@@ -54,7 +54,7 @@ export function PackagePicker({ tiers }: { tiers: readonly Tier[] }) {
           );
         })}
       </div>
-      <p className="package-footnote">Simulasi tier untuk eksplorasi UI — nama, harga, dan fasilitas ini bukan penawaran resmi.</p>
+      <p className="package-footnote">Paket penerbitan resmi CV Cipta Manuskrip Media.</p>
     </section>
   );
 }

@@ -29,7 +29,7 @@ describe("JournalAdvantages", () => {
 
   it("memuat bidang video proses publikasi dengan elemen video asli, poster, dan kontrol", () => {
     expect(html).toContain("VIDEO PROSES PUBLIKASI");
-    expect(html).toContain("AUTOPLAY · MUTED");
+    expect(html).not.toContain("AUTOPLAY · MUTED");
     expect(html).toContain("<video");
     expect(html).toContain('src="/video/video_bukti_korespondensi.mp4"');
     expect(html).toContain('poster="/aset/jurnal-video-poster.jpg"');

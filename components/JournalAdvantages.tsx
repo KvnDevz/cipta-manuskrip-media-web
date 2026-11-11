@@ -150,12 +150,6 @@ export function JournalAdvantages() {
         >
           <Play size={11} strokeWidth={2} aria-hidden="true" /> VIDEO PROSES PUBLIKASI
         </span>
-        <span
-          className="journal-video-chip journal-video-chip--right"
-          onClick={(e) => e.stopPropagation()}
-        >
-          AUTOPLAY · MUTED
-        </span>
         <button
           type="button"
           className={`journal-video-play ${isPlaying ? "is-playing" : ""}`}

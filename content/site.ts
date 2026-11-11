@@ -107,10 +107,7 @@ export const MEDIA_SOSIAL: ReadonlyArray<{
 ];
 
 /**
- * Tiga tier contoh untuk prototipe visual, tertinggi ke terendah.
- * Nama, harga, dan fasilitas ini dikarang atas persetujuan pemilik proyek
- * (21 Oktober 2026) dan BUKAN penawaran resmi. Ganti setelah klien
- * mengirim paket dan harga final.
+ * Tiga tier paket penerbitan buku resmi CV Cipta Manuskrip Media.
  */
 export const PAKET_BUKU: ReadonlyArray<{
   nama: string;
@@ -119,32 +116,36 @@ export const PAKET_BUKU: ReadonlyArray<{
 }> = [
   {
     nama: "Paket Eksklusif",
-    harga: "Rp7.500.000",
+    harga: "Rp1.500.000",
+    fasilitas: [
+      "Asistensi penulisan naskah",
+      "Penyuntingan naskah",
+      "Layout isi buku",
+      "Desain cover buku",
+      "Pengurusan ISBN",
+      "Royalti penulis 30%",
+    ],
+  },
+  {
+    nama: "Paket Konversi Skripsi/Tesis/Disertasi Jadi Buku",
+    harga: "Rp800.000",
+    fasilitas: [
+      "Restrukturisasi bab dan judul",
+      "Penyuntingan naskah",
+      "Layout isi buku",
+      "Pengurusan ISBN",
+      "Royalti penulis 30%",
+    ],
+  },
+  {
+    nama: "Paket Esensial",
+    harga: "Rp1.000.000",
     fasilitas: [
       "Penyuntingan naskah",
-      "Proofreading akhir",
-      "Desain sampul dan tata letak isi",
-      "Pendampingan proses ISBN",
-      "10 buku cetak",
-    ],
-  },
-  {
-    nama: "Paket Profesional",
-    harga: "Rp4.500.000",
-    fasilitas: [
-      "Proofreading akhir",
-      "Desain sampul dan tata letak isi",
-      "Pendampingan proses ISBN",
-      "5 buku cetak",
-    ],
-  },
-  {
-    nama: "Paket Dasar",
-    harga: "Rp2.500.000",
-    fasilitas: [
-      "Tata letak isi buku",
-      "Desain sampul buku",
-      "Pendampingan proses ISBN",
+      "Layout isi buku",
+      "Desain cover buku",
+      "Pengurusan ISBN",
+      "Royalti penulis 30%",
     ],
   },
 ];
