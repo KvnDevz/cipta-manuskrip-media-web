@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { ArrowDown, BookOpen, Check, Sparkles } from "lucide-react";
+import { buildBookPackageUrl } from "@/lib/whatsapp";
+import { PERISTIWA_PAKET } from "./use-paket-terpilih";
 
 type Tier = { nama: string; harga: string; fasilitas: readonly string[] };
 
@@ -10,8 +12,10 @@ export function PackagePicker({ tiers }: { tiers: readonly Tier[] }) {
 
   function pilih(tier: Tier) {
     setPilihan(tier.nama);
-    window.dispatchEvent(new CustomEvent("cmm:paket-terpilih", { detail: { nama: tier.nama, harga: tier.harga } }));
-    document.getElementById("asistensi")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.dispatchEvent(new CustomEvent(PERISTIWA_PAKET, { detail: { nama: tier.nama, harga: tier.harga } }));
+    // Permintaan pemilik proyek: tombol "Pilih Paket" langsung membuka
+    // WhatsApp nomor buku (…900) dengan caption berisi nama paket terpilih.
+    window.open(buildBookPackageUrl(tier.nama), "_blank", "noopener,noreferrer");
   }
 
   return (

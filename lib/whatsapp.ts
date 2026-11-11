@@ -26,6 +26,22 @@ export function buildBookOrderUrl(judul: string, jenis: JenisPesanan): string {
 }
 
 /**
+ * Pesan saat pengunjung menekan "Pilih Paket" pada salah satu kartu paket di
+ * halaman Publish Buku: langsung ke WhatsApp nomor buku (berakhiran 900)
+ * dengan caption `Saya ingin menerbitkan buku dengan "<nama paket>"`.
+ *
+ * Nama paket diapit tanda petik dua — pola pengapit yang sama dipakai pesan
+ * lain di file ini supaya batas antara kalimat pengantar dan judul paket tetap
+ * jelas saat dibaca admin di WhatsApp.
+ */
+export function buildBookPackageUrl(namaPaket: string): string {
+  const nama = namaPaket.trim();
+  return `https://wa.me/${NOMOR_BUKU}?text=${encodeURIComponent(
+    `Saya ingin menerbitkan buku dengan "${nama}"`
+  )}`;
+}
+
+/**
  * Kalimat pesan jurnal dikunci persis oleh brief: berbeda dengan pesan buku,
  * pesan jurnal BERAKHIR TITIK dan huruf awalnya sengaja kecil ("saya", bukan
  * "Saya") — jangan dirapikan. Topik asistensi hanya pernah masuk ke isi pesan

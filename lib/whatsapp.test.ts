@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   buildBookOrderUrl,
   buildBookAssistUrl,
+  buildBookPackageUrl,
   buildJournalSubmitUrl,
   buildJournalAssistUrl,
   pesanAsistensiBuku,
@@ -151,6 +152,31 @@ describe("whatsapp asistensi buku", () => {
  * tier ikut masuk ke pesan WhatsApp. Baris paket ditaruh di baris kedua
  * supaya kalimat pertama tetap persis seperti yang sudah dikunci.
  */
+describe("buildBookPackageUrl — tombol Pilih Paket langsung ke WhatsApp", () => {
+  it("membentuk tautan nomor buku (…900) dengan caption nama paket diapit petik dua", () => {
+    const url = buildBookPackageUrl("Paket Esensial");
+    expect(url).toBe(
+      "https://wa.me/6289671894900?text=Saya%20ingin%20menerbitkan%20buku%20dengan%20%22Paket%20Esensial%22"
+    );
+  });
+
+  it("nama paket tiap kartu berbeda ikut tercermin di caption", () => {
+    for (const nama of ["Paket Eksklusif", "Paket Konversi Skripsi/Tesis/Disertasi Jadi Buku", "Paket Esensial"]) {
+      const url = buildBookPackageUrl(nama);
+      expect(decodeURIComponent(new URL(url).searchParams.get("text") ?? "")).toBe(
+        `Saya ingin menerbitkan buku dengan "${nama}"`
+      );
+    }
+  });
+
+  it("memangkas spasi tepi nama paket sebelum dipakai", () => {
+    const url = buildBookPackageUrl("  Paket Eksklusif  ");
+    expect(decodeURIComponent(new URL(url).searchParams.get("text") ?? "")).toBe(
+      'Saya ingin menerbitkan buku dengan "Paket Eksklusif"'
+    );
+  });
+});
+
 describe("whatsapp asistensi buku — paket pilihan ikut dikirim", () => {
   const paket = { nama: "Paket Profesional", harga: "Rp4.500.000" };
 
