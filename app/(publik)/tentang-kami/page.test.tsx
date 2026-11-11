@@ -25,10 +25,20 @@ describe("tentang-kami", () => {
     expect(html).toContain("Admin Jurnal");
   });
 
-  it("memuat area legalitas, kontak, dokumen resmi, dan media sosial", () => {
-    for (const a of ["Dokumen Resmi", "Kontak", "Media Sosial"]) expect(html).toContain(a);
+  it("memuat area legalitas dan kontak; section kartu pending (Dokumen Resmi/Media Sosial) dihapus", () => {
+    expect(html).toContain("Kontak");
     expect(html).toContain("01 / LEGALITAS");
     expect(html).toContain('id="legalitas"');
+    // Section about-pending (kartu "Dokumen Resmi" & "Media Sosial" + tag
+    // TERSEDIA) sengaja dihapus dari halaman — pastikan tidak muncul lagi.
+    expect(html).not.toContain("about-pending");
+    expect(html).not.toContain("LEGALITAS PERUSAHAAN");
+    expect(html).not.toContain("MEDIA SOSIAL RESMI");
+    expect(html).not.toContain("Dokumen Resmi");
+    expect(html).not.toContain(">Media Sosial<");
+    expect(html).not.toContain("TERSEDIA");
+    const cssGlobal = readFileSync(join(process.cwd(), "app/globals.css"), "utf8");
+    expect(cssGlobal).not.toContain(".about-pending");
   });
 
   it("tidak mengarang NIB, nomor NPWP, atau alamat; surel hanya akun resmi klien", () => {
@@ -138,7 +148,7 @@ describe("tentang-kami", () => {
   });
 
   it("kartu kontak memakai ikon WhatsApp, bukan ikon buku/dokumen", () => {
-    const kontak = html.slice(html.indexOf('class="about-contact-grid"'), html.indexOf("about-pending"));
+    const kontak = html.slice(html.indexOf('class="about-contact-grid"'), html.indexOf('id="medsos"'));
     expect((kontak.match(/class="about-contact-icon about-contact-icon--whatsapp"/g) ?? [])).toHaveLength(2);
     // Glif WhatsApp punya path khas; ikon telepon lucide tetap ada di kanan.
     expect((kontak.match(/d="M17\.472 14\.382/g) ?? [])).toHaveLength(2);

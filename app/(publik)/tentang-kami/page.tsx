@@ -1,12 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- banner foto lokal statis di public/aset/, src langsung dipakai agar mudah ditimpa klien. */
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  FileText,
-  Share2,
-  Phone,
-} from "lucide-react";
+import { ArrowUpRight, Phone } from "lucide-react";
 import { KONTAK } from "@/content/site";
 import { AboutLegalitas } from "@/components/AboutLegalitas";
 import { AboutTeam } from "@/components/AboutTeam";
@@ -61,11 +56,6 @@ export default function Page() {
           <a className="about-contact-card" href={`tel:${KONTAK.adminBuku}`}><span className="about-contact-icon about-contact-icon--whatsapp"><WhatsappIcon size={21} /></span><span className="about-contact-copy"><small>UNTUK PENERBITAN BUKU</small><strong>Admin Buku</strong><b>{KONTAK.adminBuku}</b></span><Phone size={16} className="about-contact-arrow" /></a>
           <a className="about-contact-card" href={`tel:${KONTAK.adminJurnal}`}><span className="about-contact-icon about-contact-icon--whatsapp"><WhatsappIcon size={21} /></span><span className="about-contact-copy"><small>UNTUK PUBLIKASI JURNAL</small><strong>Admin Jurnal</strong><b>{KONTAK.adminJurnal}</b></span><Phone size={16} className="about-contact-arrow" /></a>
         </div>
-      </section>
-
-      <section className="about-pending" aria-label="Ringkasan dokumen dan media sosial">
-        <article className="about-pending-card"><span className="about-pending-icon"><FileText size={17} /></span><div><p className="about-kicker">LEGALITAS PERUSAHAAN</p><h2>Dokumen Resmi</h2><p>Bukti pendaftaran CV dan NPWP perusahaan ditampilkan pada section legalitas di atas.</p></div><span className="about-pending-tag">TERSEDIA</span></article>
-        <article className="about-pending-card"><span className="about-pending-icon"><Share2 size={17} /></span><div><p className="about-kicker">MEDIA SOSIAL RESMI</p><h2>Media Sosial</h2><p>Akun media sosial dan surel resmi tercantum pada section medsos di bawah.</p></div><span className="about-pending-tag">TERSEDIA</span></article>
       </section>
 
       <AboutMedsos />
