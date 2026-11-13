@@ -5009,25 +5009,58 @@ html {
 }
 
 /* ==========================================================================
-   KEHALUSAN ANTARHALAMAN & KERANGKA MUAT
+   KEHALUSAN ANTARHALAMAN, HAPTIC-UI & KERANGKA MUAT
    --------------------------------------------------------------------------
-   Dua hal yang membuat perpindahan halaman terasa "nyambung":
-
    1. `template.tsx` memasang ulang bingkainya pada setiap navigasi, jadi
       animasi masuk di `.route-transition` diputar lagi tanpa JavaScript
       tambahan. Hanya isi halaman yang bergerak — header, footer, dan panel
       samping admin ada di layout dan tetap diam.
-   2. Tiap segmen rute punya `loading.tsx` sendiri, sehingga selama data
-      diambil yang tampil adalah kerangka berbentuk halaman itu, bukan area
-      kosong. Kerangka memakai kelas `.skeleton-*` yang sudah ada.
+   2. `HapticUI` menambahkan `.is-haptic-pressed` dengan spring curve dan
+      bar kemajuan `.route-progress` saat pindah rute di seluruh halaman.
+   3. Tiap segmen rute punya `loading.tsx` sendiri, sehingga selama data
+      diambil yang tampil adalah kerangka berbentuk halaman itu.
 
    Semua gerak berhenti di `prefers-reduced-motion: reduce`.
    ========================================================================== */
 
+:root {
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 42, 49, 0.22) transparent;
+}
+
+::selection {
+  background: rgba(194, 204, 8, 0.28);
+  color: #102a31;
+}
+
+input,
+textarea,
+select {
+  caret-color: #09677d;
+}
+
+/* Hilangkan kilat abu-abu/biru bawaan mobile & tunda ketuk 300ms. */
+a,
+button,
+summary,
+[role="button"],
+input,
+select,
+textarea,
+label {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
 @keyframes cmm-halaman-masuk {
   from {
     opacity: 0;
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(0, 8px, 0);
   }
 
   to {
@@ -5044,24 +5077,206 @@ html {
      footer tetap menempel di bawah pada halaman pendek seperti halaman
      asistensi. Tanpa ini, bingkai template memutus `flex-1` milik <main>. */
   min-height: 0;
-  animation: cmm-halaman-masuk 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: cmm-halaman-masuk 0.28s var(--ease-smooth) both;
 }
 
-/* Umpan balik tekan: tombol terasa "masuk" sedikit saat ditekan, dan
-   kembali pada :hover. Sengaja kecil supaya tidak menggeser tata letak. */
+/* Garis kemajuan navigasi tipis di tepi atas layar. */
+.route-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 9999;
+  height: 2.5px;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, #09677d 0%, #34746c 52%, #c2cc08 100%);
+  box-shadow: 0 1px 6px rgba(9, 103, 125, 0.25);
+  transition: transform 0.32s var(--ease-smooth), opacity 0.22s ease;
+}
+
+.route-progress.is-loading {
+  opacity: 1;
+  transform: scaleX(0.76);
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.14s ease;
+}
+
+.route-progress.is-done {
+  opacity: 0;
+  transform: scaleX(1);
+  transition: transform 0.18s var(--ease-smooth), opacity 0.22s ease 0.08s;
+}
+
+/* Umpan balik tekan taktil (desktop :active maupun ketukan cepat mobile). */
+.button-primary,
+.button-secondary,
+.nav-cta,
+.nav-link,
+.brand-lockup,
+.scroll-cue,
+.package-action,
+.journal-button,
+.publish-button,
+.about-button,
+.asistensi-submit,
+.katalog-tab,
+.kat-card-link,
+.detail-order-whatsapp,
+.detail-order-back,
+.journal-category-action,
+.journal-back-link,
+.footer-link,
+.footer-contact-item,
+.admin-nav-link,
+.admin-primary-button,
+.admin-secondary-button,
+.admin-danger-button,
+.admin-table-action,
+.admin-back-link,
+.admin-login-submit,
+.admin-login-back,
+.home-faq-question,
+.book-preview-more {
+  transition:
+    transform 0.22s var(--ease-spring),
+    background-color 0.2s var(--ease-smooth),
+    border-color 0.2s var(--ease-smooth),
+    color 0.2s var(--ease-smooth),
+    box-shadow 0.24s var(--ease-smooth);
+}
+
+.hero-photo-card,
+.kat-card,
+.home-contact-card,
+.about-contact-card,
+.about-medsos-item,
+.journal-category-card,
+.admin-stat-card,
+.admin-quick-card {
+  transition:
+    transform 0.26s var(--ease-spring),
+    border-color 0.22s var(--ease-smooth),
+    box-shadow 0.26s var(--ease-smooth),
+    background-color 0.22s var(--ease-smooth);
+}
+
 .button-primary:active,
+.button-primary.is-haptic-pressed,
 .button-secondary:active,
+.button-secondary.is-haptic-pressed,
 .nav-cta:active,
+.nav-cta.is-haptic-pressed,
+.nav-link:active,
+.nav-link.is-haptic-pressed,
+.brand-lockup:active,
+.brand-lockup.is-haptic-pressed,
 .scroll-cue:active,
+.scroll-cue.is-haptic-pressed,
 .package-action:active,
+.package-action.is-haptic-pressed,
 .journal-button:active,
+.journal-button.is-haptic-pressed,
 .publish-button:active,
+.publish-button.is-haptic-pressed,
 .about-button:active,
+.about-button.is-haptic-pressed,
 .asistensi-submit:active,
+.asistensi-submit.is-haptic-pressed,
+.katalog-tab:active,
+.katalog-tab.is-haptic-pressed,
+.kat-card-link:active,
+.kat-card-link.is-haptic-pressed,
+.detail-order-whatsapp:active,
+.detail-order-whatsapp.is-haptic-pressed,
+.detail-order-back:active,
+.detail-order-back.is-haptic-pressed,
+.journal-category-action:active,
+.journal-category-action.is-haptic-pressed,
+.journal-back-link:active,
+.journal-back-link.is-haptic-pressed,
+.footer-link:active,
+.footer-link.is-haptic-pressed,
+.footer-contact-item:active,
+.footer-contact-item.is-haptic-pressed,
+.admin-nav-link:active,
+.admin-nav-link.is-haptic-pressed,
 .admin-primary-button:active,
+.admin-primary-button.is-haptic-pressed,
 .admin-secondary-button:active,
-.admin-quick-card:active {
-  transform: translateY(1px) scale(0.988);
+.admin-secondary-button.is-haptic-pressed,
+.admin-danger-button:active,
+.admin-danger-button.is-haptic-pressed,
+.admin-table-action:active,
+.admin-table-action.is-haptic-pressed,
+.admin-back-link:active,
+.admin-back-link.is-haptic-pressed,
+.admin-login-submit:active,
+.admin-login-submit.is-haptic-pressed,
+.admin-login-back:active,
+.admin-login-back.is-haptic-pressed,
+.home-faq-question:active,
+.home-faq-question.is-haptic-pressed,
+.book-preview-more:active,
+.book-preview-more.is-haptic-pressed {
+  transform: translateY(1px) scale(0.974);
+  transition-duration: 0.08s;
+  transition-timing-function: ease-out;
+}
+
+.hero-photo-card:active,
+.hero-photo-card.is-haptic-pressed,
+.kat-card:active,
+.kat-card.is-haptic-pressed,
+.home-contact-card:active,
+.home-contact-card.is-haptic-pressed,
+.about-contact-card:active,
+.about-contact-card.is-haptic-pressed,
+.about-medsos-item:active,
+.about-medsos-item.is-haptic-pressed,
+.journal-category-card:active,
+.journal-category-card.is-haptic-pressed,
+.admin-quick-card:active,
+.admin-quick-card.is-haptic-pressed {
+  transform: translateY(1px) scale(0.99);
+  transition-duration: 0.08s;
+  transition-timing-function: ease-out;
+}
+
+@media (hover: hover) {
+  .home-contact-card:hover,
+  .about-contact-card:hover,
+  .about-medsos-item:hover {
+    transform: translateY(-2px);
+  }
+
+  .katalog-tab:hover,
+  .detail-order-back:hover,
+  .admin-table-action:hover,
+  .admin-back-link:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Akordeon FAQ: animasi buka & tutup halus saat peramban mendukung `::details-content`. */
+@supports (interpolate-size: allow-keywords) {
+  .home-faq-item {
+    interpolate-size: allow-keywords;
+  }
+
+  .home-faq-item::details-content {
+    block-size: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      content-visibility 0.28s allow-discrete,
+      block-size 0.28s var(--ease-smooth),
+      opacity 0.22s ease;
+  }
+
+  .home-faq-item[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
 }
 
 /* --- Potongan tata letak untuk kerangka muat ----------------------------- */
@@ -5219,19 +5434,87 @@ html {
     animation: none;
   }
 
+  .route-progress {
+    display: none;
+  }
+
   .button-primary:active,
+  .button-primary.is-haptic-pressed,
   .button-secondary:active,
+  .button-secondary.is-haptic-pressed,
   .nav-cta:active,
+  .nav-cta.is-haptic-pressed,
+  .nav-link:active,
+  .nav-link.is-haptic-pressed,
+  .brand-lockup:active,
+  .brand-lockup.is-haptic-pressed,
   .scroll-cue:active,
+  .scroll-cue.is-haptic-pressed,
   .package-action:active,
+  .package-action.is-haptic-pressed,
   .journal-button:active,
+  .journal-button.is-haptic-pressed,
   .publish-button:active,
+  .publish-button.is-haptic-pressed,
   .about-button:active,
+  .about-button.is-haptic-pressed,
   .asistensi-submit:active,
+  .asistensi-submit.is-haptic-pressed,
+  .katalog-tab:active,
+  .katalog-tab.is-haptic-pressed,
+  .kat-card-link:active,
+  .kat-card-link.is-haptic-pressed,
+  .detail-order-whatsapp:active,
+  .detail-order-whatsapp.is-haptic-pressed,
+  .detail-order-back:active,
+  .detail-order-back.is-haptic-pressed,
+  .journal-category-action:active,
+  .journal-category-action.is-haptic-pressed,
+  .journal-back-link:active,
+  .journal-back-link.is-haptic-pressed,
+  .footer-link:active,
+  .footer-link.is-haptic-pressed,
+  .footer-contact-item:active,
+  .footer-contact-item.is-haptic-pressed,
+  .admin-nav-link:active,
+  .admin-nav-link.is-haptic-pressed,
   .admin-primary-button:active,
+  .admin-primary-button.is-haptic-pressed,
   .admin-secondary-button:active,
-  .admin-quick-card:active {
+  .admin-secondary-button.is-haptic-pressed,
+  .admin-danger-button:active,
+  .admin-danger-button.is-haptic-pressed,
+  .admin-table-action:active,
+  .admin-table-action.is-haptic-pressed,
+  .admin-back-link:active,
+  .admin-back-link.is-haptic-pressed,
+  .admin-login-submit:active,
+  .admin-login-submit.is-haptic-pressed,
+  .admin-login-back:active,
+  .admin-login-back.is-haptic-pressed,
+  .home-faq-question:active,
+  .home-faq-question.is-haptic-pressed,
+  .book-preview-more:active,
+  .book-preview-more.is-haptic-pressed,
+  .hero-photo-card:active,
+  .hero-photo-card.is-haptic-pressed,
+  .kat-card:active,
+  .kat-card.is-haptic-pressed,
+  .home-contact-card:active,
+  .home-contact-card.is-haptic-pressed,
+  .about-contact-card:active,
+  .about-contact-card.is-haptic-pressed,
+  .about-medsos-item:active,
+  .about-medsos-item.is-haptic-pressed,
+  .journal-category-card:active,
+  .journal-category-card.is-haptic-pressed,
+  .admin-quick-card:active,
+  .admin-quick-card.is-haptic-pressed {
     transform: none;
+  }
+
+  .home-faq-item::details-content {
+    transition: none;
   }
 }
 
@@ -5988,13 +6271,81 @@ html {
   font-size: 13px;
 }
 
-.nav-link {
-  font-size: 15.5px;
+.site-nav {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 6px;
+  min-height: 64px;
+  padding: 8px 14px 8px 20px;
+  border-color: rgba(16, 42, 49, 0.085);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 1px 2px rgba(16, 42, 49, 0.03),
+    0 12px 32px -8px rgba(16, 42, 49, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+.brand-lockup {
+  justify-self: start;
+  padding: 4px 8px 4px 2px;
+  border-radius: 12px;
+  transition: opacity 0.2s var(--ease-smooth), transform 0.22s var(--ease-spring);
+}
+
+.brand-lockup:hover {
+  opacity: 0.9;
+}
+
+.brand-name strong {
+  color: #102a31;
+}
+
+.brand-name small {
+  color: #526661;
+}
+
+.nav-links {
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.nav-link,
 .nav-link-kanan {
-  font-size: 15.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  color: #465b57;
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: 0.005em;
+  transition:
+    color 0.2s var(--ease-smooth),
+    transform 0.24s var(--ease-spring);
+}
+
+.nav-link::after {
+  right: 14px;
+  bottom: 7px;
+  left: 14px;
+  height: 2px;
+  border-radius: 999px;
+  background: #17665c;
+  opacity: 0.9;
+}
+
+.nav-link:hover {
+  color: #102a31;
+}
+
+.nav-link[aria-current="page"] {
+  color: #102a31;
   font-weight: 650;
+}
+
+.nav-link[aria-current="page"]::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .hero-photo-card {
@@ -6142,7 +6493,11 @@ html {
     align-items: center;
     gap: 4px;
     min-height: 54px;
-    padding: 4px 10px 4px 12px;
+    padding: 5px 10px 5px 14px;
+  }
+
+  .brand-lockup {
+    padding: 0 4px 0 0;
   }
 
   .nav-links {
@@ -6151,7 +6506,7 @@ html {
     width: auto;
     height: auto;
     justify-content: flex-end;
-    gap: 2px;
+    gap: 4px;
     padding-top: 0;
     border-top: 0;
   }
@@ -6170,9 +6525,16 @@ html {
 
   .nav-links .nav-link,
   .nav-link-kanan {
-    padding: 0 9px;
+    padding: 0 10px;
     font-size: 13px;
     white-space: nowrap;
+  }
+
+  .nav-links .nav-link::after,
+  .nav-link-kanan::after {
+    right: 10px;
+    bottom: 8px;
+    left: 10px;
   }
 
   .closing-note > a {
@@ -6302,8 +6664,14 @@ html {
 
   .nav-links .nav-link,
   .nav-link-kanan {
-    padding: 0 6px;
+    padding: 0 8px;
     font-size: 12px;
+  }
+
+  .nav-links .nav-link::after,
+  .nav-link-kanan::after {
+    right: 8px;
+    left: 8px;
   }
 }
 

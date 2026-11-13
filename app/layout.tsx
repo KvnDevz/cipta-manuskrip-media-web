@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { metadataSitus } from "@/lib/site-metadata";
+import { HapticUI } from "@/components/HapticUI";
 import "./globals.css";
 import "./home-sections.css";
 import "./hero-headline.css";
@@ -22,7 +23,10 @@ export const metadata: Metadata = metadataSitus();
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <HapticUI />
+        {children}
+      </body>
     </html>
   );
 }
