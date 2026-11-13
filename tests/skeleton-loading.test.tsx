@@ -10,7 +10,14 @@ import TentangKamiLoading from "@/app/(publik)/tentang-kami/loading";
 import KatalogLoading from "@/app/(publik)/katalog/[status]/loading";
 import BukuLoading from "@/app/(publik)/buku/[slug]/loading";
 import AdminLoading from "@/app/admin/(terlindungi)/loading";
+import AdminBukuLoading from "@/app/admin/(terlindungi)/buku/loading";
+import AdminBukuTambahLoading from "@/app/admin/(terlindungi)/buku/tambah/loading";
+import AdminBukuEditLoading from "@/app/admin/(terlindungi)/buku/[id]/edit/loading";
+import AdminLoginLoading from "@/app/admin/login/loading";
 import AdminPreviewLoading from "@/app/admin/preview/loading";
+import AdminPreviewBukuLoading from "@/app/admin/preview/buku/loading";
+import AdminPreviewBukuTambahLoading from "@/app/admin/preview/buku/tambah/loading";
+import AdminPreviewBukuEditLoading from "@/app/admin/preview/buku/[id]/edit/loading";
 
 /**
  * Kerangka muat tiap segmen rute.
@@ -35,7 +42,14 @@ const KERANGKA = [
   ["katalog/[status]", KatalogLoading],
   ["buku/[slug]", BukuLoading],
   ["admin", AdminLoading],
+  ["admin/login", AdminLoginLoading],
+  ["admin/buku", AdminBukuLoading],
+  ["admin/buku/tambah", AdminBukuTambahLoading],
+  ["admin/buku/[id]/edit", AdminBukuEditLoading],
   ["admin/preview", AdminPreviewLoading],
+  ["admin/preview/buku", AdminPreviewBukuLoading],
+  ["admin/preview/buku/tambah", AdminPreviewBukuTambahLoading],
+  ["admin/preview/buku/[id]/edit", AdminPreviewBukuEditLoading],
 ] as const;
 
 describe("kerangka muat tiap segmen rute", () => {

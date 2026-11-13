@@ -1,9 +1,8 @@
 /**
- * Kerangka muat katalog.
+ * Kerangka muat katalog (`/katalog/[status]`).
  *
- * Query katalog berjalan di server; pada sambungan lambat halaman sebelumnya
- * kosong tanpa penanda apa pun. Kerangka ini menjaga susunannya tetap
- * terlihat dan memberi tahu bahwa isinya sedang diambil — bukan rusak.
+ * Meniru susunan asli: breadcrumb, kepala katalog dua kolom (intro + tab di
+ * kiri, kartu ringkasan stat di kanan), kisi 6 kartu buku, dan panel bantuan.
  */
 export default function Loading() {
   return (
@@ -26,6 +25,17 @@ export default function Loading() {
             <span className="skeleton-pill" />
           </div>
         </div>
+
+        <aside className="katalog-stat">
+          <span className="skeleton-line" style={{ width: 120, height: 9 }} />
+          <span className="skeleton-line skeleton-title" style={{ width: 88, height: 34, marginTop: 18 }} />
+          <span className="skeleton-line" style={{ width: "76%", height: 11, marginTop: 14 }} />
+          <span className="skeleton-line" style={{ width: "90%", height: 11 }} />
+          <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+            <span className="skeleton-pill" style={{ width: 92, height: 24 }} />
+            <span className="skeleton-pill" style={{ width: 106, height: 24 }} />
+          </div>
+        </aside>
       </header>
 
       <ul className="kat-grid" aria-hidden="true">
@@ -44,6 +54,15 @@ export default function Loading() {
           </li>
         ))}
       </ul>
+
+      <aside className="katalog-help" aria-hidden="true">
+        <div>
+          <span className="skeleton-line" style={{ width: 120, height: 9 }} />
+          <span className="skeleton-line skeleton-title" style={{ width: "min(280px, 78%)", height: 24, marginTop: 12 }} />
+          <span className="skeleton-line" style={{ width: "min(360px, 90%)", height: 12, marginTop: 12 }} />
+        </div>
+        <span className="skeleton-pill" style={{ width: 170, height: 44 }} />
+      </aside>
     </div>
   );
 }

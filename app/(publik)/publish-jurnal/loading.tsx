@@ -1,10 +1,9 @@
 /**
- * Kerangka muat halaman Publish Jurnal dan turunannya.
+ * Kerangka muat halaman Publish Jurnal (`/publish-jurnal`).
  *
- * Banner jurnal berlatar gelap, jadi kerangkanya memakai blok terang di atas
- * panel gelap itu — kalau tidak, bagian atas halaman tampak kosong seolah
- * gagal dimuat. Bagian bawah mengikuti deretan kartu dokumentasi dan daftar
- * fasilitas, dua bagian yang selalu ada di halaman ini.
+ * Banner gelap memakai shimmer terang agar bagian atas tetap terbaca. Visual
+ * kanan mengikuti rasio foto lanskap 851:482, diikuti 3 kartu keunggulan,
+ * placeholder video, 13 baris fasilitas, dan blok ajakan bawah.
  */
 export default function Loading() {
   return (
@@ -13,18 +12,22 @@ export default function Loading() {
 
       <section className="journal-hero" aria-hidden="true">
         <div className="journal-hero-copy">
-          <span className="skeleton-line" style={{ width: 200, height: 9, background: "rgba(255,255,255,.22)" }} />
-          <span className="skeleton-line skeleton-title" style={{ width: "92%", height: 46, marginTop: 24, background: "rgba(255,255,255,.18)" }} />
-          <span className="skeleton-line skeleton-title" style={{ width: "66%", height: 46, marginTop: 12, background: "rgba(255,255,255,.18)" }} />
-          <span className="skeleton-line" style={{ width: "88%", height: 12, marginTop: 24, background: "rgba(255,255,255,.14)" }} />
-          <span className="skeleton-line" style={{ width: "70%", height: 12, background: "rgba(255,255,255,.14)" }} />
-          <div className="home-skeleton-actions" style={{ justifyContent: "flex-start" }}>
-            <span className="skeleton-pill" style={{ width: 150, height: 48, background: "rgba(255,255,255,.2)" }} />
-            <span className="skeleton-pill" style={{ width: 168, height: 48, background: "rgba(255,255,255,.12)" }} />
+          <span className="skeleton-line skeleton-dark" style={{ width: 200, height: 9 }} />
+          <span className="skeleton-line skeleton-title skeleton-dark" style={{ width: "92%", height: 46, marginTop: 24 }} />
+          <span className="skeleton-line skeleton-title skeleton-dark" style={{ width: "66%", height: 46, marginTop: 12 }} />
+          <span className="skeleton-line skeleton-dark" style={{ width: "88%", height: 12, marginTop: 24 }} />
+          <span className="skeleton-line skeleton-dark" style={{ width: "70%", height: 12 }} />
+          <div className="journal-hero-actions home-skeleton-actions" style={{ justifyContent: "flex-start" }}>
+            <span className="skeleton-pill skeleton-dark" style={{ width: 150, height: 48 }} />
+            <span className="skeleton-pill skeleton-dark" style={{ width: 168, height: 48, opacity: 0.72 }} />
           </div>
+          <span className="skeleton-line skeleton-dark" style={{ width: 120, height: 11, marginTop: 28 }} />
         </div>
-        <div className="journal-hero-visual">
-          <span className="skeleton-cover" style={{ width: "min(240px, 70%)", aspectRatio: "1", height: "auto", borderRadius: "50%", background: "rgba(255,255,255,.1)" }} />
+        <div className="journal-hero-visual journal-hero-visual--foto">
+          <span
+            className="skeleton-cover skeleton-dark"
+            style={{ width: "100%", height: "auto", aspectRatio: "851 / 482", borderRadius: 16 }}
+          />
         </div>
       </section>
 
@@ -58,7 +61,7 @@ export default function Loading() {
           <span className="skeleton-line" style={{ width: 220, height: 12 }} />
         </div>
         <ul className="journal-facilities-grid">
-          {Array.from({ length: 9 }, (_, i) => (
+          {Array.from({ length: 13 }, (_, i) => (
             <li key={i} className="journal-facility">
               <span className="skeleton-line" style={{ width: 20, height: 10, marginTop: 0 }} />
               <span className="skeleton-pill" style={{ width: 24, height: 24, borderRadius: "50%" }} />
@@ -66,6 +69,17 @@ export default function Loading() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="journal-next-step" aria-hidden="true">
+        <div>
+          <span className="skeleton-line" style={{ width: 140, height: 9 }} />
+          <span className="skeleton-line skeleton-title" style={{ width: "min(280px, 76%)", height: 28, marginTop: 12 }} />
+        </div>
+        <div className="journal-next-actions">
+          <span className="skeleton-pill" style={{ width: 150, height: 46 }} />
+          <span className="skeleton-line" style={{ width: 132, height: 12, marginTop: 0 }} />
+        </div>
       </section>
     </div>
   );

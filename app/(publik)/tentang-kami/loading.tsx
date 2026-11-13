@@ -1,6 +1,9 @@
 /**
- * Kerangka muat halaman Tentang Kami — teks tengah tanpa pill di atas,
- * banner lebar, section legalitas dua kolom + catatan, tim kami, lalu medsos.
+ * Kerangka muat halaman Tentang Kami (`/tentang-kami`).
+ *
+ * Meniru urutan persis: hero teks tengah + banner lebar, legalitas dua kolom
+ * (dua dokumen berdampingan + catatan verifikasi), tim kami + empat peran,
+ * kontak admin buku & jurnal, media sosial, lalu penutup.
  */
 export default function Loading() {
   return (
@@ -14,9 +17,9 @@ export default function Loading() {
           <span className="skeleton-line skeleton-title" style={{ width: "64%", height: 46, marginTop: 12 }} />
           <span className="skeleton-line" style={{ width: "88%", height: 14, marginTop: 22 }} />
           <span className="skeleton-line" style={{ width: "72%", height: 14 }} />
-          <div className="home-skeleton-actions" style={{ justifyContent: "center" }}>
+          <div className="about-hero-actions home-skeleton-actions" style={{ justifyContent: "center" }}>
             <span className="skeleton-pill" style={{ width: 196, height: 46 }} />
-            <span className="skeleton-pill" style={{ width: 148, height: 46, background: "transparent" }} />
+            <span className="skeleton-pill" style={{ width: 148, height: 46 }} />
           </div>
         </div>
         <div className="about-hero-banner">
@@ -32,13 +35,16 @@ export default function Loading() {
             <span className="skeleton-line skeleton-title" style={{ width: "68%", height: 44, marginTop: 10 }} />
             <span className="skeleton-line" style={{ width: "92%", height: 14, marginTop: 26 }} />
             <span className="skeleton-line" style={{ width: "78%", height: 14 }} />
-            <div className="about-legalitas-badges">
-              <span className="skeleton-pill" style={{ width: 240, height: 58, borderRadius: 12 }} />
-              <span className="skeleton-pill" style={{ width: 210, height: 58, borderRadius: 12 }} />
+            <div className="about-legalitas-badges" style={{ display: "grid", gap: 10, marginTop: 22 }}>
+              <span className="skeleton-pill" style={{ width: "min(280px, 100%)", height: 52, borderRadius: 12 }} />
+              <span className="skeleton-pill" style={{ width: "min(250px, 100%)", height: 52, borderRadius: 12 }} />
             </div>
           </div>
           <div className="about-legalitas-visual">
-            <span className="skeleton-cover" style={{ width: "100%", height: 320, borderRadius: 20 }} />
+            <div className="about-legalitas-docs" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, alignItems: "end", height: "auto" }}>
+              <span className="skeleton-cover" style={{ width: "100%", height: "auto", aspectRatio: "443 / 552", borderRadius: 14 }} />
+              <span className="skeleton-cover" style={{ width: "100%", height: "auto", aspectRatio: "520 / 312", borderRadius: 14 }} />
+            </div>
           </div>
         </div>
         <div className="about-legalitas-note">
@@ -56,7 +62,26 @@ export default function Loading() {
           <span className="skeleton-line" style={{ width: "78%", height: 14 }} />
         </div>
         <div className="about-team-photo">
-          <span className="skeleton-cover" style={{ width: "100%", height: 320, borderRadius: 28 }} />
+          <span className="skeleton-cover" style={{ width: "100%", height: "auto", aspectRatio: "1584 / 672", borderRadius: 0 }} />
+          <div className="about-team-roles" style={{ position: "static", background: "#f2f6f2", padding: "22px 24px" }}>
+            {[0, 1, 2, 3].map((i) => (
+              <div className="about-team-role" key={i}>
+                <span className="skeleton-line" style={{ width: "70%", height: 16, marginInline: "auto" }} />
+                <span className="skeleton-line" style={{ width: "86%", height: 11, marginInline: "auto" }} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="about-contact" aria-hidden="true">
+        <div className="about-contact-heading">
+          <span className="skeleton-line" style={{ width: 140, height: 10 }} />
+          <span className="skeleton-line skeleton-title" style={{ width: "min(360px, 84%)", height: 32, marginTop: 14 }} />
+        </div>
+        <div className="about-contact-grid">
+          <span className="skeleton-cover" style={{ height: 86, borderRadius: 16 }} />
+          <span className="skeleton-cover" style={{ height: 86, borderRadius: 16 }} />
         </div>
       </section>
 

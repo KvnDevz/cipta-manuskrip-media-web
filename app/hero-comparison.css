@@ -197,12 +197,21 @@
 /* Di layar sempit tetap satu panel; kolom menumpuk dengan divider horizontal. */
 @media (max-width: 700px) {
   .home-hero--foto {
-    gap: 22px;
-    padding: 22px 12px 20px;
+    gap: 20px;
+    padding: 26px 16px 26px;
+    border-radius: 22px;
+  }
+
+  .home-hero--foto .hero-actions {
+    margin-top: 22px;
+  }
+
+  .home-hero--foto .hero-buku {
+    margin-top: 8px;
   }
 
   .home-comparison-section {
-    margin: 22px auto 0;
+    margin: 18px auto 0;
     padding: 0 12px;
   }
 
