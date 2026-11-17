@@ -47,8 +47,8 @@ describe("visual §3 publish-buku", () => {
     expect(posisiKatalog).toBeGreaterThan(posisiPilar);
     expect((html.match(/class="trust-card"/g) ?? [])).toHaveLength(4);
     expect(html).toContain('id="trust-title"');
-    expect(html).toContain("Mengapa Memilih Penerbit ");
-    expect(html).toContain("Cipta Manuskrip Media?");
+    expect(html).toContain("Mengapa Memilih ");
+    expect(html).toContain("CV Cipta Manuskrip Media?");
   });
 
   it("foto diberi alt yang menjelaskan isinya (bukan alt kosong)", async () => {

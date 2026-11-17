@@ -47,15 +47,18 @@ describe("content/site", () => {
   it("empat pilar kepercayaan Section 2.2 memakai teks persis brief", () => {
     expect(PILAR_KEPERCAYAAN.map((p) => p.judul)).toEqual([
       "Legalitas Resmi",
-      "ISBN Resmi",
+      "Tim Penerbitan Profesional",
       "Tidak Harus Ada Naskah di Awal",
       "Distribusi Beragam",
     ]);
     expect(PILAR_KEPERCAYAAN.map((p) => p.jenisVisual)).toEqual([
-      "legalitas", "isbn", "naskah", "distribusi",
+      "legalitas", "tim", "naskah", "distribusi",
     ]);
     expect(PILAR_KEPERCAYAAN[0].deskripsi).toBe(
       "CV Cipta Manuskrip Media telah resmi berbadan hukum dengan kegiatan usaha penerbitan buku dan jurnal ilmiah.",
+    );
+    expect(PILAR_KEPERCAYAAN[1].deskripsi).toBe(
+      "Didukung oleh tim editor, proofreader, dan desainer tata letak berpengalaman yang memastikan setiap naskah diproses secara profesional sesuai standar penerbitan.",
     );
     expect(PILAR_KEPERCAYAAN[3].deskripsi).toBe(
       "Buku kamu tak hanya dijual secara cetak, tapi bisa disewa secara online juga.",

@@ -122,7 +122,6 @@ export const PAKET_BUKU: ReadonlyArray<{
       "Penyuntingan naskah",
       "Layout isi buku",
       "Desain cover buku",
-      "Pengurusan ISBN",
       "Royalti penulis 30%",
     ],
   },
@@ -134,7 +133,6 @@ export const PAKET_BUKU: ReadonlyArray<{
       "Penyuntingan naskah",
       "Layout isi buku",
       "Desain cover buku",
-      "Pengurusan ISBN",
       "Royalti penulis 30%",
     ],
   },
@@ -145,7 +143,6 @@ export const PAKET_BUKU: ReadonlyArray<{
       "Penyuntingan naskah",
       "Layout isi buku",
       "Desain cover buku",
-      "Pengurusan ISBN",
       "Royalti penulis 30%",
     ],
   },
@@ -278,15 +275,16 @@ export const SPESIFIKASI_BUKU = {
 } as const;
 
 /** Jenis visual pendukung pada kartu pilar kepercayaan. */
-export type JenisVisualPilar = "legalitas" | "isbn" | "naskah" | "distribusi";
+export type JenisVisualPilar = "legalitas" | "tim" | "naskah" | "distribusi";
 
 /**
  * Empat pilar kepercayaan pada /publish-buku, setelah section asistensi.
  * Teks judul & deskripsi mengikuti brief kata per kata.
  *
- * `jenisVisual` menentukan ilustrasi kartu. Dua entri pertama masih
- * PLACEHOLDER: logo resmi Kemenkumham, Perpusnas RI, dan barcode ISBN
- * belum dikirim klien, jadi jangan dibuat-buat.
+ * `jenisVisual` menentukan ilustrasi kartu. Kartu nomor 02 dahulu berjudul
+ * "ISBN Resmi" (logo Perpusnas RI & barcode ISBN); atas permintaan klien
+ * diganti menjadi "Tim Penerbitan Profesional" dengan visual tim editorial,
+ * sejalan dengan dihapusnya fasilitas "Pengurusan ISBN" dari semua paket.
  */
 export const PILAR_KEPERCAYAAN: ReadonlyArray<{
   id: string;
@@ -304,12 +302,12 @@ export const PILAR_KEPERCAYAAN: ReadonlyArray<{
     jenisVisual: "legalitas",
   },
   {
-    id: "isbn",
+    id: "tim",
     nomor: "02",
-    judul: "ISBN Resmi",
+    judul: "Tim Penerbitan Profesional",
     deskripsi:
-      "Setiap buku memiliki nomor ISBN dari Perpustakaan Nasional yang bisa divalidasi di website resmi Perpusnas.",
-    jenisVisual: "isbn",
+      "Didukung oleh tim editor, proofreader, dan desainer tata letak berpengalaman yang memastikan setiap naskah diproses secara profesional sesuai standar penerbitan.",
+    jenisVisual: "tim",
   },
   {
     id: "naskah",

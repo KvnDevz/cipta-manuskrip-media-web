@@ -266,7 +266,7 @@
   color: #09677d;
 }
 
-/* --- Area visual: dua pertama placeholder logo resmi, dua lainnya ikon --- */
+/* --- Area visual kartu pilar: logo/legalitas, tim editorial, dan ikon --- */
 
 .trust-visual {
   position: relative;
@@ -285,8 +285,8 @@
   background: radial-gradient(ellipse at 50% 40%, rgba(9, 103, 125, 0.1), transparent 70%);
 }
 
-.trust-visual--isbn {
-  background: radial-gradient(ellipse at 50% 40%, rgba(212, 163, 70, 0.13), transparent 70%);
+.trust-visual--tim {
+  background: radial-gradient(ellipse at 50% 40%, rgba(14, 124, 189, 0.12), transparent 70%);
 }
 
 .trust-visual--naskah {
@@ -332,20 +332,6 @@
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 6px 16px rgba(16, 42, 49, 0.06);
   color: #09677d;
-}
-
-.trust-barcode {
-  width: 94px;
-  height: 42px;
-  border: 1px solid rgba(16, 42, 49, 0.12);
-  border-radius: 4px;
-  background-color: #fff;
-  background-image: repeating-linear-gradient(
-    90deg,
-    #102a31 0 2px, transparent 2px 4px,
-    #102a31 4px 5px, transparent 5px 9px
-  );
-  opacity: 0.55;
 }
 
 .trust-penghubung {

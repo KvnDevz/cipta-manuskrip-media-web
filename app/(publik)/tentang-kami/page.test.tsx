@@ -108,7 +108,7 @@ describe("tentang-kami", () => {
     expect(html).toContain('width="443"');
     expect(html).toContain('height="552"');
     expect(html).toContain('width="520"');
-    expect(html).toContain('height="312"');
+    expect(html).toContain('height="316"');
     expect(html).toContain("Surat keterangan terdaftar pendirian CV Cipta Manuskrip Media");
     expect(html).toContain("Kartu NPWP badan usaha CV Cipta Manuskrip Media.");
     expect(html).not.toContain("PLACEHOLDER");

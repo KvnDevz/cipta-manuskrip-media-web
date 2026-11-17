@@ -56,7 +56,7 @@ export function AboutLegalitas() {
               className="about-legal-card"
               src="/aset/legalitas-npwp.png"
               width={520}
-              height={312}
+              height={316}
               alt="Kartu NPWP badan usaha CV Cipta Manuskrip Media."
               loading="lazy"
               decoding="async"
