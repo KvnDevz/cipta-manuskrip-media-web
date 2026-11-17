@@ -2,7 +2,7 @@ import { BadgeCheck } from "lucide-react";
 import { PILAR_KEPERCAYAAN, type JenisVisualPilar } from "@/content/site";
 
 /**
- * "Mengapa Memilih Penerbit Cipta Manuskrip Media?"
+ * "Mengapa Memilih CV Cipta Manuskrip Media?"
  * Komponen empat pilar kepercayaan di /publish-buku, tepat setelah asistensi.
  */
 function VisualPilar({ jenis }: { jenis: JenisVisualPilar }) {
@@ -25,21 +25,19 @@ function VisualPilar({ jenis }: { jenis: JenisVisualPilar }) {
     );
   }
 
-  if (jenis === "isbn") {
+  if (jenis === "tim") {
     return (
-      <div className="trust-visual trust-visual--isbn">
-        <span className="trust-logo-bulat" aria-hidden="true">
-          <img
-            src="/aset/trust-perpusnas.png"
-            alt=""
-            width={78}
-            height={73}
-            className="trust-logo-img"
-          />
-        </span>
-        <span className="trust-barcode" aria-hidden="true" />
+      <div className="trust-visual trust-visual--tim">
+        <img
+          src="/aset/trust-tim.png"
+          alt=""
+          aria-hidden="true"
+          width={140}
+          height={96}
+          className="trust-ilustrasi-img"
+        />
         <span className="trust-visual-caption">
-          Logo Perpusnas RI &amp; Barcode ISBN
+          Tim editor, proofreader &amp; desainer
         </span>
       </div>
     );
@@ -90,7 +88,7 @@ export function TrustPillars() {
         <div>
           <p className="section-kicker">Mengapa memilih kami</p>
           <h2 id="trust-title" className="section-title">
-            Mengapa Memilih Penerbit <em>Cipta Manuskrip Media?</em>
+            Mengapa Memilih <em>CV Cipta Manuskrip Media?</em>
           </h2>
         </div>
         <p className="section-intro">

@@ -174,7 +174,7 @@ describe("beranda", () => {
     expect(teks).not.toContain("Empat langkah");
     expect(teks).not.toContain("dua jalan berkarya");
     expect(teks).not.toContain("Bukan janji besar");
-    expect(teks).not.toContain("Mengapa Memilih Penerbit");
+    expect(teks).not.toContain("Mengapa Memilih CV Cipta Manuskrip Media");
     expect(html).not.toContain("home-flow");
     expect(html).not.toContain("home-ground");
     expect(html).not.toContain("services-section");

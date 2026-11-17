@@ -62,9 +62,9 @@ export default async function Page() {
           <img
             className="publish-hero-foto"
             src="/aset/buku-hero.jpg"
-            width={687}
-            height={492}
-            alt="Penulis muda Indonesia tersenyum menunjukkan ponsel bertanda PUBLISHED, disertai ilustrasi lambang Perpustakaan Nasional dan barcode ISBN."
+            width={1184}
+            height={880}
+            alt="Penulis muda Indonesia tersenyum menunjukkan ponsel bertanda PUBLISHED."
           />
         </div>
       </section>
