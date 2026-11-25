@@ -106,47 +106,50 @@ export const MEDIA_SOSIAL: ReadonlyArray<{
   },
 ];
 
-/**
- * Tiga tier paket penerbitan buku resmi CV Cipta Manuskrip Media.
- */
-export const PAKET_BUKU: ReadonlyArray<{
-  nama: string;
-  harga: string;
-  fasilitas: readonly string[];
-}> = [
-  {
-    nama: "Paket Eksklusif",
-    harga: "Rp1.500.000",
-    fasilitas: [
-      "Asistensi penulisan naskah",
-      "Penyuntingan naskah",
-      "Layout isi buku",
-      "Desain cover buku",
-      "Royalti penulis 30%",
-    ],
-  },
-  {
-    nama: "Paket Konversi Skripsi/Tesis/Disertasi Jadi Buku",
-    harga: "Rp800.000",
-    fasilitas: [
-      "Restrukturisasi bab dan judul",
-      "Penyuntingan naskah",
-      "Layout isi buku",
-      "Desain cover buku",
-      "Royalti penulis 30%",
-    ],
-  },
-  {
-    nama: "Paket Esensial",
-    harga: "Rp1.000.000",
-    fasilitas: [
-      "Penyuntingan naskah",
-      "Layout isi buku",
-      "Desain cover buku",
-      "Royalti penulis 30%",
-    ],
-  },
-];
+  /**
+   * Tiga tier paket penerbitan buku resmi CV Cipta Manuskrip Media.
+   */
+  export const PAKET_BUKU: ReadonlyArray<{
+    nama: string;
+    harga: string;
+    fasilitas: readonly string[];
+  }> = [
+    {
+      nama: "Paket Eksklusif",
+      harga: "Rp1.500.000",
+      fasilitas: [
+        "Asistensi penulisan naskah",
+        "Penyuntingan naskah",
+        "Layout isi buku",
+        "Desain cover buku",
+        "ISBN",
+        "Royalti penulis 30%",
+      ],
+    },
+    {
+      nama: "Paket Konversi Skripsi/Tesis/Disertasi Jadi Buku",
+      harga: "Rp800.000",
+      fasilitas: [
+        "Restrukturisasi bab dan judul",
+        "Penyuntingan naskah",
+        "Layout isi buku",
+        "Desain cover buku",
+        "ISBN",
+        "Royalti penulis 30%",
+      ],
+    },
+    {
+      nama: "Paket Esensial",
+      harga: "Rp1.000.000",
+      fasilitas: [
+        "Penyuntingan naskah",
+        "Layout isi buku",
+        "Desain cover buku",
+        "ISBN",
+        "Royalti penulis 30%",
+      ],
+    },
+  ];
 
 /**
  * 13 fasilitas jurnal persis dari brief §10 — urutan dan ejaannya
@@ -283,8 +286,7 @@ export type JenisVisualPilar = "legalitas" | "tim" | "naskah" | "distribusi";
  *
  * `jenisVisual` menentukan ilustrasi kartu. Kartu nomor 02 dahulu berjudul
  * "ISBN Resmi" (logo Perpusnas RI & barcode ISBN); atas permintaan klien
- * diganti menjadi "Tim Penerbitan Profesional" dengan visual tim editorial,
- * sejalan dengan dihapusnya fasilitas "Pengurusan ISBN" dari semua paket.
+ * diganti menjadi "Tim Penerbitan Profesional" dengan visual tim editorial.
  */
 export const PILAR_KEPERCAYAAN: ReadonlyArray<{
   id: string;
