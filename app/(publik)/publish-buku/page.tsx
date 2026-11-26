@@ -62,8 +62,8 @@ export default async function Page() {
           <img
             className="publish-hero-foto"
             src="/aset/buku-hero.jpg"
-            width={1184}
-            height={880}
+            width={1448}
+            height={1086}
             alt="Penulis muda Indonesia tersenyum menunjukkan ponsel bertanda PUBLISHED."
           />
         </div>
